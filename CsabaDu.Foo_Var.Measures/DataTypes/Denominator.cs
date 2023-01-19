@@ -8,17 +8,17 @@ internal sealed class Denominator : BaseMeasure, IDenominator
     {
         ValueType baseMeasureQuantity = baseMeasure.GetQuantity();
 
-        Quantity = ValidateMeasures.GetValidQuantity(baseMeasureQuantity, Common.Statics.BaseMeasure.Denominator);
+        Quantity = ValidateMeasures.GetValidQuantity(baseMeasureQuantity, Common.Statics.BaseMeasureType.Denominator);
     }
 
     internal Denominator(IMeasurement measurement, ValueType? quantity = null) : base(quantity ?? 1m, measurement)
     {
-        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasure.Denominator);
+        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasureType.Denominator);
     }
 
     internal Denominator(Enum measureUnit, ValueType? quantity = null, decimal? exchangeRate = null) : base(quantity ?? 1m, measureUnit, exchangeRate)
     {
-        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasure.Denominator);
+        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasureType.Denominator);
     }
 
     public override IBaseMeasure GetBaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null)

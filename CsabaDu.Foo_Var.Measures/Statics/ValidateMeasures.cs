@@ -78,7 +78,7 @@ public static class ValidateMeasures
         return ValidQuantityParamTypes.Contains(type);
     }
 
-    internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasure baseMeasureType = default)
+    internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType = default)
     {
         //baseMeasureType ??= typeof(IMeasure);
 
@@ -96,12 +96,12 @@ public static class ValidateMeasures
 
             switch (baseMeasureType)
             {
-                case BaseMeasure.Measure:
+                case BaseMeasureType.Measure:
                     break;
-                case BaseMeasure.Denominator:
+                case BaseMeasureType.Denominator:
                     quantity = GetDenominatorQuantity(decimalQuantity);
                     break;
-                case BaseMeasure.Limit:
+                case BaseMeasureType.Limit:
                     quantity = GetLimitQuantity(decimalQuantity);
                     break;
 
@@ -125,7 +125,7 @@ public static class ValidateMeasures
         return quantity != null;
     }
 
-    private static bool TryGetNotNullQuantityParam(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasure baseMeasureType)
+    private static bool TryGetNotNullQuantityParam(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType)
     {
         quantity = default;
 
@@ -148,13 +148,13 @@ public static class ValidateMeasures
 
         switch (baseMeasureType)
         {
-            case BaseMeasure.Measure:
+            case BaseMeasureType.Measure:
                 quantity = quantityParam;
                 break;
-            case BaseMeasure.Denominator:
+            case BaseMeasureType.Denominator:
                 quantity = quantityParam ?? decimal.One;
                 break;
-            case BaseMeasure.Limit:
+            case BaseMeasureType.Limit:
                 quantity = quantityParam ?? uint.MinValue;
                 break;
 
@@ -165,7 +165,7 @@ public static class ValidateMeasures
         return IsValidQuantityParamType(quantity?.GetType());
     }
 
-    private static void ValidateMeasureQuantity(ValueType? quantity, BaseMeasure baseMeasureType)
+    private static void ValidateMeasureQuantity(ValueType? quantity, BaseMeasureType baseMeasureType)
     {
         if (quantity != null) return;
         else if (baseMeasureType != default) return;
@@ -173,7 +173,7 @@ public static class ValidateMeasures
         throw new ArgumentNullException(nameof(quantity));
     }
 
-    internal static ValueType GetValidQuantity(ValueType? quantity, BaseMeasure baseMeasureType = default)
+    internal static ValueType GetValidQuantity(ValueType? quantity, BaseMeasureType baseMeasureType = default)
     {
         ValidateMeasureQuantity(quantity, baseMeasureType);
 
@@ -193,25 +193,25 @@ public static class ValidateMeasures
 
     private static decimal? GetDenominatorQuantity(decimal quantity)
     {
-        return quantity.IsValidQuantity(BaseMeasure.Denominator) ?
+        return quantity.IsValidQuantity(BaseMeasureType.Denominator) ?
             quantity
             : null;
     }
 
     private static ulong? GetLimitQuantity(decimal quantity)
     {
-        return quantity.IsValidQuantity(BaseMeasure.Limit) ?
+        return quantity.IsValidQuantity(BaseMeasureType.Limit) ?
             (ulong)quantity.ToQuantity(typeof(ulong))!
             : null;
     }
 
-    private static bool IsValidQuantity(this decimal quantity, BaseMeasure baseMeasureType)
+    private static bool IsValidQuantity(this decimal quantity, BaseMeasureType baseMeasureType)
     {
         return baseMeasureType switch
         {
-            BaseMeasure.Measure => true,
-            BaseMeasure.Denominator => quantity > decimal.Zero,
-            BaseMeasure.Limit => quantity >= ulong.MinValue && quantity <= ulong.MaxValue,
+            BaseMeasureType.Measure => true,
+            BaseMeasureType.Denominator => quantity > decimal.Zero,
+            BaseMeasureType.Limit => quantity >= ulong.MinValue && quantity <= ulong.MaxValue,
 
             _ => false,
         };

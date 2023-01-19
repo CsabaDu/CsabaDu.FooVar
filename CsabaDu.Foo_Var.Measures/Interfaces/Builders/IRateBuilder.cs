@@ -4,11 +4,11 @@ namespace CsabaDu.Foo_Var.Measures.Interfaces.Builders;
 
 public interface IRateBuilder
 {
-    IRateBuilder SetMeasurement(Enum measureUnit, BaseMeasure baseMeasureType = default, decimal? exchangeRate = null);
+    IRateBuilder SetMeasurement(Enum measureUnit, BaseMeasureType baseMeasureType = default, decimal? exchangeRate = null);
 
-    IRateBuilder SetMeasurement(IMeasurement measurement, BaseMeasure baseMeasureType = default);
+    IRateBuilder SetMeasurement(IMeasurement measurement, BaseMeasureType baseMeasureType = default);
 
-    IRateBuilder SetQuantity(ValueType quantity, BaseMeasure baseMeasureType = default);
+    IRateBuilder SetQuantity(ValueType quantity, BaseMeasureType baseMeasureType = default);
 
     IRateBuilder SetLimitType(LimitType limitType);
 

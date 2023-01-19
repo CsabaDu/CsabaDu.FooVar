@@ -7,7 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CsabaDu.Foo_Var\CsabaDu.Foo_Var.Common.csproj" />
+    <ProjectReference Include="..\CsabaDu.Foo_Var.Common\CsabaDu.Foo_Var.Common.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.40.0.48530">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>CsabaDu.Foo_Var.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\Builders\" />
   </ItemGroup>
 
 </Project>

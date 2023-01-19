@@ -11,13 +11,13 @@ internal sealed class Limit : BaseMeasure, ILimit
     #region Constructors
     internal Limit(Enum measureUnit, ValueType? quantity = null, decimal? exchangeRate = null, LimitType limitType = default) : base(quantity ?? 0, measureUnit, exchangeRate)
     {
-        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasure.Limit);
+        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasureType.Limit);
         LimitType = limitType;
     }
 
     internal Limit(IMeasurement measurement, ValueType? quantity = null, LimitType limitType = default) : base(quantity ?? 0, measurement)
     {
-        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasure.Limit);
+        Quantity = ValidateMeasures.GetValidQuantity(quantity, Common.Statics.BaseMeasureType.Limit);
         LimitType = limitType;
     }
 
@@ -25,7 +25,7 @@ internal sealed class Limit : BaseMeasure, ILimit
     {
         ValueType baseMeasureQuantity = baseMeasure.GetQuantity();
 
-        Quantity = ValidateMeasures.GetValidQuantity(baseMeasureQuantity, Common.Statics.BaseMeasure.Limit);
+        Quantity = ValidateMeasures.GetValidQuantity(baseMeasureQuantity, Common.Statics.BaseMeasureType.Limit);
         LimitType = limitType;
     }
 

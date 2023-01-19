@@ -7,7 +7,7 @@ public enum RoundingMode : byte { General, Ceiling, Floor, Half }
 
 public enum SummingMode : byte { Add, Subtract }
 
-public enum BaseMeasure : byte { Measure, Denominator, Limit }
+public enum BaseMeasureType : byte { Measure, Denominator, Limit }
 
 // Geometrics
 public enum Side : byte { Outer, Inner }

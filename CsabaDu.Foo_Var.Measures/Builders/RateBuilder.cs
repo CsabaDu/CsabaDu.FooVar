@@ -40,7 +40,7 @@ public sealed class RateBuilder : IRateBuilder
     #endregion
 
     #region Public methods
-    public IRateBuilder SetMeasurement(Enum measureUnit, BaseMeasure baseMeasureType = default, decimal? exchangeRate = null)
+    public IRateBuilder SetMeasurement(Enum measureUnit, BaseMeasureType baseMeasureType = default, decimal? exchangeRate = null)
     {
         _ = measureUnit ?? throw new ArgumentNullException(nameof(measureUnit));
 
@@ -49,19 +49,19 @@ public sealed class RateBuilder : IRateBuilder
         return SetMeasurement(measurement, baseMeasureType);
     }
 
-    public IRateBuilder SetMeasurement(IMeasurement measurement, BaseMeasure baseMeasureType = default)
+    public IRateBuilder SetMeasurement(IMeasurement measurement, BaseMeasureType baseMeasureType = default)
     {
         _ = measurement ?? throw new ArgumentNullException(nameof(measurement));
 
         switch (baseMeasureType)
         {
-            case BaseMeasure.Measure:
+            case BaseMeasureType.Measure:
                 _numeratorMeasurement = measurement;
                 return this;
-            case BaseMeasure.Denominator:
+            case BaseMeasureType.Denominator:
                 _denominatorMeasurement = measurement;
                 return this;
-            case BaseMeasure.Limit:
+            case BaseMeasureType.Limit:
                 _limitMeasurement = measurement;
                 return this;
 
@@ -69,19 +69,19 @@ public sealed class RateBuilder : IRateBuilder
         }
     }
 
-    public IRateBuilder SetQuantity(ValueType quantity, BaseMeasure baseMeasureType = default)
+    public IRateBuilder SetQuantity(ValueType quantity, BaseMeasureType baseMeasureType = default)
     {
         ValueType validQuantity = ValidateMeasures.GetValidQuantity(quantity, baseMeasureType);
 
         switch (baseMeasureType)
         {
-            case BaseMeasure.Measure:
+            case BaseMeasureType.Measure:
                 _numeratorQuantity = validQuantity;
                 break;
-            case BaseMeasure.Denominator:
+            case BaseMeasureType.Denominator:
                 _denominatorQuantity = validQuantity;
                 break;
-            case BaseMeasure.Limit:
+            case BaseMeasureType.Limit:
                 _limitQuantity = (ulong)validQuantity;
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(baseMeasureType));

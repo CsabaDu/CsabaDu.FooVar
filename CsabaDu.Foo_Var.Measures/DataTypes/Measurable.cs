@@ -25,7 +25,7 @@ internal abstract class Measurable : IMeasurable
     #endregion
 
     #region Public methods
-    public Type GetMeasureUnitType() => GetType();
+    public Type GetMeasureUnitType() => MeasureUnit.GetType();
 
     public Enum GetMeasureUnit() => (Enum)MeasureUnit;
 

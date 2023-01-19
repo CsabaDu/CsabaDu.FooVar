@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsabaDu.Foo_Var.Common", "CsabaDu.Foo_Var\CsabaDu.Foo_Var.Common.csproj", "{C3679880-203B-4F67-ABB2-4E53F9C7139A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsabaDu.Foo_Var.Common", "CsabaDu.Foo_Var.Common\CsabaDu.Foo_Var.Common.csproj", "{C3679880-203B-4F67-ABB2-4E53F9C7139A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsabaDu.Foo_Var.Measures", "CsabaDu.Foo_Var.Measures\CsabaDu.Foo_Var.Measures.csproj", "{7F6CE032-03E2-4CAA-ACBF-5466EBE8A4E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsabaDu.Foo_Var.Geometrics", "CsabaDu.Foo_Var.Geometrics\CsabaDu.Foo_Var.Geometrics.csproj", "{9D4646D6-9231-4A81-99A9-806374E289EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsabaDu.Foo_Var.Tests", "CsabaDu.Foo_Var.Tests\CsabaDu.Foo_Var.Tests.csproj", "{5B1B3C2F-9423-4A6C-BC4E-BAED7154AD8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9D4646D6-9231-4A81-99A9-806374E289EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D4646D6-9231-4A81-99A9-806374E289EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D4646D6-9231-4A81-99A9-806374E289EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B1B3C2F-9423-4A6C-BC4E-BAED7154AD8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B1B3C2F-9423-4A6C-BC4E-BAED7154AD8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B1B3C2F-9423-4A6C-BC4E-BAED7154AD8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B1B3C2F-9423-4A6C-BC4E-BAED7154AD8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
