@@ -113,7 +113,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.IDiagonal" Collapsed="true">
-    <Position X="3.5" Y="4.5" Width="1.5" />
+    <Position X="3.5" Y="4.5" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Interfaces\IDiagonal.cs</FileName>
@@ -353,7 +353,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.ISpread&lt;T, U&gt;" Collapsed="true">
-    <Position X="7.25" Y="4" Width="1.5" />
+    <Position X="7.25" Y="4" Width="4.5" />
     <InheritanceLine Type="CsabaDu.Foo_Var.Common.Interfaces.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
         <Point X="6.5" Y="2.062" />
@@ -378,7 +378,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.ISpreadMeasure&lt;T, U&gt;" Collapsed="true">
-    <Position X="7.5" Y="2.75" Width="1.5" />
+    <Position X="7.5" Y="2.75" Width="4.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ISpreadMeasure.cs</FileName>
@@ -427,7 +427,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.ITangentShape" Collapsed="true">
-    <Position X="5.5" Y="4.5" Width="1.5" />
+    <Position X="7.25" Y="4.5" Width="5" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ITangentShape.cs</FileName>
