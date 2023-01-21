@@ -2,7 +2,7 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
 
-public interface IGeometricBodyFactory : IBoxFactory, IDrumFactory
+public interface IGeometricBodyFactory : ICuboidFactory, ICylinderFactory
 {
     IGeometricBody GetGeometricBody(params IExtent[] shapeExtents);
     IGeometricBody GetGeometricBody(IGeometricBody geometricBody);

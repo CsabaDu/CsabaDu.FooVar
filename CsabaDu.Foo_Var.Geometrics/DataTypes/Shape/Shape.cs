@@ -119,13 +119,13 @@ internal abstract class Shape : IShape
 
             if (shapeTraits.HasFlag(ShapeTrait.Round))
             {
-                return GetDrumDiagonal(firstShapeExtent, lastShapeExtent, extentUnit);
+                return GetCylinderDiagonal(firstShapeExtent, lastShapeExtent, extentUnit);
             }
         }
 
         IExtent secondShapeExtent = shapeExtentList.ElementAt(1);
 
-        return GetBoxDiagonal(firstShapeExtent, secondShapeExtent, lastShapeExtent, extentUnit);
+        return GetCuboidDiagonal(firstShapeExtent, secondShapeExtent, lastShapeExtent, extentUnit);
     }
 
     public IShape GetShape(ExtentUnit? extentUnit = null)
@@ -166,9 +166,9 @@ internal abstract class Shape : IShape
 
         return shapeType switch
         {
-            IBox => ShapeTrait.None,
+            ICuboid => ShapeTrait.None,
             ICircle => ShapeTrait.Plane | ShapeTrait.Round,
-            IDrum => ShapeTrait.Round,
+            ICylinder => ShapeTrait.Round,
             IRectangle => ShapeTrait.Plane,
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null),

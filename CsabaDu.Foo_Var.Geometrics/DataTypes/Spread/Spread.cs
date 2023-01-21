@@ -80,9 +80,9 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
     {
         Enum measureUnit = spreadMeasureUnit ?? (Enum)VolumeUnit.meterCubic;
 
-        if (shapeTraits.HasFlag(ShapeTrait.Round)) return (T)GetDrumVolume(firstShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
+        if (shapeTraits.HasFlag(ShapeTrait.Round)) return (T)GetCylinderVolume(firstShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
 
-        return (T)GetBoxVolume(firstShapeExtent, secondShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
+        return (T)GetCuboidVolume(firstShapeExtent, secondShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
     }
 
     public bool IsExchangeableTo(U spreadMeasureUnit)

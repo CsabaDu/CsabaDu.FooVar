@@ -2,7 +2,7 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-public interface IRectangle : IPlaneShape, IStraightShape
+public interface IRectangle : IPlaneShape, IRectangularShape
 {
     IRectangle GetRectangle(params IExtent[] shapeExtents);
     IRectangle GetRectangle(IExtent length, IExtent width);

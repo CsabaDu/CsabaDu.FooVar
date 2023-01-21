@@ -34,7 +34,7 @@ public static class CalculateGeometrics
         return GetArea(quantity, areaUnit);
     }
 
-    internal static IVolume GetDrumVolume(IExtent radius, IExtent height, VolumeUnit volumeUnit = default)
+    internal static IVolume GetCylinderVolume(IExtent radius, IExtent height, VolumeUnit volumeUnit = default)
     {
         radius.ValidateShapeExtent();
         height.ValidateShapeExtent();
@@ -42,13 +42,13 @@ public static class CalculateGeometrics
         double radiusQuantity = (double)radius.Quantity;
         decimal heightQuantity = height.GetDecimalQuantity();
 
-        decimal quantity = GetDrumVolumeQuantity(radiusQuantity, heightQuantity);
+        decimal quantity = GetCylinderVolumeQuantity(radiusQuantity, heightQuantity);
         quantity /= volumeUnit.GetMeterQubicExchangeRate(radius, height);
 
         return GetVolume(quantity, volumeUnit);
     }
 
-    internal static IVolume GetBoxVolume(IExtent length, IExtent width, IExtent height, VolumeUnit volumeUnit = VolumeUnit.meterCubic)
+    internal static IVolume GetCuboidVolume(IExtent length, IExtent width, IExtent height, VolumeUnit volumeUnit = VolumeUnit.meterCubic)
     {
         length.ValidateShapeExtent();
         width.ValidateShapeExtent();
@@ -58,7 +58,7 @@ public static class CalculateGeometrics
         decimal widthQuantity = width.GetDecimalQuantity();
         decimal heightQuantity = height.GetDecimalQuantity();
 
-        decimal quantity = GetBoxVolumeQuantity(lengthQuantity, widthQuantity, heightQuantity);
+        decimal quantity = GetCuboidVolumeQuantity(lengthQuantity, widthQuantity, heightQuantity);
         quantity /= volumeUnit.GetMeterQubicExchangeRate(length, width, height);
 
         return GetVolume(quantity, volumeUnit);
@@ -77,14 +77,14 @@ public static class CalculateGeometrics
         return GetShapeExtentSqrt(quantity, extentUnit);
     }
 
-    internal static IExtent GetDrumDiagonal(IExtent radius, IExtent height, ExtentUnit extentUnit)
+    internal static IExtent GetCylinderDiagonal(IExtent radius, IExtent height, ExtentUnit extentUnit)
     {
         IExtent baseCircleDiagonal = GetCircleDiagonal(radius, extentUnit);
 
         return GetRectangleDiagonal(baseCircleDiagonal, height, extentUnit);
     }
 
-    internal static IExtent GetBoxDiagonal(IExtent length, IExtent width, IExtent height, ExtentUnit extentUnit)
+    internal static IExtent GetCuboidDiagonal(IExtent length, IExtent width, IExtent height, ExtentUnit extentUnit)
     {
         decimal quantity = GetQuantitySquares(length);
         quantity += GetQuantitySquares(width);
@@ -188,14 +188,14 @@ public static class CalculateGeometrics
         return (IArea)MeasureFactory.GetMeasure(quantity, areaUnit);
     }
 
-    private static decimal GetDrumVolumeQuantity(double radiusQuantity, decimal heightQuantity)
+    private static decimal GetCylinderVolumeQuantity(double radiusQuantity, decimal heightQuantity)
     {
         decimal basePlateQuantity = GetCircleAreaQuantity(radiusQuantity);
 
         return GetGeometricBodyVolumeQuantity(basePlateQuantity, heightQuantity);
     }
 
-    private static decimal GetBoxVolumeQuantity(decimal lengthQuantity, decimal widthQuantity, decimal heightQuantity)
+    private static decimal GetCuboidVolumeQuantity(decimal lengthQuantity, decimal widthQuantity, decimal heightQuantity)
     {
         decimal basePlateQuantity = GetRectangleAreaQuantity(lengthQuantity, widthQuantity);
 

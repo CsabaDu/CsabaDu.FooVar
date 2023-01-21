@@ -4,5 +4,5 @@ namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 
 public interface IDimensions
 {
-    IStraightShape GetDimensions();
+    IRectangularShape GetDimensions();
 }

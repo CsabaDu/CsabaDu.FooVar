@@ -2,10 +2,10 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
-public interface IStraightShape : IShape, IRotate<IStraightShape>
+public interface IRectangularShape : IShape, IRotate<IRectangularShape>
 {
     IExtent Length { get; init; }
     IExtent Width { get; init; }
 
-    IStraightShape GetStraightShape(params IExtent[] shapeExtents);
+    IRectangularShape GetRectangularShape(params IExtent[] shapeExtents);
 }

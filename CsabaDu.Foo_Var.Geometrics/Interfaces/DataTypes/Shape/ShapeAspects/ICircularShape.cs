@@ -2,9 +2,9 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
-public interface IRoundShape : IShape, IDimensions
+public interface ICircularShape : IShape, IDimensions
 {
     IExtent Radius { get; init; }
 
-    IRoundShape GetRoundShape(params IExtent[] shapeExtents);
+    ICircularShape GetCircularShape(params IExtent[] shapeExtents);
 }

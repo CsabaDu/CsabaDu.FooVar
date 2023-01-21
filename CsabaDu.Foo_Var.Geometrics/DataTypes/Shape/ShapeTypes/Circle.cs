@@ -63,14 +63,14 @@ internal sealed class Circle : PlaneShape, ICircle
         return GetCircleDiagonal(Radius, extentUnit);
     }
 
-    public IStraightShape GetDimensions()
+    public IRectangularShape GetDimensions()
     {
         IExtent diagonal = GetDiagonal();
 
         return ShapeFactory.GetRectangle(diagonal, diagonal);
     }
 
-    public IRoundShape GetRoundShape(params IExtent[] shapeExtents) => ShapeFactory.GetRoundShape(shapeExtents);
+    public ICircularShape GetCircularShape(params IExtent[] shapeExtents) => ShapeFactory.GetCircularShape(shapeExtents);
 
     public override IReadOnlyList<IExtent> GetShapeExtentList()
     {

@@ -2,7 +2,7 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-public interface ICircle : IPlaneShape, IRoundShape
+public interface ICircle : IPlaneShape, ICircularShape
 {
     ICircle GetCircle(params IExtent[] shapeExtents);
     ICircle GetCircle(IExtent radius);

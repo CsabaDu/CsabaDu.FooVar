@@ -50,12 +50,12 @@ public static class ValidateGeometrics
 
     private static void ValidateShapeTraitsByEdgeType(ShapeTrait shapeTraits, Type[] interfaces, Type shapeType)
     {
-        bool hasRoundShapeFlag = (shapeTraits.HasFlag(ShapeTrait.Round));
-        bool isRoundShape = interfaces.Contains(typeof(IRoundShape));
+        bool hasCircularShapeFlag = (shapeTraits.HasFlag(ShapeTrait.Round));
+        bool isCircularShape = interfaces.Contains(typeof(ICircularShape));
 
-        if (hasRoundShapeFlag && isRoundShape) return;
+        if (hasCircularShapeFlag && isCircularShape) return;
 
-        if (hasRoundShapeFlag || isRoundShape) throw new ArgumentOutOfRangeException(nameof(shapeTraits), shapeType, null);
+        if (hasCircularShapeFlag || isCircularShape) throw new ArgumentOutOfRangeException(nameof(shapeTraits), shapeType, null);
     }
 
     public static void ValidateShapeExtentCount(this ShapeTrait shapeTraits, int count)

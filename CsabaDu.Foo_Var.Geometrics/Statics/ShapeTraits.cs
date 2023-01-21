@@ -68,15 +68,15 @@ public static class ShapeTraits
 
     private static void AddShapeExtentTypesByEdgeType(ISet<ShapeExtentType> shapeExtentTypeSet, Type[] interfaces, Type shapeType)
     {
-        if (interfaces.Contains(typeof(IRoundShape)) && interfaces.Contains(typeof(IStraightShape)))
+        if (interfaces.Contains(typeof(ICircularShape)) && interfaces.Contains(typeof(IRectangularShape)))
         {
             throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null);
         }
-        else if (interfaces.Contains(typeof(IRoundShape)))
+        else if (interfaces.Contains(typeof(ICircularShape)))
         {
             shapeExtentTypeSet.Add(ShapeExtentType.Radius);
         }
-        else if (interfaces.Contains(typeof(IStraightShape)))
+        else if (interfaces.Contains(typeof(IRectangularShape)))
         {
             shapeExtentTypeSet.Add(ShapeExtentType.Length);
             shapeExtentTypeSet.Add(ShapeExtentType.Width);
@@ -105,9 +105,9 @@ public static class ShapeTraits
 
     public static Type GetShapeType(this ShapeTrait shapeTraits)
     {
-        if (shapeTraits.Equals(ShapeTrait.None)) return typeof(IBox);
+        if (shapeTraits.Equals(ShapeTrait.None)) return typeof(ICuboid);
 
-        if (shapeTraits.HasFlag(ShapeTrait.Plane) && shapeTraits.HasFlag(ShapeTrait.Round)) return typeof(IDrum);
+        if (shapeTraits.HasFlag(ShapeTrait.Plane) && shapeTraits.HasFlag(ShapeTrait.Round)) return typeof(ICylinder);
 
         if (shapeTraits.HasFlag(ShapeTrait.Plane)) return typeof(IRectangle);
 
@@ -122,9 +122,9 @@ public static class ShapeTraits
 
         return shapeType switch
         {
-            IBox => ShapeTrait.None,
+            ICuboid => ShapeTrait.None,
             IRectangle => ShapeTrait.Plane,
-            IDrum => ShapeTrait.Round,
+            ICylinder => ShapeTrait.Round,
             ICircle => ShapeTrait.Plane | ShapeTrait.Round,
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null),
@@ -133,9 +133,9 @@ public static class ShapeTraits
 
     public static int GetShapeExtentCount(this ShapeTrait shapeTraits)
     {
-        if (shapeTraits.Equals(ShapeTrait.None)) return 3; // Box
+        if (shapeTraits.Equals(ShapeTrait.None)) return 3; // Cuboid
 
-        if (!shapeTraits.HasFlag(ShapeTrait.Plane)) return 2;  // Drum
+        if (!shapeTraits.HasFlag(ShapeTrait.Plane)) return 2;  // Cylinder
 
         if (shapeTraits.HasFlag(ShapeTrait.Round)) return 1; // Circle
 

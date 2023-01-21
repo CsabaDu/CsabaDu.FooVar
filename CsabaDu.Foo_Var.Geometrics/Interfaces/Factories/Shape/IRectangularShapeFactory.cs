@@ -2,7 +2,7 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
 
-public interface IRoundShapeFactory : IDrumFactory, ICircleFactory
+public interface IRectangularShapeFactory : ICuboidFactory, IRectangleFactory
 {
-    IRoundShape GetRoundShape(params IExtent[] shapeExtents);
+    IRectangularShape GetSraightShape(params IExtent[] shapeExtents);
 }

@@ -2,7 +2,7 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
 
-public interface IStraightShapeFactory : IBoxFactory, IRectangleFactory
+public interface ICircularShapeFactory : ICylinderFactory, ICircleFactory
 {
-    IStraightShape GetSraightShape(params IExtent[] shapeExtents);
+    ICircularShape GetCircularShape(params IExtent[] shapeExtents);
 }

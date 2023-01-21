@@ -10,24 +10,24 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories;
 
 public class ShapeFactory : IShapeFactory
 {
-    public IBox GetBox(IExtent length, IExtent width, IExtent height)
+    public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
     {
-        return new Box(length, width, height);
+        return new Cuboid(length, width, height);
     }
 
-    public IBox GetBox(IRectangle baseShape, IExtent height)
+    public ICuboid GetCuboid(IRectangle baseShape, IExtent height)
     {
-        return new Box(baseShape, height);
+        return new Cuboid(baseShape, height);
     }
 
-    public IDrum GetDrum(IExtent radius, IExtent height)
+    public ICylinder GetCylinder(IExtent radius, IExtent height)
     {
-        return new Drum(radius, height);
+        return new Cylinder(radius, height);
     }
 
-    public IDrum GetDrum(ICircle baseShape, IExtent height)
+    public ICylinder GetCylinder(ICircle baseShape, IExtent height)
     {
-        return new Drum(baseShape, height);
+        return new Cylinder(baseShape, height);
     }
 
     public ICircle GetCircle(IExtent radius)
@@ -48,8 +48,8 @@ public class ShapeFactory : IShapeFactory
 
         return count switch
         {
-            2 => GetDrum(shapeExtents[0], shapeExtents[1]),
-            3 => GetBox(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+            2 => GetCylinder(shapeExtents[0], shapeExtents[1]),
+            3 => GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null),
         };
@@ -88,7 +88,7 @@ public class ShapeFactory : IShapeFactory
         return GetPlaneShape(shapeExtents);
     }
 
-    public IStraightShape GetSraightShape(params IExtent[] shapeExtents)
+    public IRectangularShape GetSraightShape(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
 
@@ -97,13 +97,13 @@ public class ShapeFactory : IShapeFactory
         return count switch
         {
             2 => GetRectangle(shapeExtents[0], shapeExtents[1]),
-            3 => GetBox(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
+            3 => GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]),
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null),
         };
     }
 
-    public IRoundShape GetRoundShape(params IExtent[] shapeExtents)
+    public ICircularShape GetCircularShape(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
 
@@ -112,7 +112,7 @@ public class ShapeFactory : IShapeFactory
         return count switch
         {
             1 => GetCircle(shapeExtents[0]),
-            2 => GetDrum(shapeExtents[0], shapeExtents[1]),
+            2 => GetCylinder(shapeExtents[0], shapeExtents[1]),
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null),
         };
@@ -142,10 +142,10 @@ public class ShapeFactory : IShapeFactory
 
             if (shapeTraits.HasFlag(ShapeTrait.Round))
             {
-                return new Drum(shapeExtentList);
+                return new Cylinder(shapeExtentList);
             }
         }
 
-        return new Box(shapeExtentList);
+        return new Cuboid(shapeExtentList);
     }
 }

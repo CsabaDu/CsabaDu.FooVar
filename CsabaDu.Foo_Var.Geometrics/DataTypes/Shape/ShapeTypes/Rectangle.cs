@@ -96,7 +96,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetShapeExtentList().OrderByDescending(x => x);
     }
 
-    public IStraightShape GetStraightShape(params IExtent[] shapeExtents) => ShapeFactory.GetSraightShape(shapeExtents);
+    public IRectangularShape GetRectangularShape(params IExtent[] shapeExtents) => ShapeFactory.GetSraightShape(shapeExtents);
 
     public override IShape GetTangentShape(Side shapeSide = Side.Outer)
     {
@@ -113,14 +113,14 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return ShapeFactory.GetCircle(radius);
     }
 
-    public IStraightShape Rotated()
+    public IRectangularShape Rotated()
     {
         IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
 
         return GetRectangle(shapeExtentList.ToArray());
     }
 
-    public (IStraightShape, IStraightShape) RotatedWith(IStraightShape other)
+    public (IRectangularShape, IRectangularShape) RotatedWith(IRectangularShape other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
