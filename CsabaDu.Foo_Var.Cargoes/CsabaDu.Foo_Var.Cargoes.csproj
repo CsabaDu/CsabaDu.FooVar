@@ -12,4 +12,8 @@
     <ProjectReference Include="..\CsabaDu.Foo_Var.Measures\CsabaDu.Foo_Var.Measures.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Statics\" />
+  </ItemGroup>
+
 </Project>
