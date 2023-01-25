@@ -12,7 +12,6 @@ internal sealed class Measurement : Measurable, IMeasurement
     public Type MeasureUnitType { get; init; }
 
     public IMeasurementFactory MeasurementFactory { get; init; }
-
     #endregion
 
     #region Constructors

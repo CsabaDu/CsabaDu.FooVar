@@ -1,13 +1,11 @@
 ﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
-using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
 public interface IGeometricBody : IBaseShape, IShape, IBody, IProjection
 {
     IExtent Height { get; init; }
-    //IBodyFactory BodyFactory { get; init; }
 
     IGeometricBody GetGeometricBody(ExtentUnit extentUnit);
     IGeometricBody GetGeometricBody(params IExtent[] shapeExtents);

@@ -28,19 +28,6 @@ public static class ValidateMeasures
     internal static ICollection<Enum> ValidMeasureUnits => ExchangeMeasures.Rates.Keys;
 
     private static HashSet<Type> ValidMeasureUnitTypes => ValidMeasureUnits.Select(x => x.GetType()).ToHashSet();
-
-    //private static HashSet<Type> BaseMeasureTypes => new()
-    //{
-    //    typeof(IMeasure),
-    //    typeof(IDenominator),
-    //    typeof(ILimit),
-    //};
-
-    //private static bool IsValidBaseMeasureType(Type? baseMeasureType)
-    //{
-    //    return baseMeasureType == null || BaseMeasureTypes.Contains(baseMeasureType);
-    //}
-
     #endregion
 
     #region Quantity
@@ -264,4 +251,17 @@ public static class ValidateMeasures
 
         return GetOrCreateLimit(other.Denominator, limit);
     }
+
+    //private static HashSet<Type> BaseMeasureTypes => new()
+    //{
+    //    typeof(IMeasure),
+    //    typeof(IDenominator),
+    //    typeof(ILimit),
+    //};
+
+    //private static bool IsValidBaseMeasureType(Type? baseMeasureType)
+    //{
+    //    return baseMeasureType == null || BaseMeasureTypes.Contains(baseMeasureType);
+    //}
+
 }

@@ -5,6 +5,8 @@ namespace CsabaDu.Foo_Var.Geometrics.Statics;
 
 public static class ValidateGeometrics
 {
+    private static ShapeTrait AllShapeTraits => ShapeTrait.Plane | ShapeTrait.Round;
+
     public static void ValidateShape(this ShapeTrait shapeTraits, IShape shape)
     {
         _ = shape ?? throw new ArgumentNullException(nameof(shape));
@@ -14,7 +16,7 @@ public static class ValidateGeometrics
 
     public static void ValidateShapeTraits(this ShapeTrait shapeTraits, Type? shapeType = null)
     {
-        if (!Enum.IsDefined(typeof(ShapeTrait), shapeTraits)) throw new ArgumentOutOfRangeException(nameof(shapeTraits), shapeTraits, null);
+        if (!AllShapeTraits.HasFlag(shapeTraits)) throw new ArgumentOutOfRangeException(nameof(shapeTraits), shapeTraits, null);
 
         if (shapeType == null) return;
 

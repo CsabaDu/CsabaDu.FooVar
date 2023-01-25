@@ -1,9 +1,7 @@
-﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
-using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
+﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
-using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
 
 namespace CsabaDu.Foo_Var.Geometrics.Factories;
@@ -88,7 +86,7 @@ public class ShapeFactory : IShapeFactory
         return GetPlaneShape(shapeExtents);
     }
 
-    public IRectangularShape GetSraightShape(params IExtent[] shapeExtents)
+    public IRectangularShape GetRectangularShape(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
 
