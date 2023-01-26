@@ -8,5 +8,5 @@ public interface IBodyFactory
     IBody GetBody(IVolume volume);
     IBody GetBody(ISpread<IVolume, VolumeUnit> spread);
     IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
-    IBody GetBody(IGeometricBody geometricBody);
+    //IBody GetBody(IGeometricBody geometricBody);
 }

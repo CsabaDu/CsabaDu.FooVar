@@ -23,10 +23,10 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories
             return new BulkBody(shapeExtentList, shapeTraits);
         }
 
-        public IBody GetBody(IGeometricBody geometricBody)
-        {
-            return new BulkBody(geometricBody);
-        }
+        //public IBody GetBody(IGeometricBody geometricBody)
+        //{
+        //    return new BulkBody(geometricBody);
+        //}
 
         public ISurface GetSurface(IArea area)
         {

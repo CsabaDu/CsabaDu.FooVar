@@ -9,26 +9,23 @@ internal abstract class Rate : Measure, IRate
     #region Properties
     public IDenominator Denominator { get; init; }
 
-    public IRateFactory RateFactory { get; init; }
+    public IRateFactory RateFactory => new RateFactory(this);
     #endregion
 
     #region Constructors
     private protected Rate(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate)
     {
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
-        RateFactory = new RateFactory(this);
     }
 
     private protected Rate(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(quantity, measurement)
     {
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
-        RateFactory = new RateFactory(this);
     }
 
     private protected Rate(IMeasure numerator, IDenominator denominator) : base(numerator)
     {
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
-        RateFactory = new RateFactory(this);
     }
 
     private protected Rate(IRate other) : this(other?.GetNumerator() ?? throw new ArgumentNullException(nameof(other)), other.Denominator) { }
@@ -150,88 +147,88 @@ internal abstract class Rate : Measure, IRate
     public abstract IRate GetRate(IRate? other = null);
     #endregion
 
-    #region Static operators
-    public static bool operator ==(Rate? rate, IRate? other)
-    {
-        return rate?.Equals(other) == true;
-    }
-    public static bool operator ==(IRate? rate, Rate? other)
-    {
-        return rate?.Equals(other) == true;
-    }
+    //#region Static operators
+    //public static bool operator ==(Rate? rate, IRate? other)
+    //{
+    //    return rate?.Equals(other) == true;
+    //}
+    //public static bool operator ==(IRate? rate, Rate? other)
+    //{
+    //    return rate?.Equals(other) == true;
+    //}
 
-    public static bool operator !=(Rate? rate, IRate? other)
-    {
-        return rate?.Equals(other) != true;
-    }
-    public static bool operator !=(IRate? rate, Rate? other)
-    {
-        return rate?.Equals(other) != true;
-    }
+    //public static bool operator !=(Rate? rate, IRate? other)
+    //{
+    //    return rate?.Equals(other) != true;
+    //}
+    //public static bool operator !=(IRate? rate, Rate? other)
+    //{
+    //    return rate?.Equals(other) != true;
+    //}
 
-    public static bool operator >(Rate? rate, IRate? other)
-    {
-        if (rate is null) return false;
+    //public static bool operator >(Rate? rate, IRate? other)
+    //{
+    //    if (rate is null) return false;
 
-        return rate.CompareTo(other) > 0;
-    }
-    public static bool operator >(IRate? rate, Rate? other)
-    {
-        if (rate is null) return false;
+    //    return rate.CompareTo(other) > 0;
+    //}
+    //public static bool operator >(IRate? rate, Rate? other)
+    //{
+    //    if (rate is null) return false;
 
-        return rate.CompareTo(other) > 0;
-    }
+    //    return rate.CompareTo(other) > 0;
+    //}
 
-    public static bool operator <(Rate? rate, IRate? other)
-    {
-        if (rate is null) return true;
+    //public static bool operator <(Rate? rate, IRate? other)
+    //{
+    //    if (rate is null) return true;
 
-        return rate.CompareTo(other) < 0;
-    }
-    public static bool operator <(IRate? rate, Rate? other)
-    {
-        if (rate is null) return true;
+    //    return rate.CompareTo(other) < 0;
+    //}
+    //public static bool operator <(IRate? rate, Rate? other)
+    //{
+    //    if (rate is null) return true;
 
-        return rate.CompareTo(other) < 0;
-    }
+    //    return rate.CompareTo(other) < 0;
+    //}
 
-    public static bool operator >=(Rate? rate, IRate? other)
-    {
-        if (rate is null) return false;
+    //public static bool operator >=(Rate? rate, IRate? other)
+    //{
+    //    if (rate is null) return false;
 
-        return rate.CompareTo(other) >= 0;
-    }
-    public static bool operator >=(IRate? rate, Rate? other)
-    {
-        if (rate is null) return false;
+    //    return rate.CompareTo(other) >= 0;
+    //}
+    //public static bool operator >=(IRate? rate, Rate? other)
+    //{
+    //    if (rate is null) return false;
 
-        return rate.CompareTo(other) >= 0;
-    }
+    //    return rate.CompareTo(other) >= 0;
+    //}
 
-    public static bool operator <=(Rate? rate, IRate? other)
-    {
-        if (rate is null) return true;
+    //public static bool operator <=(Rate? rate, IRate? other)
+    //{
+    //    if (rate is null) return true;
 
-        return rate.CompareTo(other) <= 0;
-    }
-    public static bool operator <=(IRate? rate, Rate? other)
-    {
-        if (rate is null) return true;
+    //    return rate.CompareTo(other) <= 0;
+    //}
+    //public static bool operator <=(IRate? rate, Rate? other)
+    //{
+    //    if (rate is null) return true;
 
-        return rate.CompareTo(other) <= 0;
-    }
+    //    return rate.CompareTo(other) <= 0;
+    //}
 
-    public static decimal operator /(Rate? rate, IRate? other)
-    {
-        if (rate is null) return 0m;
+    //public static decimal operator /(Rate? rate, IRate? other)
+    //{
+    //    if (rate is null) return 0m;
 
-        return rate.ProportionalTo(other);
-    }
-    public static decimal operator /(IRate? rate, Rate? other)
-    {
-        if (rate is null) return 0m;
+    //    return rate.ProportionalTo(other);
+    //}
+    //public static decimal operator /(IRate? rate, Rate? other)
+    //{
+    //    if (rate is null) return 0m;
 
-        return rate.ProportionalTo(other);
-    }
-    #endregion
+    //    return rate.ProportionalTo(other);
+    //}
+    //#endregion
 }

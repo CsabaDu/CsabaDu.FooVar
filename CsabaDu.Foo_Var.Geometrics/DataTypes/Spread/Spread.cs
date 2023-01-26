@@ -1,10 +1,19 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
+﻿using CsabaDu.Foo_Var.Geometrics.Factories;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Spread;
 
 internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U : struct, Enum
 {
+    //public ISpreadFactory BodyFactory { get; init; }
+
+    //private protected Spread()
+    //{
+    //    BodyFactory = new BodyFactory();
+    //}
+
     public int CompareTo(ISpread<T, U>? other)
     {
         if (other == null) return 1;

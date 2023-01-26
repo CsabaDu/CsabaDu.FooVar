@@ -2,39 +2,39 @@
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
 
 internal abstract class GeometricBody : Shape, IGeometricBody
 {
-    private readonly IBody _body;
+    private IBody Body => BodyFactory.GetBody(this);
 
     public IExtent Height { get; init; }
     public abstract IVolume Volume { get; init; }
+    public IBodyFactory BodyFactory { get; init; }
 
     private protected GeometricBody(IExtent height, ShapeTrait shapeTraits) : base(shapeTraits)
     {
         ValidateShapeExtent(height);
 
         Height = height;
-
-        _body = new SpreadFactory().GetBody(this);
+        BodyFactory = new SpreadFactory();
     }
 
     private protected GeometricBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         Height = shapeExtentList.Last();
-
-        _body = new SpreadFactory().GetBody(this);
+        BodyFactory = new SpreadFactory();
     }
 
-    public int CompareTo(ISpread<IVolume, VolumeUnit>? other) => _body.CompareTo(other);
+    public int CompareTo(ISpread<IVolume, VolumeUnit>? other) => Body.CompareTo(other);
 
-    public bool Equals(ISpread<IVolume, VolumeUnit>? other) => _body.Equals(other);
+    public bool Equals(ISpread<IVolume, VolumeUnit>? other) => Body.Equals(other);
 
-    public ISpread<IVolume, VolumeUnit>? ExchangeTo(VolumeUnit volumeUnit) => _body.ExchangeTo(volumeUnit);
+    public ISpread<IVolume, VolumeUnit>? ExchangeTo(VolumeUnit volumeUnit) => Body.ExchangeTo(volumeUnit);
 
-    public bool? FitsIn(ISpread<IVolume, VolumeUnit>? other = null, LimitType? limitType = null) => _body.FitsIn(other, limitType);
+    public bool? FitsIn(ISpread<IVolume, VolumeUnit>? other = null, LimitType? limitType = null) => Body.FitsIn(other, limitType);
 
     public IPlaneShape GetBaseShape(ExtentUnit extentUnit)
     {
@@ -56,15 +56,15 @@ internal abstract class GeometricBody : Shape, IGeometricBody
         return ShapeFactory.GetPlaneShape(shapeExtents);
     }
 
-    public IBody GetBody(VolumeUnit? volumeUnit = null) => _body.GetBody(volumeUnit);
+    public IBody GetBody(VolumeUnit? volumeUnit = null) => Body.GetBody(volumeUnit);
 
-    public IBody GetBody(IVolume volume) => _body.GetBody(volume);
+    public IBody GetBody(IVolume volume) => Body.GetBody(volume);
 
-    public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => _body.GetBody(spread);
+    public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => Body.GetBody(spread);
 
-    public IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => _body.GetBody(shapeExtentList, shapeTraits);
+    public IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => Body.GetBody(shapeExtentList, shapeTraits);
 
-    public IBody GetBody(IShape shape) => _body.GetBody(shape);
+    public IBody GetBody(IShape shape) => Body.GetBody(shape);
 
     public IGeometricBody GetGeometricBody(params IExtent[] shapeExtents)
     {
@@ -100,17 +100,17 @@ internal abstract class GeometricBody : Shape, IGeometricBody
 
     public ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
 
-    public IVolume GetSpreadMeasure(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits, VolumeUnit? spreadMeasureUnit = null) => _body.GetSpreadMeasure(shapeExtentList, shapeTraits, spreadMeasureUnit);
+    public IVolume GetSpreadMeasure(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits, VolumeUnit? spreadMeasureUnit = null) => Body.GetSpreadMeasure(shapeExtentList, shapeTraits, spreadMeasureUnit);
 
-    public IVolume GetSpreadMeasure(VolumeUnit? spreadMeasureUnit = null) => _body.GetSpreadMeasure(spreadMeasureUnit);
+    public IVolume GetSpreadMeasure(VolumeUnit? spreadMeasureUnit = null) => Body.GetSpreadMeasure(spreadMeasureUnit);
 
-    public bool IsExchangeableTo(VolumeUnit volumeUnit) => _body.IsExchangeableTo(volumeUnit);
+    public bool IsExchangeableTo(VolumeUnit volumeUnit) => Body.IsExchangeableTo(volumeUnit);
 
-    public decimal ProportionalTo(ISpread<IVolume, VolumeUnit>? other) => _body.ProportionalTo(other);
+    public decimal ProportionalTo(ISpread<IVolume, VolumeUnit>? other) => Body.ProportionalTo(other);
 
-    public bool TryExchangeTo(VolumeUnit volumeUnit, [NotNullWhen(true)] out ISpread<IVolume, VolumeUnit>? exchanged) => _body.TryExchangeTo(volumeUnit, out exchanged);
+    public bool TryExchangeTo(VolumeUnit volumeUnit, [NotNullWhen(true)] out ISpread<IVolume, VolumeUnit>? exchanged) => Body.TryExchangeTo(volumeUnit, out exchanged);
 
-    public void ValidateSpreadMeasure(IVolume volume) => _body.ValidateSpreadMeasure(volume);
+    public void ValidateSpreadMeasure(IVolume volume) => Body.ValidateSpreadMeasure(volume);
 
     public abstract IPlaneShape GetProjection(ShapeExtentType shapeExtentType);
 }

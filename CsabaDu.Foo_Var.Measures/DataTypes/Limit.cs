@@ -95,23 +95,23 @@ internal sealed class Limit : BaseMeasure, ILimit
     }
     #endregion
 
-    #region Static operators
-    public static bool operator ==(Limit limit, ILimit other)
-    {
-        return limit?.Equals(limit, other) == true;
-    }
-    public static bool operator ==(ILimit limit, Limit other)
-    {
-        return limit?.Equals(limit, other) == true;
-    }
+    //#region Static operators
+    //public static bool operator ==(Limit limit, ILimit other)
+    //{
+    //    return limit?.Equals(limit, other) == true;
+    //}
+    //public static bool operator ==(ILimit limit, Limit other)
+    //{
+    //    return limit?.Equals(limit, other) == true;
+    //}
 
-    public static bool operator !=(Limit limit, ILimit other)
-    {
-        return limit?.Equals(limit, other) != true;
-    }
-    public static bool operator !=(ILimit limit, Limit other)
-    {
-        return limit?.Equals(limit, other) != true;
-    }
-    #endregion
+    //public static bool operator !=(Limit limit, ILimit other)
+    //{
+    //    return limit?.Equals(limit, other) != true;
+    //}
+    //public static bool operator !=(ILimit limit, Limit other)
+    //{
+    //    return limit?.Equals(limit, other) != true;
+    //}
+    //#endregion
 }

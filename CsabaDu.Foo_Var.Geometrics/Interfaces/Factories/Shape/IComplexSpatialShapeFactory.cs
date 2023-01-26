@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes
+namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape
 {
-    internal interface IExoticShapedBody : IBody
+    public interface IComplexSpatialShapeFactory
     {
-
     }
 }
