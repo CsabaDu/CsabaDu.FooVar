@@ -13,7 +13,17 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
         IWeight Weight { get; init; }
         IBody Body {get; init;}
 
+        IBulkBody GetBulkBody();
         IBulk GetBulk();
+        IBulk GetBulk(IWeight weight, IVolume volume);
+    }
+
+    public interface IDry<out T> : IBulk where T : IGeometricBody
+    {
+        IGeometricBody GetGeometricBody();
+        IDry<T> GetDry();
+        IDry<T> GetDry(IWeight weight, IEnumerable<IExtent> shapeExtentList);
+        T GetShape();
     }
 
     public interface IPallet
@@ -33,13 +43,7 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
 
     }
 
-    public interface IDry : IBulk
-    {
-        IGeometricBody GetGeometricBody();
-        IDry GetDry();
-    }
-
-    public interface ICargoContainer<T> : IDry where T : IGeometricBody
+    public interface ICargoContainer<T> : IDry<T> where T : IGeometricBody
     {
         T ContainerShape { get; init; }
         IDry? DryCapacity { get; init; }
@@ -58,13 +62,12 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
     public interface IGoods : ICommodity
     {
         IMeasure GoodsMeasure { get; init; }
-
         IGoods GetGoods();
     }
 
     public interface ICargoItem : IBulk, IGoods
     {
-        IBulkBody GetBulkBody();
+        //IBulkBody GetBulkBody();
         ICargoItem GetCargoItem();
     }
 
@@ -78,13 +81,13 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
         IDry? ContentSize { get; init; }
     }
 
-    public interface IDryCargoItem<T> : IContentSize, ICargoItem, IDry where T : class, IGeometricBody
+    public interface IDryCargoItem<T> : IContentSize, ICargoItem, IDry<T> where T : class, IGeometricBody
     {
         ICargoContainer<T> Packing { get; init; }
         IPieceCount CargoItemPieceCount { get; init; }
 
         IDryCargoItem<T> GetDryCargoItem();
-        IWeight GetGrossWeight();
+        IWeight GetNetWeight();
     }
 
     public interface IBox : ICargoContainer<ICuboid>, IFit<ICargoDoor>
