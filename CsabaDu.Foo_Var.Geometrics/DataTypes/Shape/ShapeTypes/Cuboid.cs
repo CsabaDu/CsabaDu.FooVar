@@ -72,7 +72,7 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-        return GetCuboid(geometricBody.GetBaseShape(), geometricBody.Height);
+        return GetCuboid(geometricBody.GetBaseShape(), geometricBody.GetHeight());
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)

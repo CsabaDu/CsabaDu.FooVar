@@ -10,21 +10,16 @@ internal abstract class GeometricBody : Shape, IGeometricBody
 {
     private IBody Body => BodyFactory.GetBody(this);
 
-    public IExtent Height { get; init; }
     public abstract IVolume Volume { get; init; }
     public IBodyFactory BodyFactory { get; init; }
 
-    private protected GeometricBody(IExtent height, ShapeTrait shapeTraits) : base(shapeTraits)
+    private protected GeometricBody(ShapeTrait shapeTraits) : base(shapeTraits)
     {
-        ValidateShapeExtent(height);
-
-        Height = height;
         BodyFactory = new SpreadFactory();
     }
 
     private protected GeometricBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
-        Height = shapeExtentList.Last();
         BodyFactory = new SpreadFactory();
     }
 
@@ -112,5 +107,6 @@ internal abstract class GeometricBody : Shape, IGeometricBody
 
     public void ValidateSpreadMeasure(IVolume volume) => Body.ValidateSpreadMeasure(volume);
 
+    public abstract IExtent GetHeight();
     public abstract IPlaneShape GetProjection(ShapeExtentType shapeExtentType);
 }

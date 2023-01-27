@@ -80,7 +80,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
     {
         Enum measureUnit = spreadMeasureUnit ?? (Enum)AreaUnit.meterSquare;
 
-        if (shapeTraits.HasFlag(ShapeTrait.Round)) return (T)GetCircleArea(firstShapeExtent, (AreaUnit)measureUnit);
+        if (shapeTraits.HasFlag(ShapeTrait.Circular)) return (T)GetCircleArea(firstShapeExtent, (AreaUnit)measureUnit);
 
         return (T)GetRectangleArea(firstShapeExtent, lastShapeExtent, (AreaUnit)measureUnit);
     }
@@ -89,7 +89,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
     {
         Enum measureUnit = spreadMeasureUnit ?? (Enum)VolumeUnit.meterCubic;
 
-        if (shapeTraits.HasFlag(ShapeTrait.Round)) return (T)GetCylinderVolume(firstShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
+        if (shapeTraits.HasFlag(ShapeTrait.Circular)) return (T)GetCylinderVolume(firstShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
 
         return (T)GetCuboidVolume(firstShapeExtent, secondShapeExtent, lastShapeExtent, (VolumeUnit)measureUnit);
     }

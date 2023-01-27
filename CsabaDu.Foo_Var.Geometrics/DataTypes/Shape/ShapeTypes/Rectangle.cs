@@ -78,7 +78,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
 
-        return planeShape.ShapeTraits.HasFlag(ShapeTrait.Round) ?
+        return planeShape.ShapeTraits.HasFlag(ShapeTrait.Circular) ?
             (IRectangle)planeShape.GetTangentShape()
             : (IRectangle)planeShape.GetPlaneShape();
     }

@@ -7,7 +7,7 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
 
 internal sealed class Circle : PlaneShape, ICircle
 {
-    public Circle(IExtent radius) : base(ShapeTrait.Plane | ShapeTrait.Round)
+    public Circle(IExtent radius) : base(ShapeTrait.Plane | ShapeTrait.Circular)
     {
         ValidateShapeExtent(radius);
 
@@ -15,7 +15,7 @@ internal sealed class Circle : PlaneShape, ICircle
         Area = GetCircleArea(radius);
     }
 
-    public Circle(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Plane | ShapeTrait.Round)
+    public Circle(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Plane | ShapeTrait.Circular)
     {
         IExtent radius = shapeExtentList.First();
 
@@ -46,7 +46,7 @@ internal sealed class Circle : PlaneShape, ICircle
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
 
-        return planeShape.ShapeTraits.HasFlag(ShapeTrait.Round) ?
+        return planeShape.ShapeTraits.HasFlag(ShapeTrait.Circular) ?
             (ICircle)planeShape.GetPlaneShape()
             : (ICircle)planeShape.GetTangentShape();
     }

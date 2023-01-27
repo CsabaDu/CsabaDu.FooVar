@@ -1,11 +1,22 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
+﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
 namespace CsabaDu.Foo_Var.Geometrics.Statics;
 
 public static class ValidateGeometrics
 {
-    private static ShapeTrait AllShapeTraits => ShapeTrait.Plane | ShapeTrait.Round;
+    private static readonly ShapeTrait AllShapeTraits = ShapeTrait.Plane | ShapeTrait.Circular;
+    internal static readonly int CuboidShapeExtentCount = ShapeTrait.None.GetShapeExtentCount();
+
+    public static void ValidateInnerShapeExtentList(this IEnumerable<IExtent> innerShapeExtentList)
+    {
+        int count = innerShapeExtentList.Count();
+
+        if (count % CuboidShapeExtentCount != 0) throw new ArgumentOutOfRangeException(nameof(innerShapeExtentList), count, null);
+
+        ValidateShapeExtentListEelements(innerShapeExtentList);
+    }
 
     public static void ValidateShape(this ShapeTrait shapeTraits, IShape shape)
     {
@@ -28,14 +39,14 @@ public static class ValidateGeometrics
 
     public static void ValidateShapeTraitsBySpreadType(this ShapeTrait shapeTraits, Type shapeType)
     {
-        Type[] interfaces = GetShapeTypeInterfaces(shapeTraits, shapeType);
+        Type[] interfaces = shapeTraits.GetShapeTypeInterfaces(shapeType);
 
         ValidateShapeTraitsBySpreadType(shapeTraits, interfaces, shapeType);
     }
 
     public static void ValidateShapeTraitsByEdgeType(this ShapeTrait shapeTraits, Type shapeType)
     {
-        Type[] interfaces = GetShapeTypeInterfaces(shapeTraits, shapeType);
+        Type[] interfaces = shapeTraits.GetShapeTypeInterfaces(shapeType);
 
         ValidateShapeTraitsByEdgeType(shapeTraits, interfaces, shapeType);
     }
@@ -52,7 +63,7 @@ public static class ValidateGeometrics
 
     private static void ValidateShapeTraitsByEdgeType(ShapeTrait shapeTraits, Type[] interfaces, Type shapeType)
     {
-        bool hasCircularShapeFlag = (shapeTraits.HasFlag(ShapeTrait.Round));
+        bool hasCircularShapeFlag = (shapeTraits.HasFlag(ShapeTrait.Circular));
         bool isCircularShape = interfaces.Contains(typeof(ICircularShape));
 
         if (hasCircularShapeFlag && isCircularShape) return;
@@ -73,6 +84,11 @@ public static class ValidateGeometrics
 
         shapeTraits.ValidateShapeExtentCount(count);
 
+        ValidateShapeExtentListEelements(shapeExtentList);
+    }
+
+    private static void ValidateShapeExtentListEelements(IEnumerable<IExtent> shapeExtentList)
+    {
         foreach (IExtent item in shapeExtentList)
         {
             item.ValidateShapeExtent();
@@ -98,12 +114,12 @@ public static class ValidateGeometrics
         if (!extentUnit.IsDefinedMeasureUnit(typeof(ExtentUnit))) throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
     }
 
-    private static Type[] GetShapeTypeInterfaces(ShapeTrait shapeTraits, Type shapeType)
-    {
-        _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
+    //private static Type[] GetShapeTypeInterfaces(ShapeTrait shapeTraits, Type shapeType)
+    //{
+    //    _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
 
-        shapeTraits.ValidateShapeTraits();
+    //    shapeTraits.ValidateShapeTraits();
 
-        return shapeType.GetInterfaces();
-    }
+    //    return shapeType.GetInterfaces();
+    //}
 }

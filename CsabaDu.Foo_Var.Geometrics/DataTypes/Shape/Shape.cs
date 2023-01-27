@@ -104,7 +104,7 @@ internal abstract class Shape : IShape
 
         if (!shapeTraits.Equals(ShapeTrait.None))
         {
-            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Round))
+            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
             {
                 return GetCircleDiagonal(firstShapeExtent, extentUnit);
             }
@@ -114,7 +114,7 @@ internal abstract class Shape : IShape
                 return GetRectangleDiagonal(firstShapeExtent, lastShapeExtent, extentUnit);
             }
 
-            if (shapeTraits.HasFlag(ShapeTrait.Round))
+            if (shapeTraits.HasFlag(ShapeTrait.Circular))
             {
                 return GetCylinderDiagonal(firstShapeExtent, lastShapeExtent, extentUnit);
             }
@@ -164,8 +164,8 @@ internal abstract class Shape : IShape
         return shapeType switch
         {
             ICuboid => ShapeTrait.None,
-            ICircle => ShapeTrait.Plane | ShapeTrait.Round,
-            ICylinder => ShapeTrait.Round,
+            ICircle => ShapeTrait.Plane | ShapeTrait.Circular,
+            ICylinder => ShapeTrait.Circular,
             IRectangle => ShapeTrait.Plane,
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null),

@@ -128,7 +128,7 @@ public class ShapeFactory : IShapeFactory
 
         if (!shapeTraits.Equals(ShapeTrait.None))
         {
-            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Round))
+            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
             {
                 return new Circle(shapeExtentList);
             }
@@ -138,7 +138,7 @@ public class ShapeFactory : IShapeFactory
                 return new Rectangle(shapeExtentList);
             }
 
-            if (shapeTraits.HasFlag(ShapeTrait.Round))
+            if (shapeTraits.HasFlag(ShapeTrait.Circular))
             {
                 return new Cylinder(shapeExtentList);
             }

@@ -12,7 +12,7 @@ public static class ShapeTraits
     {
         None = 0,
         Plane = 1,
-        Round = 2,
+        Circular = 2,
     }
 
     public enum ShapeExtentType : byte { Radius, Length, Width, Height }
@@ -22,8 +22,8 @@ public static class ShapeTraits
         {
             { 0, GetShapeExtentTypeSet(ShapeTrait.None) },
             { (ShapeTrait)1, GetShapeExtentTypeSet(ShapeTrait.Plane) },
-            { (ShapeTrait)2, GetShapeExtentTypeSet(ShapeTrait.Round) },
-            { (ShapeTrait)3, GetShapeExtentTypeSet(ShapeTrait.Plane | ShapeTrait.Round) },
+            { (ShapeTrait)2, GetShapeExtentTypeSet(ShapeTrait.Circular) },
+            { (ShapeTrait)3, GetShapeExtentTypeSet(ShapeTrait.Plane | ShapeTrait.Circular) },
         };
 
     public static ImmutableSortedSet<ShapeExtentType> GetShapeExtentTypeSet(ShapeTrait shapeTraits = ShapeTrait.None)
@@ -32,7 +32,7 @@ public static class ShapeTraits
 
         ISet<ShapeExtentType> shapeExtentTypeSet = ImmutableSortedSet<ShapeExtentType>.Empty;
 
-        if (shapeTraits.HasFlag(ShapeTrait.Round))
+        if (shapeTraits.HasFlag(ShapeTrait.Circular))
         {
             shapeExtentTypeSet.Add(ShapeExtentType.Radius);
         }
@@ -107,11 +107,11 @@ public static class ShapeTraits
     {
         if (shapeTraits.Equals(ShapeTrait.None)) return typeof(ICuboid);
 
-        if (shapeTraits.HasFlag(ShapeTrait.Plane) && shapeTraits.HasFlag(ShapeTrait.Round)) return typeof(ICylinder);
+        if (shapeTraits.HasFlag(ShapeTrait.Plane) && shapeTraits.HasFlag(ShapeTrait.Circular)) return typeof(ICylinder);
 
         if (shapeTraits.HasFlag(ShapeTrait.Plane)) return typeof(IRectangle);
 
-        if (shapeTraits.HasFlag(ShapeTrait.Round)) return typeof(ICircle);
+        if (shapeTraits.HasFlag(ShapeTrait.Circular)) return typeof(ICircle);
 
         return typeof(IShape);
     }
@@ -124,8 +124,8 @@ public static class ShapeTraits
         {
             ICuboid => ShapeTrait.None,
             IRectangle => ShapeTrait.Plane,
-            ICylinder => ShapeTrait.Round,
-            ICircle => ShapeTrait.Plane | ShapeTrait.Round,
+            ICylinder => ShapeTrait.Circular,
+            ICircle => ShapeTrait.Plane | ShapeTrait.Circular,
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null),
         };
@@ -137,8 +137,17 @@ public static class ShapeTraits
 
         if (!shapeTraits.HasFlag(ShapeTrait.Plane)) return 2;  // Cylinder
 
-        if (shapeTraits.HasFlag(ShapeTrait.Round)) return 1; // Circle
+        if (shapeTraits.HasFlag(ShapeTrait.Circular)) return 1; // Circle
 
         return 2; // Rectangle
+    }
+
+    internal static Type[] GetShapeTypeInterfaces(this ShapeTrait shapeTraits, Type shapeType)
+    {
+        _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
+
+        shapeTraits.ValidateShapeTraits();
+
+        return shapeType.GetInterfaces();
     }
 }

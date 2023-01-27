@@ -3,74 +3,135 @@ using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes
+namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
+
+internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
 {
-    internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
+    public ComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions) : base(ShapeTrait.None)
     {
-        public ComplexSpatialShape(IExtent height) : base(height, ShapeTrait.None)
-        {
-        }
+        ValidateCuboids(innerTangentCuboids, dimensions);
 
-        public ComplexSpatialShape(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.None)
-        {
-        }
+        Dimensions = dimensions ?? GetDimensions(innerTangentCuboids);
+        InnerTangentCuboids = innerTangentCuboids;
+        Volume = Dimensions.Volume;
+    }
 
-        public override IVolume Volume { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
-        public IEnumerable<ICuboid> InnerTangentCuboids { get => throw new NotImplementedException(); init => throw new NotImplementedException(); }
+    public ComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList) : base(outerShapeExtentList ?? GetEnclosingShapeExtentList(innerShapeExtentList), ShapeTrait.None)
+    {
+        ValidateShapeExtentLists(innerShapeExtentList);
+        outerShapeExtentList ??= GetEnclosingShapeExtentList(innerShapeExtentList);
 
-        public IComplexSpatialShape GetComplexSpatialShape(params IExtent[] shapeExtents)
-        {
-            throw new NotImplementedException();
-        }
+        Dimensions = GetDimensions(outerShapeExtentList);
+        InnerTangentCuboids = GetInnerTangentCuboids(innerShapeExtentList);
+        Volume = Dimensions.Volume;
+    }
 
-        public IComplexSpatialShape GetComplexSpatialShape(ExtentUnit extentUnit)
-        {
-            throw new NotImplementedException();
-        }
+    public override IVolume Volume { get; init; }
+    public IEnumerable<ICuboid> InnerTangentCuboids { get; init; }
+    public ICuboid Dimensions { get; init; }
 
-        public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null)
-        {
-            throw new NotImplementedException();
-        }
+    private static IEnumerable<ICuboid> GetInnerTangentCuboids(IEnumerable<IExtent> innerShapeExtentList)
+    {
+        throw new NotImplementedException();
+    }
 
-        public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? shapeExtentList = null)
-        {
-            throw new NotImplementedException();
-        }
+    public IComplexSpatialShape GetComplexSpatialShape(params IExtent[] shapeExtents)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
-        {
-            throw new NotImplementedException();
-        }
+    public IComplexSpatialShape GetComplexSpatialShape(ExtentUnit extentUnit)
+    {
+        throw new NotImplementedException();
+    }
 
-        public IRectangularShape GetDimensions()
-        {
-            throw new NotImplementedException();
-        }
+    public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null)
+    {
+        throw new NotImplementedException();
+    }
 
-        public IEnumerable<IExtent> GetInnerShapeExtentList()
-        {
-            throw new NotImplementedException();
-        }
+    public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? shapeExtentList = null)
+    {
+        throw new NotImplementedException();
+    }
 
-        public ICuboid GetInnerTangentCuboid(Comparison comparison)
-        {
-            throw new NotImplementedException();
-        }
+    public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
+    {
+        return Dimensions.GetDiagonal();
+    }
 
-        public override IPlaneShape GetProjection(ShapeExtentType shapeExtentType)
-        {
-            throw new NotImplementedException();
-        }
+    public IRectangularShape GetDimensions() => Dimensions;
 
-        public override IReadOnlyList<IExtent> GetShapeExtentList()
-        {
-            throw new NotImplementedException();
-        }
+    private ICuboid GetDimensions(IEnumerable<ICuboid> innerTangentCuboids)
+    {
+        IEnumerable<IExtent> innerShapeExtentList = innerTangentCuboids.GetInnerShapeExtentList();
 
-        public override IShape GetTangentShape(Side shapeSide = Side.Outer)
+        return GetDimensions(innerShapeExtentList);
+    }
+
+    private ICuboid GetDimensions(IEnumerable<IExtent> innerShapeExtentList)
+    {
+        IEnumerable<IExtent> enclosigShapeExtentList = GetEnclosingShapeExtentList(innerShapeExtentList);
+
+        return (ICuboid)ShapeFactory.GetRectangularShape(enclosigShapeExtentList.ToArray());
+    }
+
+    public override IExtent GetHeight()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<IExtent> GetInnerShapeExtentList()
+    {
+        return InnerTangentCuboids.GetInnerShapeExtentList();
+    }
+
+    public int GetInnerTangentCuboidsCount() => InnerTangentCuboids.Count();
+
+    public override IPlaneShape GetProjection(ShapeExtentType shapeExtentType)
+    {
+        return Dimensions.GetProjection(shapeExtentType);
+    }
+
+    public override IReadOnlyList<IExtent> GetShapeExtentList()
+    {
+        return Dimensions.GetShapeExtentList();
+    }
+
+    public override IShape GetTangentShape(Side shapeSide = Side.Outer)
+    {
+        return Dimensions.GetTangentShape(shapeSide);
+    }
+
+    public void ValidateShapeExtentLists(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
+    {
+        IEnumerable<IExtent> enclosingShapeExtentList = GetEnclosingShapeExtentList(innerShapeExtentList);
+
+        outerShapeExtentList ??= enclosingShapeExtentList;
+
+        ValidateShapeExtentList(outerShapeExtentList, ShapeTraits);
+
+        for (int i = 0; i < ShapeExtentTypeCount; i++)
         {
-            throw new NotImplementedException();
+            IExtent outerShapeExtent = outerShapeExtentList.ElementAt(i);
+            IExtent enclosingShapeExtent = enclosingShapeExtentList.ElementAt(i);
+
+            bool? fitsIn = enclosingShapeExtent.FitsIn(outerShapeExtent, LimitType.BeNotGreater);
+
+            if (fitsIn != true) throw new ArgumentOutOfRangeException(nameof(outerShapeExtentList));
         }
+    }
+
+    public void ValidateCuboids(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null)
+    {
+        int count = innerTangentCuboids?.Count() ?? throw new ArgumentNullException(nameof(innerTangentCuboids));
+
+        if (count == 0) throw new ArgumentOutOfRangeException(nameof(innerTangentCuboids), count, null);
+
+        IEnumerable<IExtent> innerShapeExtentist = innerTangentCuboids.GetInnerShapeExtentList();
+
+        IEnumerable<IExtent>? outerShapeExtentList = dimensions?.GetShapeExtentList();
+
+        ValidateShapeExtentLists(innerShapeExtentist, outerShapeExtentList);
     }
 }
