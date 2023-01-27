@@ -113,23 +113,23 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     }
     #endregion
 
-    #region Static operators
-    public static bool operator ==(LimitedRate? limitedRate, ILimitedRate? other)
-    {
-        return limitedRate?.Equals(limitedRate, other) == true;
-    }
-    public static bool operator ==(ILimitedRate? limitedRate, LimitedRate? other)
-    {
-        return limitedRate?.Equals(limitedRate, other) == true;
-    }
+    //#region Static operators
+    //public static bool operator ==(LimitedRate? limitedRate, ILimitedRate? other)
+    //{
+    //    return limitedRate?.Equals(limitedRate, other) == true;
+    //}
+    //public static bool operator ==(ILimitedRate? limitedRate, LimitedRate? other)
+    //{
+    //    return limitedRate?.Equals(limitedRate, other) == true;
+    //}
 
-    public static bool operator !=(LimitedRate? limitedRate, ILimitedRate? other)
-    {
-        return limitedRate?.Equals(limitedRate, other) != true;
-    }
-    public static bool operator !=(ILimitedRate? limitedRate, LimitedRate? other)
-    {
-        return limitedRate?.Equals(limitedRate, other) != true;
-    }
-    #endregion
+    //public static bool operator !=(LimitedRate? limitedRate, ILimitedRate? other)
+    //{
+    //    return limitedRate?.Equals(limitedRate, other) != true;
+    //}
+    //public static bool operator !=(ILimitedRate? limitedRate, LimitedRate? other)
+    //{
+    //    return limitedRate?.Equals(limitedRate, other) != true;
+    //}
+    //#endregion
 }

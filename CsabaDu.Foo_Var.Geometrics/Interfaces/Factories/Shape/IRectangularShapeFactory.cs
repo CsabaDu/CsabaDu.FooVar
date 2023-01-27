@@ -4,5 +4,5 @@ namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
 
 public interface IRectangularShapeFactory : ICuboidFactory, IRectangleFactory
 {
-    IRectangularShape GetSraightShape(params IExtent[] shapeExtents);
+    IRectangularShape GetRectangularShape(params IExtent[] shapeExtents);
 }

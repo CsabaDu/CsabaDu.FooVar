@@ -12,7 +12,6 @@ internal sealed class Measurement : Measurable, IMeasurement
     public Type MeasureUnitType { get; init; }
 
     public IMeasurementFactory MeasurementFactory { get; init; }
-
     #endregion
 
     #region Constructors
@@ -93,88 +92,88 @@ internal sealed class Measurement : Measurable, IMeasurement
     }
     #endregion
 
-    #region Static operators
-    public static bool operator ==(Measurement? measurement, IMeasurement? other)
-    {
-        return measurement?.Equals(other) == true;
-    }
-    public static bool operator ==(IMeasurement? measurement, Measurement? other)
-    {
-        return measurement?.Equals(other) == true;
-    }
+    //#region Static operators
+    //public static bool operator ==(Measurement? measurement, IMeasurement? other)
+    //{
+    //    return measurement?.Equals(other) == true;
+    //}
+    //public static bool operator ==(IMeasurement? measurement, Measurement? other)
+    //{
+    //    return measurement?.Equals(other) == true;
+    //}
 
-    public static bool operator !=(Measurement? measurement, IMeasurement? other)
-    {
-        return measurement?.Equals(other) != true;
-    }
-    public static bool operator !=(IMeasurement? measurement, Measurement? other)
-    {
-        return measurement?.Equals(other) != true;
-    }
+    //public static bool operator !=(Measurement? measurement, IMeasurement? other)
+    //{
+    //    return measurement?.Equals(other) != true;
+    //}
+    //public static bool operator !=(IMeasurement? measurement, Measurement? other)
+    //{
+    //    return measurement?.Equals(other) != true;
+    //}
 
-    public static bool operator >(Measurement? measurement, IMeasurement? other)
-    {
-        if (measurement is null) return false;
+    //public static bool operator >(Measurement? measurement, IMeasurement? other)
+    //{
+    //    if (measurement is null) return false;
 
-        return measurement.CompareTo(other) > 0;
-    }
-    public static bool operator >(IMeasurement? measurement, Measurement? other)
-    {
-        if (measurement is null) return false;
+    //    return measurement.CompareTo(other) > 0;
+    //}
+    //public static bool operator >(IMeasurement? measurement, Measurement? other)
+    //{
+    //    if (measurement is null) return false;
 
-        return measurement.CompareTo(other) > 0;
-    }
+    //    return measurement.CompareTo(other) > 0;
+    //}
 
-    public static bool operator <(Measurement? measurement, IMeasurement? other)
-    {
-        if (measurement is null) return true;
+    //public static bool operator <(Measurement? measurement, IMeasurement? other)
+    //{
+    //    if (measurement is null) return true;
 
-        return measurement.CompareTo(other) < 0;
-    }
-    public static bool operator <(IMeasurement? measurement, Measurement? other)
-    {
-        if (measurement is null) return true;
+    //    return measurement.CompareTo(other) < 0;
+    //}
+    //public static bool operator <(IMeasurement? measurement, Measurement? other)
+    //{
+    //    if (measurement is null) return true;
 
-        return measurement.CompareTo(other) < 0;
-    }
+    //    return measurement.CompareTo(other) < 0;
+    //}
 
-    public static bool operator >=(Measurement? measurement, IMeasurement? other)
-    {
-        if (measurement is null) return false;
+    //public static bool operator >=(Measurement? measurement, IMeasurement? other)
+    //{
+    //    if (measurement is null) return false;
 
-        return measurement.CompareTo(other) >= 0;
-    }
-    public static bool operator >=(IMeasurement? measurement, Measurement? other)
-    {
-        if (measurement is null) return false;
+    //    return measurement.CompareTo(other) >= 0;
+    //}
+    //public static bool operator >=(IMeasurement? measurement, Measurement? other)
+    //{
+    //    if (measurement is null) return false;
 
-        return measurement.CompareTo(other) >= 0;
-    }
+    //    return measurement.CompareTo(other) >= 0;
+    //}
 
-    public static bool operator <=(Measurement? measurement, IMeasurement? other)
-    {
-        if (measurement is null) return true;
+    //public static bool operator <=(Measurement? measurement, IMeasurement? other)
+    //{
+    //    if (measurement is null) return true;
 
-        return measurement.CompareTo(other) <= 0;
-    }
-    public static bool operator <=(IMeasurement? measurement, Measurement? other)
-    {
-        if (measurement is null) return true;
+    //    return measurement.CompareTo(other) <= 0;
+    //}
+    //public static bool operator <=(IMeasurement? measurement, Measurement? other)
+    //{
+    //    if (measurement is null) return true;
 
-        return measurement.CompareTo(other) <= 0;
-    }
+    //    return measurement.CompareTo(other) <= 0;
+    //}
 
-    public static decimal operator /(Measurement? measurement, IMeasurement? other)
-    {
-        if (measurement is null) return 0m;
+    //public static decimal operator /(Measurement? measurement, IMeasurement? other)
+    //{
+    //    if (measurement is null) return 0m;
 
-        return measurement.ProportionalTo(other);
-    }
-    public static decimal operator /(IMeasurement? measurement, Measurement? other)
-    {
-        if (measurement is null) return 0m;
+    //    return measurement.ProportionalTo(other);
+    //}
+    //public static decimal operator /(IMeasurement? measurement, Measurement? other)
+    //{
+    //    if (measurement is null) return 0m;
 
-        return measurement.ProportionalTo(other);
-    }
-    #endregion
+    //    return measurement.ProportionalTo(other);
+    //}
+    //#endregion
 }

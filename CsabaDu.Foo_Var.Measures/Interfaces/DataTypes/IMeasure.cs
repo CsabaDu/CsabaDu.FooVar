@@ -5,7 +5,7 @@ namespace CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 
 public interface IMeasure : IBaseMeasure, ISum<IMeasure>, IMultiply<decimal, IMeasure>, IDivide<decimal, IMeasure>, IFit<IBaseMeasure>
 {
-    IMeasureFactory MeasureFactory { get; init; }
+    IMeasureFactory MeasureFactory { get; }
 
     IMeasure GetMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null);
 

@@ -1,8 +1,6 @@
-﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
-using CsabaDu.Foo_Var.Geometrics.Factories;
+﻿using CsabaDu.Foo_Var.Geometrics.Factories;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
-using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
 using System.Collections.Immutable;
 
@@ -13,7 +11,7 @@ internal abstract class Shape : IShape
     public ShapeTrait ShapeTraits { get; init; }
     public ImmutableSortedSet<ShapeExtentType> ShapeExtentTypeSet { get; init; }
     public int ShapeExtentTypeCount { get; init; }
-    public IShapeFactory ShapeFactory { get; init; }
+    public IShapeFactory ShapeFactory => new ShapeFactory();
 
     private protected Shape(ShapeTrait shapeTraits)
     {
@@ -22,7 +20,6 @@ internal abstract class Shape : IShape
         ShapeTraits = shapeTraits;
         ShapeExtentTypeSet = ShapeExtentTypeSetList[shapeTraits];
         ShapeExtentTypeCount = ShapeExtentTypeSet.Count;
-        ShapeFactory = new ShapeFactory();
     }
 
     private protected Shape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : this(shapeTraits)
@@ -107,7 +104,7 @@ internal abstract class Shape : IShape
 
         if (!shapeTraits.Equals(ShapeTrait.None))
         {
-            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Round))
+            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
             {
                 return GetCircleDiagonal(firstShapeExtent, extentUnit);
             }
@@ -117,7 +114,7 @@ internal abstract class Shape : IShape
                 return GetRectangleDiagonal(firstShapeExtent, lastShapeExtent, extentUnit);
             }
 
-            if (shapeTraits.HasFlag(ShapeTrait.Round))
+            if (shapeTraits.HasFlag(ShapeTrait.Circular))
             {
                 return GetCylinderDiagonal(firstShapeExtent, lastShapeExtent, extentUnit);
             }
@@ -167,8 +164,8 @@ internal abstract class Shape : IShape
         return shapeType switch
         {
             ICuboid => ShapeTrait.None,
-            ICircle => ShapeTrait.Plane | ShapeTrait.Round,
-            ICylinder => ShapeTrait.Round,
+            ICircle => ShapeTrait.Plane | ShapeTrait.Circular,
+            ICylinder => ShapeTrait.Circular,
             IRectangle => ShapeTrait.Plane,
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null),
@@ -227,9 +224,9 @@ internal abstract class Shape : IShape
         int baseComparison = shapeExtentList.First().CompareTo(otherShapeExtentList.First());
         int count = ShapeExtentTypeCount;
 
-        if (count == 1) return baseComparison;
+        if (ShapeExtentTypeCount == 1) return baseComparison;
 
-        for (int i = 1; i < count; i++)
+        for (int i = 1; i < ShapeExtentTypeCount; i++)
         {
             IExtent other = otherShapeExtentList.ElementAt(i);
             int recentComparison = shapeExtentList.ElementAt(i).CompareTo(other);

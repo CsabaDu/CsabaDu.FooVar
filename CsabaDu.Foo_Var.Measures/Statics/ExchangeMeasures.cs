@@ -69,7 +69,7 @@ public static class ExchangeMeasures
     {
         if (exchangeRate <= 0) return false;
 
-        return TryAdd(measureUnit, exchangeRate);
+        return TryAddToExchangeRates(measureUnit, exchangeRate);
     }
 
     public static bool TryAddReplaceExchangeRate(this Enum measureUnit, decimal exchangeRate)
@@ -78,11 +78,11 @@ public static class ExchangeMeasures
 
         if (!measureUnit.ShouldHaveAdHocExchangeRate()) return false;
 
-        if (TryAdd(measureUnit, exchangeRate)) return true;
+        if (TryAddToExchangeRates(measureUnit, exchangeRate)) return true;
 
         if (!Rates.Remove(measureUnit)) return false;
 
-        return TryAdd(measureUnit, exchangeRate);
+        return TryAddToExchangeRates(measureUnit, exchangeRate);
     }
 
     public static bool ShouldHaveAdHocExchangeRate(this Enum measureUnit)
@@ -118,7 +118,7 @@ public static class ExchangeMeasures
         return measureUnit != default;
     }
 
-    private static bool TryAdd(Enum measureUnit, decimal exchangeRate)
+    private static bool TryAddToExchangeRates(Enum measureUnit, decimal exchangeRate)
     {
         return measureUnit?.IsDefinedMeasureUnit() == true && Rates.TryAdd(measureUnit, exchangeRate);
     }

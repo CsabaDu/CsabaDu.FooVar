@@ -1,5 +1,4 @@
 ﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
-using CsabaDu.Foo_Var.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
 

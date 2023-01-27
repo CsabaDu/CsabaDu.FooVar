@@ -95,63 +95,63 @@ internal sealed class FlatRate : Rate, IFlatRate
     }
     #endregion
 
-    #region Static operators
-    public static IFlatRate? operator +(FlatRate? flatRate, IFlatRate? other)
-    {
-        if (flatRate is null) return other;
+    //#region Static operators
+    //public static IFlatRate? operator +(FlatRate? flatRate, IFlatRate? other)
+    //{
+    //    if (flatRate is null) return other;
 
-        return flatRate.SumWith(other, SummingMode.Add);
-    }
-    public static IFlatRate? operator +(IFlatRate? flatRate, FlatRate? other)
-    {
-        if (flatRate is null) return other;
+    //    return flatRate.SumWith(other, SummingMode.Add);
+    //}
+    //public static IFlatRate? operator +(IFlatRate? flatRate, FlatRate? other)
+    //{
+    //    if (flatRate is null) return other;
 
-        return flatRate.SumWith(other, SummingMode.Add);
-    }
+    //    return flatRate.SumWith(other, SummingMode.Add);
+    //}
 
-    public static IFlatRate? operator -(FlatRate? flatRate, IFlatRate? other)
-    {
-        if (flatRate is null) return other!.GetFlatRate(other.MultipliedBy(-1), other.Denominator);
+    //public static IFlatRate? operator -(FlatRate? flatRate, IFlatRate? other)
+    //{
+    //    if (flatRate is null) return other!.GetFlatRate(other.MultipliedBy(-1), other.Denominator);
 
-        return flatRate.SumWith(other, SummingMode.Subtract);
-    }
-    public static IFlatRate? operator -(IFlatRate? flatRate, FlatRate? other)
-    {
-        if (flatRate is null) return other!.GetFlatRate(other.MultipliedBy(-1), other.Denominator);
+    //    return flatRate.SumWith(other, SummingMode.Subtract);
+    //}
+    //public static IFlatRate? operator -(IFlatRate? flatRate, FlatRate? other)
+    //{
+    //    if (flatRate is null) return other!.GetFlatRate(other.MultipliedBy(-1), other.Denominator);
 
-        return flatRate.SumWith(other, SummingMode.Subtract);
-    }
+    //    return flatRate.SumWith(other, SummingMode.Subtract);
+    //}
 
-    public static IFlatRate? operator *(FlatRate? flatRate, ValueType? quantity)
-    {
-        if (flatRate is null) return null;
+    //public static IFlatRate? operator *(FlatRate? flatRate, ValueType? quantity)
+    //{
+    //    if (flatRate is null) return null;
 
-        decimal decimalMultiplier = GetValidDecimalOperand(quantity);
+    //    decimal decimalMultiplier = GetValidDecimalOperand(quantity);
 
-        IMeasure multipliedNumerator = flatRate.MultipliedBy(decimalMultiplier);
+    //    IMeasure multipliedNumerator = flatRate.MultipliedBy(decimalMultiplier);
 
-        return flatRate.GetFlatRate(multipliedNumerator, flatRate.Denominator);
-    }
-    public static IFlatRate? operator *(ValueType? quantity, FlatRate? flatRate)
-    {
-        if (flatRate is null) return null;
+    //    return flatRate.GetFlatRate(multipliedNumerator, flatRate.Denominator);
+    //}
+    //public static IFlatRate? operator *(ValueType? quantity, FlatRate? flatRate)
+    //{
+    //    if (flatRate is null) return null;
 
-        decimal decimalMultiplier = GetValidDecimalOperand(quantity);
+    //    decimal decimalMultiplier = GetValidDecimalOperand(quantity);
 
-        IMeasure multipliedNumerator = flatRate.MultipliedBy(decimalMultiplier);
+    //    IMeasure multipliedNumerator = flatRate.MultipliedBy(decimalMultiplier);
 
-        return flatRate.GetFlatRate(multipliedNumerator, flatRate.Denominator);
-    }
+    //    return flatRate.GetFlatRate(multipliedNumerator, flatRate.Denominator);
+    //}
 
-    public static IFlatRate? operator /(FlatRate? flatRate, ValueType? quantity)
-    {
-        if (flatRate is null) return null;
+    //public static IFlatRate? operator /(FlatRate? flatRate, ValueType? quantity)
+    //{
+    //    if (flatRate is null) return null;
 
-        decimal decimalDivisor = GetValidDecimalOperand(quantity);
+    //    decimal decimalDivisor = GetValidDecimalOperand(quantity);
 
-        IMeasure dividedNumerator = flatRate.DividedBy(decimalDivisor);
+    //    IMeasure dividedNumerator = flatRate.DividedBy(decimalDivisor);
 
-        return flatRate.GetFlatRate(dividedNumerator, flatRate.Denominator);
-    }
-    #endregion
+    //    return flatRate.GetFlatRate(dividedNumerator, flatRate.Denominator);
+    //}
+    //#endregion
 }

@@ -6,25 +6,16 @@ namespace CsabaDu.Foo_Var.Measures.DataTypes;
 
 internal abstract class Measure : BaseMeasure, IMeasure
 {
-    #region Fields
-    public IMeasureFactory MeasureFactory { get; init; }
+    #region Properties
+    public IMeasureFactory MeasureFactory => new MeasureFactory();
     #endregion
 
     #region Constructors
-    private protected Measure(ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
-    {
-        MeasureFactory = new MeasureFactory();
-    }
+    private protected Measure(ValueType quantity, IMeasurement measurement) : base(quantity, measurement) { }
 
-    private protected Measure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate)
-    {
-        MeasureFactory = new MeasureFactory();
-    }
+    private protected Measure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate) { }
 
-    private protected Measure(IBaseMeasure other) : base(other)
-    {
-        MeasureFactory = new MeasureFactory();
-    }
+    private protected Measure(IBaseMeasure other) : base(other) { }
     #endregion
 
     #region Public methods
@@ -155,57 +146,57 @@ internal abstract class Measure : BaseMeasure, IMeasure
     public abstract IMeasure GetMeasure(IBaseMeasure? other = null);
     #endregion
 
-    #region Static operators
-    public static IMeasure? operator +(Measure? measure, IMeasure? other)
-    {
-        if (measure is null) return other;
+    //#region Static operators
+    //public static IMeasure? operator +(Measure? measure, IMeasure? other)
+    //{
+    //    if (measure is null) return other;
 
-        return measure.SumWith(other, SummingMode.Add);
-    }
-    public static IMeasure? operator +(IMeasure? measure, Measure? other)
-    {
-        if (measure is null) return other;
+    //    return measure.SumWith(other, SummingMode.Add);
+    //}
+    //public static IMeasure? operator +(IMeasure? measure, Measure? other)
+    //{
+    //    if (measure is null) return other;
 
-        return measure.SumWith(other, SummingMode.Add);
-    }
+    //    return measure.SumWith(other, SummingMode.Add);
+    //}
 
-    public static IMeasure? operator -(Measure? measure, IMeasure? other)
-    {
-        if (measure is null) return other!.MultipliedBy(-1);
+    //public static IMeasure? operator -(Measure? measure, IMeasure? other)
+    //{
+    //    if (measure is null) return other!.MultipliedBy(-1);
 
-        return measure.SumWith(other, SummingMode.Subtract);
-    }
-    public static IMeasure? operator -(IMeasure? measure, Measure? other)
-    {
-        if (measure is null) return other!.MultipliedBy(-1);
+    //    return measure.SumWith(other, SummingMode.Subtract);
+    //}
+    //public static IMeasure? operator -(IMeasure? measure, Measure? other)
+    //{
+    //    if (measure is null) return other!.MultipliedBy(-1);
 
-        return measure.SumWith(other, SummingMode.Subtract);
-    }
+    //    return measure.SumWith(other, SummingMode.Subtract);
+    //}
 
-    public static IMeasure? operator *(Measure? measure, ValueType? quantity)
-    {
-        if (measure is null) return null;
+    //public static IMeasure? operator *(Measure? measure, ValueType? quantity)
+    //{
+    //    if (measure is null) return null;
 
-        decimal multiplier = GetValidDecimalOperand(quantity);
+    //    decimal multiplier = GetValidDecimalOperand(quantity);
 
-        return measure.MultipliedBy(multiplier);
-    }
-    public static IMeasure? operator *(ValueType? quantity, Measure? measure)
-    {
-        if (measure is null) return null;
+    //    return measure.MultipliedBy(multiplier);
+    //}
+    //public static IMeasure? operator *(ValueType? quantity, Measure? measure)
+    //{
+    //    if (measure is null) return null;
 
-        decimal multiplier = GetValidDecimalOperand(quantity);
+    //    decimal multiplier = GetValidDecimalOperand(quantity);
 
-        return measure.MultipliedBy(multiplier);
-    }
+    //    return measure.MultipliedBy(multiplier);
+    //}
 
-    public static IMeasure? operator /(Measure? measure, ValueType? quantity)
-    {
-        if (measure is null) return null;
+    //public static IMeasure? operator /(Measure? measure, ValueType? quantity)
+    //{
+    //    if (measure is null) return null;
 
-        decimal divisor = GetValidDecimalOperand(quantity);
+    //    decimal divisor = GetValidDecimalOperand(quantity);
 
-        return measure.DividedBy(divisor);
-    }
-    #endregion
+    //    return measure.DividedBy(divisor);
+    //}
+    //#endregion
 }

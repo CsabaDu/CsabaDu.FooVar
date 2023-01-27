@@ -260,88 +260,88 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     #endregion
 
-    #region Static operators
-    public static bool operator ==(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        return baseMeasure?.Equals(other) == true;
-    }
-    public static bool operator ==(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        return baseMeasure?.Equals(other) == true;
-    }
+    //#region Static operators
+    //public static bool operator ==(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    return baseMeasure?.Equals(other) == true;
+    //}
+    //public static bool operator ==(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    return baseMeasure?.Equals(other) == true;
+    //}
 
-    public static bool operator !=(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        return baseMeasure?.Equals(other) != true;
-    }
-    public static bool operator !=(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        return baseMeasure?.Equals(other) != true;
-    }
+    //public static bool operator !=(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    return baseMeasure?.Equals(other) != true;
+    //}
+    //public static bool operator !=(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    return baseMeasure?.Equals(other) != true;
+    //}
 
-    public static bool operator >(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        if (baseMeasure is null) return false;
+    //public static bool operator >(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return false;
 
-        return baseMeasure.CompareTo(other) > 0;
-    }
-    public static bool operator >(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        if (baseMeasure is null) return false;
+    //    return baseMeasure.CompareTo(other) > 0;
+    //}
+    //public static bool operator >(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return false;
 
-        return baseMeasure.CompareTo(other) > 0;
-    }
+    //    return baseMeasure.CompareTo(other) > 0;
+    //}
 
-    public static bool operator <(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        if (baseMeasure is null) return true;
+    //public static bool operator <(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return true;
 
-        return baseMeasure.CompareTo(other) < 0;
-    }
-    public static bool operator <(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        if (baseMeasure is null) return true;
+    //    return baseMeasure.CompareTo(other) < 0;
+    //}
+    //public static bool operator <(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return true;
 
-        return baseMeasure.CompareTo(other) < 0;
-    }
+    //    return baseMeasure.CompareTo(other) < 0;
+    //}
 
-    public static bool operator >=(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        if (baseMeasure is null) return false;
+    //public static bool operator >=(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return false;
 
-        return baseMeasure.CompareTo(other) >= 0;
-    }
-    public static bool operator >=(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        if (baseMeasure is null) return false;
+    //    return baseMeasure.CompareTo(other) >= 0;
+    //}
+    //public static bool operator >=(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return false;
 
-        return baseMeasure.CompareTo(other) >= 0;
-    }
+    //    return baseMeasure.CompareTo(other) >= 0;
+    //}
 
-    public static bool operator <=(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        if (baseMeasure is null) return true;
+    //public static bool operator <=(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return true;
 
-        return baseMeasure.CompareTo(other) <= 0;
-    }
-    public static bool operator <=(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        if (baseMeasure is null) return true;
+    //    return baseMeasure.CompareTo(other) <= 0;
+    //}
+    //public static bool operator <=(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return true;
 
-        return baseMeasure.CompareTo(other) <= 0;
-    }
+    //    return baseMeasure.CompareTo(other) <= 0;
+    //}
 
-    public static decimal operator /(BaseMeasure? baseMeasure, IBaseMeasure? other)
-    {
-        if (baseMeasure is null) return 0m;
+    //public static decimal operator /(BaseMeasure? baseMeasure, IBaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return 0m;
 
-        return baseMeasure.ProportionalTo(other);
-    }
-    public static decimal operator /(IBaseMeasure? baseMeasure, BaseMeasure? other)
-    {
-        if (baseMeasure is null) return 0m;
+    //    return baseMeasure.ProportionalTo(other);
+    //}
+    //public static decimal operator /(IBaseMeasure? baseMeasure, BaseMeasure? other)
+    //{
+    //    if (baseMeasure is null) return 0m;
 
-        return baseMeasure.ProportionalTo(other);
-    }
-    #endregion
+    //    return baseMeasure.ProportionalTo(other);
+    //}
+    //#endregion
 }

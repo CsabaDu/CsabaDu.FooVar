@@ -4,7 +4,7 @@ namespace CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 
 public interface ILimit : IBaseMeasure, IEqualityComparer<ILimit>
 {
-    LimitType LimitType { get; init; }
+    LimitType LimitType { get; }
 
     ILimit GetLimit(Enum measureUnit, ValueType? quantity = null, decimal? exchangeRate = null, LimitType limitType = default);
 

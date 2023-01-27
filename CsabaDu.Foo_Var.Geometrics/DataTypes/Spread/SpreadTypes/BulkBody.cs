@@ -5,48 +5,29 @@ using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
 
 namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Spread.SpreadTypes;
 
-internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
+internal sealed class BulkBody : Body, IBulkBody
 {
-    public IVolume Volume { get; init; }
+    //public IVolume Volume { get; init; }
 
-    public BulkBody(IVolume volume)
-    {
-        ValidateSpreadMeasure(volume);
+    public BulkBody(IVolume volume) : base(volume) { }
 
-        Volume = volume;
-    }
+    public BulkBody(ISpread<IVolume, VolumeUnit> spread) : base(spread) { }
 
-    public BulkBody(ISpread<IVolume, VolumeUnit> body)
-    {
-        _ = body ?? throw new ArgumentNullException(nameof(body));
+    //public BulkBody(IGeometricBody geometricBody)
+    //{
+    //    _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-        Volume = body.GetSpreadMeasure();
-    }
+    //    Volume = geometricBody.Volume;
+    //}
 
-    public BulkBody(IGeometricBody geometricBody)
-    {
-        _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
+    public BulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits) { }
 
-        Volume = geometricBody.Volume;
-    }
+    public override IBody GetBody(VolumeUnit? volumeUnit = null) => GetBulkBody(volumeUnit);
 
-    public BulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
-    {
-        shapeTraits.ValidateShapeTraitsBySpreadType(typeof(IGeometricBody));
-        shapeTraits.ValidateShapeExtentList(shapeExtentList);
 
-        Volume = GetSpreadMeasure(shapeExtentList, shapeTraits);
-    }
+    public override IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBulkBody(shapeExtentList, shapeTraits);
 
-    public IBody GetBody(VolumeUnit? volumeUnit = null) => GetBulkBody(volumeUnit);
-
-    public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => GetBulkBody(spread);
-
-    public IBody GetBody(IVolume volume) => GetBulkBody(volume);
-
-    public IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBulkBody(shapeExtentList, shapeTraits);
-
-    public IBody GetBody(IShape shape) => GetBulkBody(shape);
+    public override IBody GetBody(IShape shape) => GetBulkBody(shape);
 
     public IBulkBody GetBulkBody(IVolume volume)
     {
@@ -81,20 +62,20 @@ internal sealed class BulkBody : Spread<IVolume, VolumeUnit>, IBulkBody
         throw new ArgumentOutOfRangeException(nameof(volumeUnit), volumeUnit, null);
     }
 
-    public override ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
+    //public override ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
 
-    public override ISpread<IVolume, VolumeUnit> GetSpread(ISpread<IVolume, VolumeUnit> spread) => GetBody(spread);
+    //public override ISpread<IVolume, VolumeUnit> GetSpread(ISpread<IVolume, VolumeUnit> spread) => GetBody(spread);
 
-    public override ISpread<IVolume, VolumeUnit> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBody(shapeExtentList, shapeTraits);
+    //public override ISpread<IVolume, VolumeUnit> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBody(shapeExtentList, shapeTraits);
 
-    public override ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
+    //public override ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
 
-    public override IVolume GetSpreadMeasure(VolumeUnit? volumeUnit = null)
-    {
-        if (volumeUnit == null) return Volume;
+    //public override IVolume GetSpreadMeasure(VolumeUnit? volumeUnit = null)
+    //{
+    //    if (volumeUnit == null) return Volume;
 
-        IBaseMeasure exchanged = Volume.ExchangeTo(volumeUnit)!;
+    //    IBaseMeasure exchanged = Volume.ExchangeTo(volumeUnit)!;
 
-        return Volume.GetVolume(exchanged);
-    }
+    //    return Volume.GetVolume(exchanged);
+    //}
 }

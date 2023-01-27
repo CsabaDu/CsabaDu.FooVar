@@ -23,11 +23,6 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories
             return new BulkBody(shapeExtentList, shapeTraits);
         }
 
-        public IBody GetBody(IGeometricBody geometricBody)
-        {
-            return new BulkBody(geometricBody);
-        }
-
         public ISurface GetSurface(IArea area)
         {
             return new BulkSurface(area);
@@ -56,7 +51,7 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories
         private static ISurface CreateSurface(IGeometricBody geometricBody)
         {
             IArea baseArea = geometricBody.GetBaseShape().Area;
-            IExtent height = geometricBody.Height;
+            IExtent height = geometricBody.GetHeight();
             IMeasure basePerimeter = height;
 
             if (geometricBody is ICuboid cuboid)

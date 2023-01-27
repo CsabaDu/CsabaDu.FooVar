@@ -5,19 +5,25 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
 
 internal abstract class SpatialShape<T> : GeometricBody, ISpatialShape<T> where T : IPlaneShape
 {
-    private protected SpatialShape(T baseShape, IExtent height, ShapeTrait shapeTraits) : base(height, shapeTraits)
+    private protected SpatialShape(T baseShape, IExtent height, ShapeTrait shapeTraits) : base(shapeTraits)
     {
         _ = baseShape ?? throw new ArgumentNullException(nameof(baseShape));
+        ValidateShapeExtent(height);
 
         BaseShape = baseShape;
+        Height = height;
     }
 
     private protected SpatialShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         BaseShape = (T)GetBaseShape(shapeExtentList);
+        Height = shapeExtentList.Last();
     }
 
     public T BaseShape { get; init; }
+    public IExtent Height { get; init; }
+
+    public override sealed IExtent GetHeight() => Height;
 
     public T GetHorizontalProjection() => BaseShape;
 

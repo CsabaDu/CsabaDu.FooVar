@@ -12,15 +12,15 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         ValidateShapeExtent(length);
         ValidateShapeExtent(width);
 
-        Length = GetComparedShapeExtent(length, width, Comparison.Greater);
-        Width = GetComparedShapeExtent(length, width, Comparison.Less);
+        Length = length;
+        Width = width;
         Area = GetRectangleArea(length, width);
     }
 
     public Rectangle(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Plane)
     {
-        IExtent length = shapeExtentList.Max()!;
-        IExtent width = shapeExtentList.Min()!;
+        IExtent length = shapeExtentList.First()!;
+        IExtent width = shapeExtentList.Last()!;
 
         Length = length;
         Width = width;
@@ -35,9 +35,10 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public IExtent GetComparedShapeExtent(Comparison? comparison)
     {
-        _ = comparison ?? throw new ArgumentOutOfRangeException(nameof(comparison), comparison, null);
-
         IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
+
+        comparison ??= Comparison.Greater;
+
         return comparison switch
         {
             Comparison.Greater => shapeExtentList.First(),
@@ -77,7 +78,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
 
-        return planeShape.ShapeTraits.HasFlag(ShapeTrait.Round) ?
+        return planeShape.ShapeTraits.HasFlag(ShapeTrait.Circular) ?
             (IRectangle)planeShape.GetTangentShape()
             : (IRectangle)planeShape.GetPlaneShape();
     }
@@ -96,7 +97,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return GetShapeExtentList().OrderByDescending(x => x);
     }
 
-    public IRectangularShape GetRectangularShape(params IExtent[] shapeExtents) => ShapeFactory.GetSraightShape(shapeExtents);
+    public IRectangularShape GetRectangularShape(params IExtent[] shapeExtents) => ShapeFactory.GetRectangularShape(shapeExtents);
 
     public override IShape GetTangentShape(Side shapeSide = Side.Outer)
     {
@@ -127,18 +128,5 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         other.ValidateShapeTraits(ShapeTrait.Plane);
 
         return (Rotated(), other.Rotated());
-    }
-
-    private static IExtent GetComparedShapeExtent(IExtent length, IExtent width, Comparison comparison)
-    {
-        bool isLengthGreaterOrEqual = length.CompareTo(width) >= 0;
-
-        return comparison switch
-        {
-            Comparison.Greater => isLengthGreaterOrEqual ? length : width,
-            Comparison.Less => isLengthGreaterOrEqual ? width : length,
-
-            _ => throw new ArgumentOutOfRangeException(nameof(comparison), comparison, null),
-        };
     }
 }

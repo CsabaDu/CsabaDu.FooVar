@@ -1,4 +1,5 @@
-﻿using CsabaDu.Foo_Var.Measures.Factories;
+﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
+using CsabaDu.Foo_Var.Measures.Factories;
 
 namespace CsabaDu.Foo_Var.Geometrics.Statics;
 
@@ -8,9 +9,62 @@ public static class CalculateGeometrics
     private static readonly decimal MeterSquareExchangeRate = AreaUnit.meterSquare.GetExchangeRate();
     private static readonly decimal MeterCubicExchangeRate = VolumeUnit.meterCubic.GetExchangeRate();
 
+    internal static IEnumerable<IExtent> GetInnerShapeExtentList(this IEnumerable<ICuboid> innerTangentCuboidList)
+    {
+        List<IExtent> innerShapeExtentList = new();
+
+        foreach (ICuboid item in innerTangentCuboidList)
+        {
+            innerShapeExtentList.AddRange(item.GetShapeExtentList());
+        }
+
+        return innerShapeExtentList;
+    }
+
+    internal static IEnumerable<IExtent> GetValidatedEnclosingShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
+    {
+        ValidateInnerShapeExtentList(innerShapeExtentList);
+
+        IExtent length = innerShapeExtentList.ElementAt(0);
+        IExtent width = innerShapeExtentList.ElementAt(1);
+        IExtent height = innerShapeExtentList.ElementAt(2);
+        int count = innerShapeExtentList.Count() / CuboidShapeExtentCount;
+
+        if (count == 1) return new List<IExtent>() { length, width, height };
+
+        for (int i = 1; i < count; i++)
+        {
+            int lengthIndex = i * CuboidShapeExtentCount;
+            length = GetComparedShapeExtent(length, innerShapeExtentList.ElementAt(lengthIndex));
+
+            int widthIndex = lengthIndex + 1;
+            width = GetComparedShapeExtent(width, innerShapeExtentList.ElementAt(widthIndex));
+
+            int heightIndex = widthIndex + 1;
+            height = height.GetExtent(height.SumWith(innerShapeExtentList.ElementAt(heightIndex)));
+        }
+
+        return new List<IExtent>() { length, width, height };
+    }
+
+    private static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison comparison = Comparison.Greater)
+    {
+        int argumentsComparisonResult = firstExtent.CompareTo(lastExtent);
+        IExtent longerExtent = argumentsComparisonResult >= 0 ? firstExtent : lastExtent;
+        IExtent shorterExtent = argumentsComparisonResult >= 0 ? lastExtent : firstExtent;
+
+        return comparison switch
+        {
+            Comparison.Greater => longerExtent,
+            Comparison.Less => shorterExtent,
+
+            _ => throw new ArgumentOutOfRangeException(nameof(comparison), comparison, null),
+        };
+    }
+
     internal static IArea GetCircleArea(IExtent radius, AreaUnit areaUnit = default)
     {
-        _ = radius ?? throw new ArgumentNullException(nameof(radius));
+        radius.ValidateShapeExtent();
 
         double radiusQuantity = (double)radius.Quantity;
 

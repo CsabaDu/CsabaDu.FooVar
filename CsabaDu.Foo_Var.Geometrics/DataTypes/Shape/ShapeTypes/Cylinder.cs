@@ -7,7 +7,7 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
 
 internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
 {
-    public Cylinder(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Round)
+    public Cylinder(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Circular)
     {
         IExtent radius = BaseShape.Radius;
 
@@ -15,7 +15,7 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
         Volume = GetCylinderVolume(radius, Height);
     }
 
-    public Cylinder(ICircle baseShape, IExtent height) : base(baseShape, height, ShapeTrait.Round)
+    public Cylinder(ICircle baseShape, IExtent height) : base(baseShape, height, ShapeTrait.Circular)
     {
         IExtent radius = baseShape.Radius;
 
@@ -81,7 +81,7 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-        return GetCylinder(geometricBody.GetBaseShape(), geometricBody.Height);
+        return GetCylinder(geometricBody.GetBaseShape(), geometricBody.GetHeight());
     }
 
     public ICircularShape GetCircularShape(params IExtent[] shapeExtents) => ShapeFactory.GetCircularShape(shapeExtents);
