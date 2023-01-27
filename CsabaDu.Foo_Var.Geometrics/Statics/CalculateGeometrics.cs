@@ -21,24 +21,20 @@ public static class CalculateGeometrics
         return innerShapeExtentList;
     }
 
-    internal static IEnumerable<IExtent> GetEnclosingShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
+    internal static IEnumerable<IExtent> GetValidatedEnclosingShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
     {
-        _ = innerShapeExtentList ?? throw new ArgumentNullException(nameof(innerShapeExtentList));
-
-        innerShapeExtentList.ValidateInnerShapeExtentList();
+        ValidateInnerShapeExtentList(innerShapeExtentList);
 
         IExtent length = innerShapeExtentList.ElementAt(0);
         IExtent width = innerShapeExtentList.ElementAt(1);
         IExtent height = innerShapeExtentList.ElementAt(2);
-
-        int cuboidShapeExtentCount = ValidateGeometrics.CuboidShapeExtentCount;
-        int count = innerShapeExtentList.Count() / cuboidShapeExtentCount;
+        int count = innerShapeExtentList.Count() / CuboidShapeExtentCount;
 
         if (count == 1) return new List<IExtent>() { length, width, height };
 
         for (int i = 1; i < count; i++)
         {
-            int lengthIndex = count * cuboidShapeExtentCount;
+            int lengthIndex = i * CuboidShapeExtentCount;
             length = GetComparedShapeExtent(length, innerShapeExtentList.ElementAt(lengthIndex));
 
             int widthIndex = lengthIndex + 1;

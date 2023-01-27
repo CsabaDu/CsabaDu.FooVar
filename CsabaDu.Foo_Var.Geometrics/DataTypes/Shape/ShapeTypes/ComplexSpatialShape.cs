@@ -16,10 +16,10 @@ internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
         Volume = Dimensions.Volume;
     }
 
-    public ComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList) : base(outerShapeExtentList ?? GetEnclosingShapeExtentList(innerShapeExtentList), ShapeTrait.None)
+    public ComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList) : base(outerShapeExtentList ??= GetValidatedEnclosingShapeExtentList(innerShapeExtentList), ShapeTrait.None)
     {
-        ValidateShapeExtentLists(innerShapeExtentList);
-        outerShapeExtentList ??= GetEnclosingShapeExtentList(innerShapeExtentList);
+        ValidateShapeExtentList(outerShapeExtentList, ShapeTraits);
+        //outerShapeExtentList ??= GetValidatedEnclosingShapeExtentList(innerShapeExtentList);
 
         Dimensions = GetDimensions(outerShapeExtentList);
         InnerTangentCuboids = GetInnerTangentCuboids(innerShapeExtentList);
@@ -30,9 +30,29 @@ internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
     public IEnumerable<ICuboid> InnerTangentCuboids { get; init; }
     public ICuboid Dimensions { get; init; }
 
-    private static IEnumerable<ICuboid> GetInnerTangentCuboids(IEnumerable<IExtent> innerShapeExtentList)
+    private IEnumerable<ICuboid> GetInnerTangentCuboids(IEnumerable<IExtent> innerShapeExtentList)
     {
-        throw new NotImplementedException();
+        ValidateInnerShapeExtentList(innerShapeExtentList);
+
+        int count = innerShapeExtentList.Count() / ShapeExtentTypeCount;
+        List<ICuboid> innerTangentCuboids = new();
+
+        for (int i = 0; i < count; i++)
+        {
+            int lengthIndex = i * ShapeExtentTypeCount;
+            IExtent length = innerShapeExtentList.ElementAt(lengthIndex);
+
+            int widthIndex = lengthIndex + 1;
+            IExtent width = innerShapeExtentList.ElementAt(widthIndex);
+
+            int heightIndex = widthIndex + 1;
+            IExtent height = innerShapeExtentList.ElementAt(heightIndex);
+
+            ICuboid cuboid = ShapeFactory.GetCuboid(length, width, height);
+            innerTangentCuboids.Add(cuboid);
+        }
+
+        return innerTangentCuboids;
     }
 
     public IComplexSpatialShape GetComplexSpatialShape(params IExtent[] shapeExtents)
@@ -71,15 +91,12 @@ internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
 
     private ICuboid GetDimensions(IEnumerable<IExtent> innerShapeExtentList)
     {
-        IEnumerable<IExtent> enclosigShapeExtentList = GetEnclosingShapeExtentList(innerShapeExtentList);
+        IEnumerable<IExtent> enclosigShapeExtentList = GetValidatedEnclosingShapeExtentList(innerShapeExtentList);
 
         return (ICuboid)ShapeFactory.GetRectangularShape(enclosigShapeExtentList.ToArray());
     }
 
-    public override IExtent GetHeight()
-    {
-        throw new NotImplementedException();
-    }
+    public override IExtent GetHeight() => Dimensions.Height;
 
     public IEnumerable<IExtent> GetInnerShapeExtentList()
     {
@@ -105,7 +122,7 @@ internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
 
     public void ValidateShapeExtentLists(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
     {
-        IEnumerable<IExtent> enclosingShapeExtentList = GetEnclosingShapeExtentList(innerShapeExtentList);
+        IEnumerable<IExtent> enclosingShapeExtentList = GetValidatedEnclosingShapeExtentList(innerShapeExtentList);
 
         outerShapeExtentList ??= enclosingShapeExtentList;
 
@@ -133,5 +150,10 @@ internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
         IEnumerable<IExtent>? outerShapeExtentList = dimensions?.GetShapeExtentList();
 
         ValidateShapeExtentLists(innerShapeExtentist, outerShapeExtentList);
+    }
+
+    public void ValidateInnerShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
+    {
+        ValidateGeometrics.ValidateInnerShapeExtentList(innerShapeExtentList);
     }
 }

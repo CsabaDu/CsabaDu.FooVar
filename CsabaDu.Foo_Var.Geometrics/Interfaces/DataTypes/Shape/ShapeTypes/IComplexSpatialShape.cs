@@ -15,6 +15,7 @@ public interface IComplexSpatialShape : IGeometricBody, IDimensions
     IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null);
     IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? shapeExtentList = null);
 
+    void ValidateInnerShapeExtentList(IEnumerable<IExtent> innerShapeExtentList);
     void ValidateShapeExtentLists(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null);
     void ValidateCuboids(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null);
 }

@@ -9,13 +9,15 @@ public static class ValidateGeometrics
     private static readonly ShapeTrait AllShapeTraits = ShapeTrait.Plane | ShapeTrait.Circular;
     internal static readonly int CuboidShapeExtentCount = ShapeTrait.None.GetShapeExtentCount();
 
-    public static void ValidateInnerShapeExtentList(this IEnumerable<IExtent> innerShapeExtentList)
+    public static void ValidateInnerShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
     {
+        _ = innerShapeExtentList ?? throw new ArgumentNullException(nameof(innerShapeExtentList));
+
         int count = innerShapeExtentList.Count();
 
         if (count % CuboidShapeExtentCount != 0) throw new ArgumentOutOfRangeException(nameof(innerShapeExtentList), count, null);
 
-        ValidateShapeExtentListEelements(innerShapeExtentList);
+        ValidateShapeExtentListElements(innerShapeExtentList);
     }
 
     public static void ValidateShape(this ShapeTrait shapeTraits, IShape shape)
@@ -84,10 +86,10 @@ public static class ValidateGeometrics
 
         shapeTraits.ValidateShapeExtentCount(count);
 
-        ValidateShapeExtentListEelements(shapeExtentList);
+        ValidateShapeExtentListElements(shapeExtentList);
     }
 
-    private static void ValidateShapeExtentListEelements(IEnumerable<IExtent> shapeExtentList)
+    private static void ValidateShapeExtentListElements(IEnumerable<IExtent> shapeExtentList)
     {
         foreach (IExtent item in shapeExtentList)
         {
