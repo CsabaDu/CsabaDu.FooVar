@@ -9,11 +9,11 @@ public static class CalculateGeometrics
     private static readonly decimal MeterSquareExchangeRate = AreaUnit.meterSquare.GetExchangeRate();
     private static readonly decimal MeterCubicExchangeRate = VolumeUnit.meterCubic.GetExchangeRate();
 
-    internal static IEnumerable<IExtent> GetInnerShapeExtentList(this IEnumerable<ICuboid> innerTangentCuboids)
+    internal static IEnumerable<IExtent> GetInnerShapeExtentList(this IEnumerable<ICuboid> innerTangentCuboidList)
     {
         List<IExtent> innerShapeExtentList = new();
 
-        foreach (ICuboid item in innerTangentCuboids)
+        foreach (ICuboid item in innerTangentCuboidList)
         {
             innerShapeExtentList.AddRange(item.GetShapeExtentList());
         }

@@ -5,17 +5,17 @@ namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 public interface IComplexSpatialShape : IGeometricBody, IDimensions
 {
-    IEnumerable<ICuboid> InnerTangentCuboids { get; init; }
+    IEnumerable<ICuboid> InnerTangentCuboidList { get; init; }
     ICuboid Dimensions { get; init; }
 
-    int GetInnerTangentCuboidsCount();
+    int GetInnerTangentCuboidListCount();
     IEnumerable<IExtent> GetInnerShapeExtentList();
-    IComplexSpatialShape GetComplexSpatialShape(params IExtent[] shapeExtents);
+    IComplexSpatialShape GetComplexSpatialShape();
     IComplexSpatialShape GetComplexSpatialShape(ExtentUnit extentUnit);
-    IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null);
-    IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? shapeExtentList = null);
+    IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null);
+    IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null);
 
     void ValidateInnerShapeExtentList(IEnumerable<IExtent> innerShapeExtentList);
     void ValidateShapeExtentLists(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null);
-    void ValidateCuboids(IEnumerable<ICuboid> innerTangentCuboids, ICuboid? dimensions = null);
+    void ValidateCuboids(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null);
 }
