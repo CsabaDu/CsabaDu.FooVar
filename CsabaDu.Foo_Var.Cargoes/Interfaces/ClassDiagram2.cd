@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IMass">
+    <Position X="3" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAIAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IMass.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IBulk">
+    <Position X="0.5" Y="3.25" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.Foo_Var.Cargoes.Interfaces.IMass" FixedFromPoint="true">
+      <Path>
+        <Point X="3.625" Y="2.497" />
+        <Point X="3.625" Y="2.875" />
+        <Point X="1.375" Y="2.875" />
+        <Point X="1.375" Y="3.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBulk.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IDry&lt;T&gt;">
+    <Position X="6.5" Y="3.25" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.Foo_Var.Cargoes.Interfaces.IMass" FixedFromPoint="true">
+      <Path>
+        <Point X="4.125" Y="2.497" />
+        <Point X="4.125" Y="2.875" />
+        <Point X="7.375" Y="2.875" />
+        <Point X="7.375" Y="3.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IDry.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.ICargoItem">
+    <Position X="17.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAAAACAABAAAAA=</HashCode>
+      <FileName>Interfaces\ICargoItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.ICommodity">
+    <Position X="13.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAgAAAQA=</HashCode>
+      <FileName>Interfaces\IGoods.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IGoods">
+    <Position X="13.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Interfaces\IGoods.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IBulkCargoItem">
+    <Position X="16.25" Y="3.75" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.Foo_Var.Cargoes.Interfaces.ICargoItem" FixedFromPoint="true">
+      <Path>
+        <Point X="18" Y="2.94" />
+        <Point X="18" Y="3.375" />
+        <Point X="17.125" Y="3.375" />
+        <Point X="17.125" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBulkCargoItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IDryCargoItem&lt;T&gt;">
+    <Position X="18.5" Y="3.75" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.Foo_Var.Cargoes.Interfaces.ICargoItem" FixedFromPoint="true">
+      <Path>
+        <Point X="18.5" Y="2.94" />
+        <Point X="18.5" Y="3.375" />
+        <Point X="19.375" Y="3.375" />
+        <Point X="19.375" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQCAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Interfaces\IDryCargoItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IPacking&lt;T&gt;">
+    <Position X="6.5" Y="5.75" Width="1.75" />
+    <InheritanceLine Type="CsabaDu.Foo_Var.Cargoes.Interfaces.IDry&lt;T&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="7.375" Y="5.127" />
+        <Point X="7.375" Y="5.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAACAAAAAACAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Interfaces\IPacking.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
