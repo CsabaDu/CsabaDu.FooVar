@@ -10,13 +10,6 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
         IGeometricBody GetGeometricBody();
     }
 
-    public interface IPallet
-    {
-        IDry<ICuboid> PalletTraits { get; init; }
-
-        IRectangle GetPalletSurfaceShape();
-    }
-
     public interface ICargoPallet : IPallet
     {
         ICargoPallet GetCargoPallet();
@@ -27,38 +20,9 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
 
     }
 
-    public interface ICargoContainer<T> : IDry<T> where T : class, IGeometricBody
-    {
-        T ContainerShape { get; init; }
-        IDry<T>? DryCapacity { get; init; }
-
-        IBulk GetBulkCapacity();
-    }
-
     public interface IContentSize : IFit<ICuboid>
     {
         IDry<ICuboid>? ContentSize { get; init; }
-    }
-
-    public interface IBox : ICargoContainer<ICuboid>, IFit<ICargoDoor>
-    {
-        IBox GetBox();
-    }
-
-    public interface IDrum : ICargoContainer<ICylinder>
-    {
-        IDrum GetDrum();
-    }
-
-    public interface ICargoDoor
-    {
-        IRectangle CargoDoorShape { get; init; }
-        ShapeExtentType PerpendicularShapeExtentType { get; init; }
-    }
-
-    public interface IBoxContainer : IUld<ICuboid>, ICargoDoor
-    {
-        ICargoDoor CargoDoor { get; init; }
     }
 
     public interface ICargo : IBulk
@@ -72,11 +36,6 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
     }
 
     public interface IUld<T> : ICargoContainer<T> where T : class, IGeometricBody
-    {
-
-    }
-
-    public interface IIglu : IUld<ICuboid>
     {
 
     }

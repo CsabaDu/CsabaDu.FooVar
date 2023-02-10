@@ -9,10 +9,11 @@
     }
 
 
-    public interface IGoods : ICommodity
+    public interface IGoods : IMass, ICommodity
     {
         IMeasure GoodsMeasure { get; init; }
-        IMass Mass { get; init; }
+
         IGoods GetGoods();
+        IGoods GetGoods(ICommodity commodity, IMeasure goodsMeasure, IMass mass);
     }
 }

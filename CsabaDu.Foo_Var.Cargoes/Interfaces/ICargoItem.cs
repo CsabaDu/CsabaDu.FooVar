@@ -1,10 +1,10 @@
 ﻿namespace CsabaDu.Foo_Var.Cargoes.Interfaces;
 
-public interface ICargoItem
+public interface ICargoItem : IBulk
 {
     IEnumerable<IGoods> GoodsList { get; init; }
 
-    IWeight GetNetWeight();
-    IVolume? GetNetVolume();
+    IMass GetNetMass();
     ICargoItem GetCargoItem();
+    ICargoItem GetCargoItem(IEnumerable<IGoods> goodsList);
 }

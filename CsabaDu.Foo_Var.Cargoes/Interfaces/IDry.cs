@@ -2,12 +2,18 @@
 
 namespace CsabaDu.Foo_Var.Cargoes.Interfaces
 {
-    public interface IDry<T> : IMass where T : class, IGeometricBody
+    public interface IDry : IMass
+    {
+        IGeometricBody GetGeometricBody();
+        IBulk GetBulk();
+        //IDry GetDry();
+    }
+
+    public interface IDry<T> : IDry where T : class, IGeometricBody
     {
         T GeometricBody { get; init;}
 
-        IBulk GetBulk();
         IDry<T> GetDry();
-        IDry<T> GetDry(IWeight weight, IEnumerable<IExtent> shapeExtentList);
+        IDry<T> GetDry(IWeight weight, T geometricBody);
     }
 }
