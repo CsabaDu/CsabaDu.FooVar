@@ -289,6 +289,6 @@ public static class CalculateGeometrics
         quantity = Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(quantity)));
         quantity /= extentUnit.GetExchangeRate();
 
-        return (IExtent)new MeasureFactory().GetMeasure(quantity, extentUnit);
+        return (IExtent)MeasureFactory.GetMeasure(quantity, extentUnit);
     }
 }
