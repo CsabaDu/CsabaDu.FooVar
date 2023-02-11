@@ -116,6 +116,13 @@ public static class ValidateGeometrics
         if (!extentUnit.IsDefinedMeasureUnit(typeof(ExtentUnit))) throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
     }
 
+    internal static void ValidateShapeExtents(this IExtent[] shapeExtents)
+    {
+        foreach (IExtent item in shapeExtents)
+        {
+            item.ValidateShapeExtent();
+        }
+    }
     //private static Type[] GetShapeTypeInterfaces(ShapeTrait shapeTraits, Type shapeType)
     //{
     //    _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));

@@ -1,11 +1,12 @@
 ﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.Factories;
 
 namespace CsabaDu.Foo_Var.Geometrics.Statics;
 
 public static class CalculateGeometrics
 {
-    private static readonly MeasureFactory MeasureFactory = new();
+    private static readonly IMeasureFactory MeasureFactory = new MeasureFactory();
     private static readonly decimal MeterSquareExchangeRate = AreaUnit.meterSquare.GetExchangeRate();
     private static readonly decimal MeterCubicExchangeRate = VolumeUnit.meterCubic.GetExchangeRate();
 
@@ -149,34 +150,32 @@ public static class CalculateGeometrics
 
     private static decimal GetMeterSquareExchangeRate(params IExtent[] shapeExtents)
     {
-        if (shapeExtents == null) return MeterSquareExchangeRate;
-
-        int count = shapeExtents.Length;
+        int count = GetShapeExtentsCount(shapeExtents);
 
         if (count == 0) return MeterSquareExchangeRate;
 
-        foreach (IExtent item in shapeExtents)
-        {
-            item.ValidateShapeExtent();
-        }
+        shapeExtents.ValidateShapeExtents();
 
-        Enum extentUnit = shapeExtents[0].GetMeasureUnit();
-        decimal exchangeRate = extentUnit.GetExchangeRate();
+        decimal exchangeRate = shapeExtents.GetExchangeRate(0);
 
         switch (count)
         {
             case 1:
-                exchangeRate *= exchangeRate;
-                return exchangeRate / MeterSquareExchangeRate;
+                return GetMeterSquareExchangeRate(exchangeRate, exchangeRate);
             case 2:
-                Enum otherExtentUnit = shapeExtents[1].GetMeasureUnit();
-                decimal otherExchangeRate = otherExtentUnit.GetExchangeRate();
-                exchangeRate *= otherExchangeRate;
-                return exchangeRate / MeterSquareExchangeRate;
+                decimal otherExchangeRate = shapeExtents.GetExchangeRate(1);
+                return GetMeterSquareExchangeRate(exchangeRate, otherExchangeRate);
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null);
         }
+    }
+
+    private static decimal GetMeterSquareExchangeRate(decimal exchangeRate, decimal otherExchangeRate)
+    {
+        exchangeRate *= otherExchangeRate;
+
+        return exchangeRate / MeterSquareExchangeRate;
     }
 
     private static decimal GetMeterSquareExchangeRate(this AreaUnit areaUnit, params IExtent[] shapeExtents)
@@ -186,34 +185,31 @@ public static class CalculateGeometrics
         return areaUnit == AreaUnit.meterSquare ? exchangeRate : exchangeRate / MeterSquareExchangeRate;
     }
 
+    private static decimal GetExchangeRate(this IExtent[] shapeExtents, int index)
+    {
+        Enum extentUnit = shapeExtents[index].GetMeasureUnit();
+
+        return extentUnit.GetExchangeRate();
+    }
+
     private static decimal GetMeterQubicExchangeRate(params IExtent[] shapeExtents)
     {
-        if (shapeExtents == null) return MeterCubicExchangeRate;
-
-        int count = shapeExtents.Length;
+        int count = GetShapeExtentsCount(shapeExtents);
 
         if (count == 0) return MeterCubicExchangeRate;
 
-        foreach (IExtent item in shapeExtents)
-        {
-            item.ValidateShapeExtent();
-        }
+        shapeExtents.ValidateShapeExtents();
 
-        Enum extentUnit = shapeExtents[0].GetMeasureUnit();
-        decimal exchangeRate = extentUnit.GetExchangeRate();
-        Enum heightExtentUnit = shapeExtents[count - 1].GetMeasureUnit();
+        decimal exchangeRate = shapeExtents.GetExchangeRate(0);
+        decimal heightExchangeRate = shapeExtents.GetExchangeRate(count - 1);
 
         switch (count)
         {
             case 2:
-                exchangeRate *= exchangeRate;
-                exchangeRate *= heightExtentUnit == extentUnit ? exchangeRate : heightExtentUnit.GetExchangeRate();
-                return exchangeRate / MeterCubicExchangeRate;
+                return GetMeterQubicExchangeRate(exchangeRate, exchangeRate, heightExchangeRate);
             case 3:
-                exchangeRate *= heightExtentUnit == extentUnit ? exchangeRate : heightExtentUnit.GetExchangeRate();
-                Enum widthExtentUnit = shapeExtents[1].GetMeasureUnit();
-                exchangeRate *= widthExtentUnit == extentUnit ? exchangeRate : widthExtentUnit.GetExchangeRate();
-                return exchangeRate / MeterCubicExchangeRate;
+                decimal otherExchangeRate = shapeExtents.GetExchangeRate(1);
+                return GetMeterQubicExchangeRate(exchangeRate, otherExchangeRate, heightExchangeRate);
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null);
@@ -227,9 +223,24 @@ public static class CalculateGeometrics
         return volumeUnit == VolumeUnit.meterCubic ? exchangeRate : exchangeRate / MeterCubicExchangeRate;
     }
 
+    private static decimal GetMeterQubicExchangeRate(decimal exchangeRate, decimal otherExchangeRate, decimal heightExchangeRate)
+    {
+        exchangeRate *= otherExchangeRate;
+        exchangeRate *= heightExchangeRate;
+
+        return exchangeRate / MeterCubicExchangeRate;
+    }
+
     private static decimal GetCircleAreaQuantity(double radiusQuantity)
     {
         return Convert.ToDecimal(Math.Pow(radiusQuantity, 2) * Math.PI);
+    }
+
+    private static int GetShapeExtentsCount(IExtent[]? shapeExtents)
+    {
+        if (shapeExtents == null) return 0;
+
+        return shapeExtents.Length;
     }
 
     private static decimal GetRectangleAreaQuantity(decimal lengthQuantity, decimal widthQuantity)
