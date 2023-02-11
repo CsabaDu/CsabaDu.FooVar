@@ -13,9 +13,9 @@ public class ShapeFactory : IShapeFactory
         return new Cuboid(length, width, height);
     }
 
-    public ICuboid GetCuboid(IRectangle baseShape, IExtent height)
+    public ICuboid GetCuboid(IRectangle bases, IExtent height)
     {
-        return new Cuboid(baseShape, height);
+        return new Cuboid(bases, height);
     }
 
     public ICylinder GetCylinder(IExtent radius, IExtent height)
@@ -23,9 +23,9 @@ public class ShapeFactory : IShapeFactory
         return new Cylinder(radius, height);
     }
 
-    public ICylinder GetCylinder(ICircle baseShape, IExtent height)
+    public ICylinder GetCylinder(ICircle bases, IExtent height)
     {
-        return new Cylinder(baseShape, height);
+        return new Cylinder(bases, height);
     }
 
     public ICircle GetCircle(IExtent radius)

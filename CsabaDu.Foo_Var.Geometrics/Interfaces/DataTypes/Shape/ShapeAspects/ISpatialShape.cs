@@ -4,6 +4,6 @@ namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
 public interface ISpatialShape<T> : IGeometricBody, IProjection<T> where T : IPlaneShape
 {
-    T BaseShape { get; init; }
+    T Bases { get; init; }
     IExtent Height { get; init; }
 }

@@ -9,18 +9,18 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 {
     public Cuboid(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.None)
     {
-        IExtent length = BaseShape.Length;
-        IExtent width = BaseShape.Width;
+        IExtent length = Bases.Length;
+        IExtent width = Bases.Width;
 
         Length = length;
         Width = width;
         Volume = GetCuboidVolume(length, width, Height);
     }
 
-    public Cuboid(IRectangle baseShape, IExtent height) : base(baseShape, height, ShapeTrait.None)
+    public Cuboid(IRectangle bases, IExtent height) : base(bases, height, ShapeTrait.None)
     {
-        IExtent length = baseShape.Length;
-        IExtent width = baseShape.Width;
+        IExtent length = bases.Length;
+        IExtent width = bases.Width;
 
         Length = length;
         Width= width;
@@ -35,6 +35,15 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     public IExtent Width { get; init; }
     public override IVolume Volume { get; init; }
 
+    public IRectangle GetComparedSide(Comparison? comparison)
+    {
+        if (comparison == null) return Bases;
+
+        IExtent horizontalExtent = Bases.GetComparedShapeExtent(comparison);
+
+        return ShapeFactory.GetRectangle(horizontalExtent, Height);
+    }
+
     public ICuboid GetCuboid(params IExtent[] shapeExtents)
     {
         if (shapeExtents == null || shapeExtents.Length == 0) return this;
@@ -44,23 +53,23 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
         return ShapeFactory.GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]); 
     }
 
-    public ICuboid GetCuboid(IPlaneShape baseShape, IExtent height)
+    public ICuboid GetCuboid(IPlaneShape bases, IExtent height)
     {
-        _ = baseShape ?? throw new ArgumentNullException(nameof(baseShape));
+        _ = bases ?? throw new ArgumentNullException(nameof(bases));
 
-        if (baseShape is IRectangle rectangle)
+        if (bases is IRectangle rectangle)
         {
             return ShapeFactory.GetCuboid(rectangle, height);
         }
         
-        if (baseShape is ICircle circle)
+        if (bases is ICircle circle)
         {
             ICylinder cylinder = new Cylinder(circle, height);
 
             return (ICuboid)cylinder.GetTangentShape();
         }
 
-        throw new ArgumentOutOfRangeException(nameof(baseShape), baseShape.GetShapeType(), null);
+        throw new ArgumentOutOfRangeException(nameof(bases), bases.GetShapeType(), null);
     }
 
     public ICuboid GetCuboid(ExtentUnit extentUnit)
@@ -72,7 +81,7 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-        return GetCuboid(geometricBody.GetBaseShape(), geometricBody.GetHeight());
+        return GetCuboid(geometricBody.GetBases(), geometricBody.GetHeight());
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
@@ -116,9 +125,9 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 
     public override IShape GetTangentShape(Side shapeSide = Side.Outer)
     {
-        ICircle baseShape = (ICircle)BaseShape.GetTangentShape(shapeSide);
+        ICircle bases = (ICircle)Bases.GetTangentShape(shapeSide);
 
-        return ShapeFactory.GetCylinder(baseShape, Height);
+        return ShapeFactory.GetCylinder(bases, Height);
     }
 
     public IRectangularShape Rotated()

@@ -11,26 +11,27 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
     }
     public interface ICargoContainer<T> : ICargoContainer, IDry<T> where T : class, IGeometricBody
     {
-        //T ContainerBody { get; init; }
-
         IDry<T>? GetDryCapacity();
         ICargoContainer<T> GetCargoContainer();
     }
 
     public interface IDryContainer<T> : ICargoContainer<T> where T : class, IGeometricBody
     {
+        ICargoDoor CargoDoor { get; init; }
 
+        IDryContainer<T> GetDryContainer();
+        IDryContainer<T> GetDryContainer(ICargoContainer<T> cargoContainer, ICargoDoor cargoDoor);
     }
     public interface ICargoDoor
     {
         IRectangle CargoDoorShape { get; init; }
-        ShapeExtentType HorizontalShapeExtentType { get; init; }
-        ShapeExtentType ProjectingShapeExtentType { get; init; }
+        ShapeExtentType DoorHeightShapeExtentType { get; init; }
+        Comparison? ContainerSide { get; init; }
     }
 
     public interface IBoxContainer : IDryContainer<ICuboid>
     {
-        ICargoDoor CargoDoor { get; init; }
+
     }
 
     public interface IIglu : IDryContainer<IComplexSpatialShape>

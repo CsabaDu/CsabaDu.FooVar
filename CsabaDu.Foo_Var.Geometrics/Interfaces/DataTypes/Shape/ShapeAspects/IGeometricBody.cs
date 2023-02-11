@@ -3,7 +3,7 @@ using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
-public interface IGeometricBody : IBaseShape, IShape, IBody, IProjection
+public interface IGeometricBody : IBases, IShape, IBody, IProjection
 {
     IExtent GetHeight();
     IGeometricBody GetGeometricBody(ExtentUnit extentUnit);
