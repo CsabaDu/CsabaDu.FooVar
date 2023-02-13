@@ -27,7 +27,7 @@
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects.GeometricBody" Collapsed="true">
     <Position X="5.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAARAAAAAAgAQAgAIhAABAAAAAUACABAKAIAAAEAA=</HashCode>
+      <HashCode>QAAAARAAAIAAgAQAgAIhAABAAAAAUACABAKAIAAAEAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\GeometricBody.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -43,7 +43,7 @@
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects.SpatialShape&lt;T&gt;" Collapsed="true">
     <Position X="6.75" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAABAQAAAAAAAAAAABAAAAAAAQAgAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAQAABAAAAAAAAAAAAABAAAAACAQAgAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\SpatialShape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -65,7 +65,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.Shape" Collapsed="true">
-    <Position X="3.5" Y="5" Width="1.25" />
+    <Position X="3.75" Y="5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>EAAQIIAgAAAAAAQIgAAgAAAIAAAEAQBQBACAIAACRAA=</HashCode>
       <FileName>DataTypes\Shape\Shape.cs</FileName>
@@ -91,7 +91,7 @@
   <Class Name="CsabaDu.Foo_Var.Geometrics.Statics.CalculateGeometrics" Collapsed="true">
     <Position X="7.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>IEgFEAAAQEBAACAgAAUgACAAAJCACAAAAACgFAEAAAA=</HashCode>
+      <HashCode>IEgHEAAAQEBAACAgAAUgACAAAJCACAABAACgFAEAAAA=</HashCode>
       <FileName>Statics\CalculateGeometrics.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -105,14 +105,14 @@
   <Class Name="CsabaDu.Foo_Var.Geometrics.Statics.ValidateGeometrics" Collapsed="true">
     <Position X="7.5" Y="1.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAEEIAAAwAAIAAAAAAAAAIAAAQAAAAAAACICA=</HashCode>
+      <HashCode>AAAAIAAAEEIAAAwAAIAAAAAAAAAIAAAQAAAAAAACYCA=</HashCode>
       <FileName>Statics\ValidateGeometrics.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes.Cuboid" Collapsed="true">
     <Position X="5.5" Y="9.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAARIIAAAAEAAAAAAAAAAMBAAAQAAAAAAAIAAAAIBAA=</HashCode>
+      <HashCode>AAARIIAAAAEAAAAAAAAAAMBAAAQAAAAAAAIAAAAIBCA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\Cuboid.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

@@ -5,17 +5,7 @@ using static CsabaDu.Foo_Var.Geometrics.Statics.ShapeTraits;
 
 namespace CsabaDu.Foo_Var.Cargoes.Interfaces
 {
-    public interface ICargoContainer : IDry, IFit<ICargoContainer>
-    {
-        IBulk GetBulkCapacity();
-    }
-    public interface ICargoContainer<T> : ICargoContainer, IDry<T> where T : class, IGeometricBody
-    {
-        IDry<T>? GetDryCapacity();
-        ICargoContainer<T> GetCargoContainer();
-    }
-
-    public interface IDryContainer<T> : ICargoContainer<T> where T : class, IGeometricBody
+    public interface IDryContainer<T> : ICargoContainer<T>/*, IFit<ICargoDoor>*/ where T : class, IGeometricBody
     {
         ICargoDoor CargoDoor { get; init; }
 
@@ -37,5 +27,28 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
     public interface IIglu : IDryContainer<IComplexSpatialShape>
     {
 
+    }
+
+    public interface ICargoContainer<T> : IDry<T>, IDryCapacity<T> where T : class, IGeometricBody
+    {
+        IDry<T> GetDryCapacity();
+        //ICargoContainer<T> GetCargoContainer();
+    }
+
+    public interface ICargoContainer : IDry, IFit<ICargoContainer>
+    {
+        IBulk GetBulkCapacity();
+        //IDry<IGeometricBody> GetDryCapacity();
+        ICargoContainer GetCargoContainer();
+    }
+
+    public interface IBulkContainerBody<T> : IDryCapacity<T> where T : class, IGeometricBody
+    {
+        T? ContainerBody { get; init; }
+    }
+
+    public interface IDryCapacity<T> : ICargoContainer where T : class, IGeometricBody
+    {
+        IDry<T> DryCapacity { get; init; }
     }
 }

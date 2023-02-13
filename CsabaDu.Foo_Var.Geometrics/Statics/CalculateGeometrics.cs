@@ -156,26 +156,26 @@ public static class CalculateGeometrics
 
         shapeExtents.ValidateShapeExtents();
 
-        decimal exchangeRate = shapeExtents.GetExchangeRate(0);
+        decimal lengthExchangeRate = shapeExtents.GetExchangeRate(0);
 
         switch (count)
         {
             case 1:
-                return GetMeterSquareExchangeRate(exchangeRate, exchangeRate);
+                return GetMeterSquareExchangeRate(lengthExchangeRate, lengthExchangeRate);
             case 2:
-                decimal otherExchangeRate = shapeExtents.GetExchangeRate(1);
-                return GetMeterSquareExchangeRate(exchangeRate, otherExchangeRate);
+                decimal widthExchangeRate = shapeExtents.GetExchangeRate(1);
+                return GetMeterSquareExchangeRate(lengthExchangeRate, widthExchangeRate);
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null);
         }
     }
 
-    private static decimal GetMeterSquareExchangeRate(decimal exchangeRate, decimal otherExchangeRate)
+    private static decimal GetMeterSquareExchangeRate(decimal lengthExchangeRate, decimal widthExchangeRate)
     {
-        exchangeRate *= otherExchangeRate;
+        lengthExchangeRate *= widthExchangeRate;
 
-        return exchangeRate / MeterSquareExchangeRate;
+        return lengthExchangeRate / MeterSquareExchangeRate;
     }
 
     private static decimal GetMeterSquareExchangeRate(this AreaUnit areaUnit, params IExtent[] shapeExtents)
@@ -200,16 +200,16 @@ public static class CalculateGeometrics
 
         shapeExtents.ValidateShapeExtents();
 
-        decimal exchangeRate = shapeExtents.GetExchangeRate(0);
+        decimal lengthExchangeRate = shapeExtents.GetExchangeRate(0);
         decimal heightExchangeRate = shapeExtents.GetExchangeRate(count - 1);
 
         switch (count)
         {
             case 2:
-                return GetMeterQubicExchangeRate(exchangeRate, exchangeRate, heightExchangeRate);
+                return GetMeterQubicExchangeRate(lengthExchangeRate, lengthExchangeRate, heightExchangeRate);
             case 3:
-                decimal otherExchangeRate = shapeExtents.GetExchangeRate(1);
-                return GetMeterQubicExchangeRate(exchangeRate, otherExchangeRate, heightExchangeRate);
+                decimal widthExchangeRate = shapeExtents.GetExchangeRate(1);
+                return GetMeterQubicExchangeRate(lengthExchangeRate, widthExchangeRate, heightExchangeRate);
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null);
@@ -223,12 +223,12 @@ public static class CalculateGeometrics
         return volumeUnit == VolumeUnit.meterCubic ? exchangeRate : exchangeRate / MeterCubicExchangeRate;
     }
 
-    private static decimal GetMeterQubicExchangeRate(decimal exchangeRate, decimal otherExchangeRate, decimal heightExchangeRate)
+    private static decimal GetMeterQubicExchangeRate(decimal lengthExchangeRate, decimal widthExchangeRate, decimal heightExchangeRate)
     {
-        exchangeRate *= otherExchangeRate;
-        exchangeRate *= heightExchangeRate;
+        lengthExchangeRate *= widthExchangeRate;
+        lengthExchangeRate *= heightExchangeRate;
 
-        return exchangeRate / MeterCubicExchangeRate;
+        return lengthExchangeRate / MeterCubicExchangeRate;
     }
 
     private static decimal GetCircleAreaQuantity(double radiusQuantity)

@@ -3,7 +3,7 @@ using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
 
 namespace CsabaDu.Foo_Var.Cargoes.Interfaces;
 
-public interface IMass : IFit<IMass>
+public interface IMass : IDensity, IFit<IMass>
 {
     IWeight Weight { get; init; }
 

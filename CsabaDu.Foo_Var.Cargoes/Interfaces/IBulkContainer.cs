@@ -2,10 +2,10 @@
 
 namespace CsabaDu.Foo_Var.Cargoes.Interfaces
 {
-    public interface IBulkContainer : ICargoContainer
+    public interface IBulkContainer : /*IDryCapacity<ICuboid>, */IBulkContainerBody<ICuboid>
     {
-        IDry<ICuboid> BulkContainerCapacity { get; init; }
-        ICuboid? GeometricBody { get; init; }
+        //IDry<ICuboid> BulkContainerCapacity { get; init; }
+        //ICuboid? GeometricBody { get; init; }
 
         IBulkContainer GetBulkContainer();
         IBulkContainer GetBulkContainer(IDry<ICuboid> bulkContainerCapacity);

@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.Foo_Var.Cargoes.Interfaces;
+﻿using CsabaDu.Foo_Var.Commodities.Interfaces;
+
+namespace CsabaDu.Foo_Var.Cargoes.Interfaces;
 
 public interface ICargoItem : IBulk
 {
