@@ -1,23 +1,24 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes.MeasureTypes;
 
 internal sealed class PieceCount : Measure, IPieceCount
 {
-    public PieceCount(ValueType quantity, Pieces pieces, decimal? exchangeRate = null) : base(quantity, pieces, exchangeRate)
+    public PieceCount(ValueType quantity, Pieces pieces, decimal? exchangeRate = null) : base(new MeasureFactory(), quantity, pieces, exchangeRate)
     {
         Quantity = quantity.ToQuantity(typeof(int))!;
     }
 
-    public PieceCount(ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
+    public PieceCount(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(Pieces));
 
         Quantity = quantity.ToQuantity(typeof(int))!;
     }
 
-    public PieceCount(IBaseMeasure other) : base(other)
+    public PieceCount(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(Pieces));
 

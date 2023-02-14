@@ -1,4 +1,5 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes;
 
@@ -9,29 +10,29 @@ internal sealed class LimitedRate : Rate, ILimitedRate
     #endregion
 
     #region Constructors
-    internal LimitedRate(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate, ILimit? limit = null) : base(quantity, measureUnit, denominator, exchangeRate)
+    internal LimitedRate(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate, ILimit? limit = null) : base(new RateFactory(new MeasureFactory()), quantity, measureUnit, denominator, exchangeRate)
     {
         Limit = denominator.GetOrCreateLimit(limit);
     }
 
-    internal LimitedRate(ValueType quantity, IMeasurement measurement, IDenominator denominator, ILimit? limit = null) : base(quantity, measurement, denominator)
+    internal LimitedRate(ValueType quantity, IMeasurement measurement, IDenominator denominator, ILimit? limit = null) : base(new RateFactory(new MeasureFactory()), quantity, measurement, denominator)
     {
         Limit = denominator.GetOrCreateLimit(limit);
     }
 
-    internal LimitedRate(IMeasure numerator, IDenominator denominator, ILimit? limit = null) : base(numerator, denominator)
+    internal LimitedRate(IMeasure numerator, IDenominator denominator, ILimit? limit = null) : base(new RateFactory(new MeasureFactory()), numerator, denominator)
     {
         Limit = denominator.GetOrCreateLimit(limit);
     }
 
     internal LimitedRate(IFlatRate flatRate, ILimit? limit = null) : this((IRate)flatRate, limit) { }
 
-    internal LimitedRate(ILimitedRate other, ILimit? limit = null) : base(other)
+    internal LimitedRate(ILimitedRate other, ILimit? limit = null) : base(new RateFactory(new MeasureFactory()), other)
     {
         Limit = other.Denominator.GetOrCreateLimit(limit);
     }
 
-    internal LimitedRate(IRate rate, ILimit? limit = null) : base(rate)
+    internal LimitedRate(IRate rate, ILimit? limit = null) : base(new RateFactory(new MeasureFactory()), rate)
     {
         Limit = rate.GetOrCreateLimit(limit);
     }

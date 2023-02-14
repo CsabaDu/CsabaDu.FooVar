@@ -1,18 +1,17 @@
 ﻿using CsabaDu.Foo_Var.Measures.Factories;
-using CsabaDu.Foo_Var.Measures.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 
 namespace CsabaDu.Foo_Var.Tests.Fakes.Measures;
 
 internal class RateChild : Rate
 {
-    public RateChild(IRate other) : base(other) { }
+    public RateChild(IRate other) : base(new RateFactory(new MeasureFactory()), other) { }
 
-    public RateChild(IMeasure numerator, IDenominator denominator) : base(numerator, denominator) { }
+    public RateChild(IMeasure numerator, IDenominator denominator) : base(new RateFactory(new MeasureFactory()), numerator, denominator) { }
 
-    public RateChild(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(quantity, measurement, denominator) { }
+    public RateChild(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(new RateFactory(new MeasureFactory()), quantity, measurement, denominator) { }
 
-    public RateChild(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate) : base(quantity, measureUnit, denominator, exchangeRate) { }
+    public RateChild(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate) : base(new RateFactory(new MeasureFactory()), quantity, measureUnit, denominator, exchangeRate) { }
 
     public override ILimit? GetLimit()
     {

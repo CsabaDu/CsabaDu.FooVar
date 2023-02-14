@@ -312,7 +312,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Cargoes.Interfaces.IDensity">
-    <Position X="7" Y="2.25" Width="1.75" />
+    <Position X="8" Y="2.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Interfaces\IDensity.cs</FileName>

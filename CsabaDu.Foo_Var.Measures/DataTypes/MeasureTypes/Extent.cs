@@ -1,23 +1,24 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Extent : Measure, IExtent
 {
-    public Extent(ValueType quantity, ExtentUnit extentUnit) : base(quantity, extentUnit)
+    public Extent(ValueType quantity, ExtentUnit extentUnit) : base(new MeasureFactory(), quantity, extentUnit)
     {
         Quantity = quantity.ToQuantity(typeof(double))!;
     }
 
-    public Extent(ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
+    public Extent(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(ExtentUnit));
 
         Quantity = quantity.ToQuantity(typeof(double))!;
     }
 
-    public Extent(IBaseMeasure other) : base(other)
+    public Extent(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(ExtentUnit));
 

@@ -1,23 +1,24 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Area : Measure, IArea
 {
-    public Area(ValueType quantity, AreaUnit areaUnit) : base(quantity, areaUnit)
+    public Area(ValueType quantity, AreaUnit areaUnit) : base(new MeasureFactory(), quantity, areaUnit)
     {
         Quantity = quantity.ToQuantity(typeof(double))!;
     }
 
-    public Area(ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
+    public Area(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(AreaUnit));
 
         Quantity = quantity.ToQuantity(typeof(double))!;
     }
 
-    public Area(IBaseMeasure other) : base(other)
+    public Area(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(AreaUnit));
 

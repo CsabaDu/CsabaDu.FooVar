@@ -1,4 +1,5 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes;
 
@@ -8,13 +9,13 @@ internal sealed class FlatRate : Rate, IFlatRate
     #endregion
 
     #region Constructors
-    internal FlatRate(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate) : base(quantity, measureUnit, denominator, exchangeRate) { }
+    internal FlatRate(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate) : base(new RateFactory(new MeasureFactory()), quantity, measureUnit, denominator, exchangeRate) { }
 
-    internal FlatRate(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(quantity, measurement, denominator) { }
+    internal FlatRate(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(new RateFactory(new MeasureFactory()), quantity, measurement, denominator) { }
 
-    internal FlatRate(IMeasure numerator, IDenominator denominator) : base(numerator, denominator) { }
+    internal FlatRate(IMeasure numerator, IDenominator denominator) : base(new RateFactory(new MeasureFactory()), numerator, denominator) { }
 
-    internal FlatRate(IRate rate) : base(rate) { }
+    internal FlatRate(IRate rate) : base(new RateFactory(new MeasureFactory()), rate) { }
     #endregion
 
     #region Public methods

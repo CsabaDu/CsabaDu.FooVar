@@ -9,26 +9,29 @@ internal abstract class Rate : Measure, IRate
     #region Properties
     public IDenominator Denominator { get; init; }
 
-    public IRateFactory RateFactory => new RateFactory(this);
+    public IRateFactory RateFactory { get; init; }
     #endregion
 
     #region Constructors
-    private protected Rate(ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate)
+    private protected Rate(IRateFactory rateFactory, ValueType quantity, Enum measureUnit, IDenominator denominator, decimal? exchangeRate = null) : base(new MeasureFactory(), quantity, measureUnit, exchangeRate)
     {
+        RateFactory = rateFactory ?? throw new ArgumentNullException(nameof(rateFactory));
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
     }
 
-    private protected Rate(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(quantity, measurement)
+    private protected Rate(IRateFactory rateFactory, ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(new MeasureFactory(), quantity, measurement)
     {
+        RateFactory = rateFactory ?? throw new ArgumentNullException(nameof(rateFactory));
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
     }
 
-    private protected Rate(IMeasure numerator, IDenominator denominator) : base(numerator)
+    private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(new MeasureFactory(), numerator)
     {
+        RateFactory = rateFactory ?? throw new ArgumentNullException(nameof(rateFactory));
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
     }
 
-    private protected Rate(IRate other) : this(other?.GetNumerator() ?? throw new ArgumentNullException(nameof(other)), other.Denominator) { }
+    private protected Rate(IRateFactory rateFactory, IRate other) : this(rateFactory, other?.GetNumerator() ?? throw new ArgumentNullException(nameof(other)), other.Denominator) { }
     #endregion
 
     #region Public methods
