@@ -9,42 +9,38 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Spread
     internal abstract class Body : Spread<IVolume, VolumeUnit>, IBody
     {
         public IVolume Volume { get; init; }
-        public IBodyFactory BodyFactory { get; init; }
+        //public IBodyFactory BodyFactory { get; init; }
 
-        private protected Body(IVolume volume)
+        private protected Body(IVolume volume) : base(new SpreadFactory())
         {
             ValidateSpreadMeasure(volume);
 
             Volume = volume;
-            BodyFactory = new SpreadFactory();
         }
 
-        private protected Body(ISpread<IVolume, VolumeUnit> spread)
+        private protected Body(ISpread<IVolume, VolumeUnit> spread) : base(new SpreadFactory())
         {
             _ = spread ?? throw new ArgumentNullException(nameof(spread));
 
             Volume = spread.GetSpreadMeasure();
-            BodyFactory = new SpreadFactory();
         }
 
-        private protected Body(IGeometricBody geometricBody)
+        private protected Body(IGeometricBody geometricBody) : base(new SpreadFactory())
         {
             _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
             Volume = geometricBody.Volume;
-            BodyFactory = new SpreadFactory();
         }
 
-        private protected Body(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
+        private protected Body(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(new SpreadFactory())
         {
             shapeTraits.ValidateShapeTraitsBySpreadType(typeof(IGeometricBody));
             shapeTraits.ValidateShapeExtentList(shapeExtentList);
 
             Volume = GetSpreadMeasure(shapeExtentList, shapeTraits);
-            BodyFactory = new SpreadFactory();
         }
-        public IBody GetBody(IVolume volume) => BodyFactory.GetBody(volume);
-        public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => BodyFactory.GetBody(spread);
+        public IBody GetBody(IVolume volume) => SpreadFactory.GetBody(volume);
+        public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => SpreadFactory.GetBody(spread);
 
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
 

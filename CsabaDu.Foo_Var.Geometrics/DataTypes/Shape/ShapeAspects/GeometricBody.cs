@@ -13,7 +13,7 @@ internal abstract class GeometricBody : Shape, IGeometricBody
     public abstract IVolume Volume { get; init; }
     public IBodyFactory BodyFactory { get; init; }
 
-    private protected GeometricBody(ShapeTrait shapeTraits) : base(shapeTraits)
+    private protected GeometricBody(ShapeTrait shapeTraits) : base(shapeTraits, new ShapeFactory())
     {
         BodyFactory = new SpreadFactory();
     }
