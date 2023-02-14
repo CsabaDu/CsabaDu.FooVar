@@ -29,7 +29,7 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
 
     }
 
-    public interface ICargoContainer<T> : IDry<T>, IDryCapacity<T> where T : class, IGeometricBody
+    public interface ICargoContainer<T> : IDry<T>, IContainerCapacity<T> where T : class, IGeometricBody
     {
         IDry<T> GetDryCapacity();
         //ICargoContainer<T> GetCargoContainer();
@@ -42,12 +42,12 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
         ICargoContainer GetCargoContainer();
     }
 
-    public interface IBulkContainerBody<T> : IDryCapacity<T> where T : class, IGeometricBody
+    public interface IContainerBody<T> : IContainerCapacity<T> where T : class, IGeometricBody
     {
         T? ContainerBody { get; init; }
     }
 
-    public interface IDryCapacity<T> : ICargoContainer where T : class, IGeometricBody
+    public interface IContainerCapacity<T> : ICargoContainer where T : class, IGeometricBody
     {
         IDry<T> DryCapacity { get; init; }
     }

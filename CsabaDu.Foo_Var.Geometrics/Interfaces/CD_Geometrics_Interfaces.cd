@@ -321,25 +321,25 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes.ICuboid" Collapsed="true">
-    <Position X="4" Y="14" Width="1.75" />
+    <Position X="3" Y="14" Width="1.75" />
     <InheritanceLine Type="CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ISpatialShape&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="8.25" Y="11.82" />
         <Point X="8.25" Y="13.625" />
-        <Point X="4.875" Y="13.625" />
-        <Point X="4.875" Y="14" />
+        <Point X="3.875" Y="13.625" />
+        <Point X="3.875" Y="14" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IRectangularShape" FixedFromPoint="true">
       <Path>
         <Point X="1.125" Y="10.32" />
         <Point X="1.125" Y="13.625" />
-        <Point X="4.875" Y="13.625" />
-        <Point X="4.875" Y="14" />
+        <Point X="3.875" Y="13.625" />
+        <Point X="3.875" Y="14" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Shape\ShapeTypes\ICuboid.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -547,6 +547,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Behaviors\Shape\IBases.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape.IHorizontalRotation" Collapsed="true">
+    <Position X="3" Y="12.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Interfaces\Behaviors\Shape\IHorizontalRotation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

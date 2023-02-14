@@ -35,7 +35,7 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     public IExtent Width { get; init; }
     public override IVolume Volume { get; init; }
 
-    public IRectangle GetComparedSide(Comparison? comparison)
+    public IRectangle GetComparedFace(Comparison? comparison)
     {
         if (comparison == null) return Bases;
 
@@ -128,6 +128,21 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
         ICircle bases = (ICircle)Bases.GetTangentShape(shapeSide);
 
         return ShapeFactory.GetCylinder(bases, Height);
+    }
+
+    public ICuboid RotatedHorizontally()
+    {
+        IExtent length = Bases.GetComparedShapeExtent(Comparison.Greater);
+        IExtent width = Bases.GetComparedShapeExtent(Comparison.Less);
+
+        return GetCuboid(length, width, Height);
+    }
+
+    public (ICuboid, ICuboid) RotatedHorizontallyWith(ICuboid other)
+    {
+        _ = other ?? throw new ArgumentNullException(nameof(other));
+
+        return (RotatedHorizontally(), other.RotatedHorizontally());
     }
 
     public IRectangularShape Rotated()

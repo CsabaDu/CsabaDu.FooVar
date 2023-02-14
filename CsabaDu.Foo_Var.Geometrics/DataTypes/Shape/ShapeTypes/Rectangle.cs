@@ -35,17 +35,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public IExtent GetComparedShapeExtent(Comparison? comparison)
     {
-        IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
-
-        comparison ??= Comparison.Greater;
-
-        return comparison switch
-        {
-            Comparison.Greater => shapeExtentList.First(),
-            Comparison.Less => shapeExtentList.Last(),
-
-            _ => throw new ArgumentOutOfRangeException(nameof(comparison), comparison, null),
-        };
+        return CalculateGeometrics.GetComparedShapeExtent(Length, Width, comparison);
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)

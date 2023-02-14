@@ -215,8 +215,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             quantity = decimal.Round(quantity, 8);
         }
 
-        //if (DecimalQuantity < 0 && (type == typeof(uint) || type == typeof(ulong))) return null;
-
         return quantity.ToQuantity(type);
     }
 

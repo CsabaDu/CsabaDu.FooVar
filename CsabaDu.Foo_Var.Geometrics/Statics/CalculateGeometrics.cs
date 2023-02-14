@@ -35,7 +35,7 @@ public static class CalculateGeometrics
 
         for (int i = 1; i < count; i++)
         {
-            int lengthIndex = i * CuboidShapeExtentCount;
+            int lengthIndex = i * CuboidShapeExtentCount; // TODO Gondold át
             length = GetComparedShapeExtent(length, innerShapeExtentList.ElementAt(lengthIndex));
 
             int widthIndex = lengthIndex + 1;
@@ -48,11 +48,12 @@ public static class CalculateGeometrics
         return new List<IExtent>() { length, width, height };
     }
 
-    private static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison comparison = Comparison.Greater)
+    internal static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison? comparison = Comparison.Greater)
     {
-        int argumentsComparisonResult = firstExtent.CompareTo(lastExtent);
-        IExtent longerExtent = argumentsComparisonResult >= 0 ? firstExtent : lastExtent;
-        IExtent shorterExtent = argumentsComparisonResult >= 0 ? lastExtent : firstExtent;
+        bool isFirstExtentShorter = firstExtent.CompareTo(lastExtent) < 0;
+
+        IExtent shorterExtent = isFirstExtentShorter ? firstExtent : lastExtent;
+        IExtent longerExtent = isFirstExtentShorter ? lastExtent : firstExtent;
 
         return comparison switch
         {
