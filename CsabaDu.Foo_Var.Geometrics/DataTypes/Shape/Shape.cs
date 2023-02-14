@@ -203,7 +203,7 @@ internal abstract class Shape : IShape
 
     public void ValidateShapeExtents(params IExtent[] shapeExtents)
     {
-        ValidateShapeExtentList(shapeExtents.ToList(), ShapeTraits);
+        ValidateGeometrics.ValidateShapeExtents(shapeExtents);
     }
 
     public void ValidateShapeType(Type shapeType)

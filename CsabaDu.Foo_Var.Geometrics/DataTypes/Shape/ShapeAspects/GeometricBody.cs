@@ -31,22 +31,22 @@ internal abstract class GeometricBody : Shape, IGeometricBody
 
     public bool? FitsIn(ISpread<IVolume, VolumeUnit>? other = null, LimitType? limitType = null) => Body.FitsIn(other, limitType);
 
-    public IPlaneShape GetBases(ExtentUnit extentUnit)
+    public IPlaneShape GetBaseFace(ExtentUnit extentUnit)
     {
-        return GetBases().GetPlaneShape(extentUnit);
+        return GetBaseFace().GetPlaneShape(extentUnit);
     }
 
-    public IPlaneShape GetBases(IEnumerable<IExtent> shapeExtentList)
+    public IPlaneShape GetBaseFace(IEnumerable<IExtent> shapeExtentList)
     {
-        ValidateShapeExtentList(shapeExtentList, GetBases().ShapeTraits);
+        ValidateShapeExtentList(shapeExtentList, GetBaseFace().ShapeTraits);
 
         int lastIndex = ShapeExtentTypeCount - 1;
-        IExtent[] basesExtents = shapeExtentList.TakeWhile(x => x == shapeExtentList.ElementAt(lastIndex)).ToArray();
+        IExtent[] baseFaceExtents = shapeExtentList.TakeWhile(x => x == shapeExtentList.ElementAt(lastIndex)).ToArray();
 
-        return GetBases(basesExtents);
+        return GetBaseFace(baseFaceExtents);
     }
 
-    public IPlaneShape GetBases(params IExtent[] shapeExtents)
+    public IPlaneShape GetBaseFace(params IExtent[] shapeExtents)
     {
         return ShapeFactory.GetPlaneShape(shapeExtents);
     }

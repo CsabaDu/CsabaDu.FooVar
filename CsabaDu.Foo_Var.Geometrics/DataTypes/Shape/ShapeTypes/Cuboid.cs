@@ -9,18 +9,18 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 {
     public Cuboid(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.None)
     {
-        IExtent length = Bases.Length;
-        IExtent width = Bases.Width;
+        IExtent length = BaseFace.Length;
+        IExtent width = BaseFace.Width;
 
         Length = length;
         Width = width;
         Volume = GetCuboidVolume(length, width, Height);
     }
 
-    public Cuboid(IRectangle bases, IExtent height) : base(bases, height, ShapeTrait.None)
+    public Cuboid(IRectangle baseFace, IExtent height) : base(baseFace, height, ShapeTrait.None)
     {
-        IExtent length = bases.Length;
-        IExtent width = bases.Width;
+        IExtent length = baseFace.Length;
+        IExtent width = baseFace.Width;
 
         Length = length;
         Width= width;
@@ -37,9 +37,9 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 
     public IRectangle GetComparedCuboidFace(Comparison? comparison)
     {
-        if (comparison == null) return Bases;
+        if (comparison == null) return BaseFace;
 
-        IExtent horizontalExtent = Bases.GetComparedShapeExtent(comparison);
+        IExtent horizontalExtent = BaseFace.GetComparedShapeExtent(comparison);
 
         return ShapeFactory.GetRectangle(horizontalExtent, Height);
     }
@@ -53,23 +53,23 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
         return ShapeFactory.GetCuboid(shapeExtents[0], shapeExtents[1], shapeExtents[2]); 
     }
 
-    public ICuboid GetCuboid(IPlaneShape bases, IExtent height)
+    public ICuboid GetCuboid(IPlaneShape baseFace, IExtent height)
     {
-        _ = bases ?? throw new ArgumentNullException(nameof(bases));
+        _ = baseFace ?? throw new ArgumentNullException(nameof(baseFace));
 
-        if (bases is IRectangle rectangle)
+        if (baseFace is IRectangle rectangle)
         {
             return ShapeFactory.GetCuboid(rectangle, height);
         }
         
-        if (bases is ICircle circle)
+        if (baseFace is ICircle circle)
         {
             ICylinder cylinder = new Cylinder(circle, height);
 
             return (ICuboid)cylinder.GetTangentShape();
         }
 
-        throw new ArgumentOutOfRangeException(nameof(bases), bases.GetShapeType(), null);
+        throw new ArgumentOutOfRangeException(nameof(baseFace), baseFace.GetShapeType(), null);
     }
 
     public ICuboid GetCuboid(ExtentUnit extentUnit)
@@ -81,7 +81,7 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-        return GetCuboid(geometricBody.GetBases(), geometricBody.GetHeight());
+        return GetCuboid(geometricBody.GetBaseFace(), geometricBody.GetHeight());
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
@@ -125,9 +125,9 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 
     public override IShape GetTangentShape(Side shapeSide = Side.Outer)
     {
-        ICircle bases = (ICircle)Bases.GetTangentShape(shapeSide);
+        ICircle baseFace = (ICircle)BaseFace.GetTangentShape(shapeSide);
 
-        return ShapeFactory.GetCylinder(bases, Height);
+        return ShapeFactory.GetCylinder(baseFace, Height);
     }
 
     public ICuboid RotatedSpatially()
@@ -135,7 +135,6 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
         IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
 
         return GetCuboid(shapeExtentList.ToArray());
-
     }
 
     public (ICuboid, ICuboid) RotatedSpatiallyWith(ICuboid other)
@@ -147,8 +146,8 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 
     public IRectangularShape RotatedHorizontally()
     {
-        IExtent length = Bases.GetComparedShapeExtent(Comparison.Greater);
-        IExtent width = Bases.GetComparedShapeExtent(Comparison.Less);
+        IExtent length = BaseFace.GetComparedShapeExtent(Comparison.Greater);
+        IExtent width = BaseFace.GetComparedShapeExtent(Comparison.Less);
 
         return GetCuboid(length, width, Height);
     }

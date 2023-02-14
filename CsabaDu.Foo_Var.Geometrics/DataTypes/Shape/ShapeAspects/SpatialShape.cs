@@ -5,27 +5,27 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
 
 internal abstract class SpatialShape<T> : GeometricBody, ISpatialShape<T> where T : IPlaneShape
 {
-    private protected SpatialShape(T bases, IExtent height, ShapeTrait shapeTraits) : base(shapeTraits)
+    private protected SpatialShape(T baseFace, IExtent height, ShapeTrait shapeTraits) : base(shapeTraits)
     {
-        _ = bases ?? throw new ArgumentNullException(nameof(bases));
+        _ = baseFace ?? throw new ArgumentNullException(nameof(baseFace));
         ValidateShapeExtent(height);
 
-        Bases = bases;
+        BaseFace = baseFace;
         Height = height;
     }
 
     private protected SpatialShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
-        Bases = (T)GetBases(shapeExtentList);
+        BaseFace = (T)GetBaseFace(shapeExtentList);
         Height = shapeExtentList.Last();
     }
 
-    public T Bases { get; init; }
+    public T BaseFace { get; init; }
     public IExtent Height { get; init; }
 
     public override sealed IExtent GetHeight() => Height;
 
-    public T GetHorizontalProjection() => Bases;
+    public T GetHorizontalProjection() => BaseFace;
 
     public override sealed IPlaneShape GetProjection(ShapeExtentType shapeExtentType)
     {
@@ -48,9 +48,9 @@ internal abstract class SpatialShape<T> : GeometricBody, ISpatialShape<T> where 
     {
         List<IExtent> shapeExtentList = new() { Height, };
 
-        IExtent horizontalEdge = Bases.GetDiagonal();
+        IExtent horizontalEdge = BaseFace.GetDiagonal();
 
-        if (Bases is IRectangle rectangle && comparison != null)
+        if (BaseFace is IRectangle rectangle && comparison != null)
         {
             horizontalEdge = comparison == Comparison.Greater ?
                 rectangle.Width

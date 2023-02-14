@@ -78,8 +78,7 @@ public static class CalculateGeometrics
 
     internal static IArea GetRectangleArea(IExtent length, IExtent width, AreaUnit areaUnit = AreaUnit.meterSquare)
     {
-        length.ValidateShapeExtent();
-        width.ValidateShapeExtent();
+        ValidateShapeExtents(length, width);
 
         decimal lengthQuantity = length.GetDecimalQuantity();
         decimal widthQuantity = width.GetDecimalQuantity();
@@ -92,8 +91,7 @@ public static class CalculateGeometrics
 
     internal static IVolume GetCylinderVolume(IExtent radius, IExtent height, VolumeUnit volumeUnit = default)
     {
-        radius.ValidateShapeExtent();
-        height.ValidateShapeExtent();
+        ValidateShapeExtents(radius, height);
 
         double radiusQuantity = (double)radius.Quantity;
         decimal heightQuantity = height.GetDecimalQuantity();
@@ -106,9 +104,7 @@ public static class CalculateGeometrics
 
     internal static IVolume GetCuboidVolume(IExtent length, IExtent width, IExtent height, VolumeUnit volumeUnit = VolumeUnit.meterCubic)
     {
-        length.ValidateShapeExtent();
-        width.ValidateShapeExtent();
-        height.ValidateShapeExtent();
+        ValidateShapeExtents(length, width, height);
 
         decimal lengthQuantity = length.GetDecimalQuantity();
         decimal widthQuantity = width.GetDecimalQuantity();
@@ -155,7 +151,7 @@ public static class CalculateGeometrics
 
         if (count == 0) return MeterSquareExchangeRate;
 
-        shapeExtents.ValidateShapeExtents();
+        ValidateShapeExtents(shapeExtents);
 
         decimal lengthExchangeRate = shapeExtents.GetExchangeRate(0);
 
@@ -199,7 +195,7 @@ public static class CalculateGeometrics
 
         if (count == 0) return MeterCubicExchangeRate;
 
-        shapeExtents.ValidateShapeExtents();
+        ValidateShapeExtents(shapeExtents);
 
         decimal lengthExchangeRate = shapeExtents.GetExchangeRate(0);
         decimal heightExchangeRate = shapeExtents.GetExchangeRate(count - 1);
