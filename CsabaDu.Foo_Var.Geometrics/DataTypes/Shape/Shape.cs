@@ -13,7 +13,7 @@ internal abstract class Shape : IShape
     public int ShapeExtentTypeCount { get; init; }
     public IShapeFactory ShapeFactory { get; init; }
 
-    private protected Shape(ShapeTrait shapeTraits, IShapeFactory shapeFactory)
+    private protected Shape(IShapeFactory shapeFactory, ShapeTrait shapeTraits)
     {
         ValidateShapeTraits(shapeTraits);
 
@@ -23,7 +23,7 @@ internal abstract class Shape : IShape
         ShapeExtentTypeCount = ShapeExtentTypeSet.Count;
     }
 
-    private protected Shape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : this(shapeTraits, new ShapeFactory())
+    private protected Shape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : this(new ShapeFactory(), shapeTraits)
     {
         ValidateShapeExtentList(shapeExtentList, shapeTraits);
     }

@@ -10,7 +10,7 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     private readonly ISurface _surface;
     public abstract IArea Area { get; init; }
 
-    private protected PlaneShape(ShapeTrait shapeTraits) : base(shapeTraits)
+    private protected PlaneShape(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
     {
        _surface = new SpreadFactory().GetSurface(this);
     }

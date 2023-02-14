@@ -12,28 +12,28 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 {
     public IArea Area { get; init; }
 
-    public BulkSurface(IArea area)
+    public BulkSurface(IArea area) : base(new SpreadFactory())
     {
         ValidateSpreadMeasure(area);
 
         Area = area;
     }
 
-    public BulkSurface(ISpread<IArea, AreaUnit> surface)
+    public BulkSurface(ISpread<IArea, AreaUnit> surface) : base(new SpreadFactory())
     {
         _ = surface ?? throw new ArgumentNullException(nameof(surface));
 
         Area = surface.GetSpreadMeasure();
     }
 
-    public BulkSurface(IPlaneShape planeShape)
+    public BulkSurface(IPlaneShape planeShape) : base(new SpreadFactory())
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
 
         Area = planeShape.Area;
     }
 
-    public BulkSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
+    public BulkSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(new SpreadFactory())
     {
         shapeTraits.ValidateShapeTraitsBySpreadType(typeof(IPlaneShape));
         shapeTraits.ValidateShapeExtentList(shapeExtentList);
