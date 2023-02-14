@@ -1,10 +1,11 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
+﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 
-public interface IHorizontalRotation
+public interface IHorizontalRotation<T> where T : IShape
 {
-    IRectangle GetComparedFace(Comparison? comparison);
-    ICuboid RotatedHorizontally();
-    (ICuboid, ICuboid) RotatedHorizontallyWith(ICuboid other);
+    T RotatedHorizontally();
+    (T, T) RotatedHorizontallyWith(T other);
+    IExtent GetComparedShapeExtent(Comparison? comparison);
+    IEnumerable<IExtent> GetSortedShapeExtentList();
 }

@@ -43,11 +43,11 @@
       <FileName>Interfaces\Behaviors\Shape\IProjection.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape.IRotate&lt;T&gt;" Collapsed="true">
+  <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape.IHorizontalRotation&lt;T&gt;" Collapsed="true">
     <Position X="0.5" Y="8.25" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAABIAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
-      <FileName>Interfaces\Behaviors\Shape\IRotate.cs</FileName>
+      <HashCode>AAABIAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Interfaces\Behaviors\Shape\IHorizontalRotation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape.IShapeExtent" Collapsed="true">
@@ -547,13 +547,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Behaviors\Shape\IBases.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape.IHorizontalRotation" Collapsed="true">
-    <Position X="3" Y="12.75" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>BAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
-      <FileName>Interfaces\Behaviors\Shape\IHorizontalRotation.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

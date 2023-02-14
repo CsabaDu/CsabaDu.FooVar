@@ -25,7 +25,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects.GeometricBody" Collapsed="true">
-    <Position X="5.75" Y="6.5" Width="1.5" />
+    <Position X="5.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAARAAAIAAgAQAgAIhAABAAAAAUACABAKAIAAAEAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\GeometricBody.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects.SpatialShape&lt;T&gt;" Collapsed="true">
-    <Position X="6.75" Y="8" Width="1.5" />
+    <Position X="6.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAABAAAAAAAAAAAAABAAAAACAQAgAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\SpatialShape.cs</FileName>
@@ -65,7 +65,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.Shape" Collapsed="true">
-    <Position X="3.75" Y="5" Width="1.25" />
+    <Position X="3" Y="5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>EAAQIIAgAAAAAAQIgAAgAAAIAAAEAQBQBACAIAACRAA=</HashCode>
       <FileName>DataTypes\Shape\Shape.cs</FileName>
@@ -112,7 +112,7 @@
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes.Cuboid" Collapsed="true">
     <Position X="5.5" Y="9.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAARIIAAAAEAAAAAAAAAAMBAAAQAAAAAAAIAAAAIBCA=</HashCode>
+      <HashCode>BAARIIAgAAEAAAAAAAAAAMBAAAQAAAAAAAIAAAAJBAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\Cuboid.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -134,7 +134,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes.ComplexSpatialShape" Collapsed="true">
-    <Position X="4.5" Y="8" Width="1.75" />
+    <Position X="4.25" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAQAYAAAEAAAACAAAAAAALAAAAAACAQAAqAAAAABIA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\ComplexSpatialShape.cs</FileName>

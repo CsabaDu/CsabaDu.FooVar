@@ -104,19 +104,19 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return ShapeFactory.GetCircle(radius);
     }
 
-    public IRectangularShape Rotated()
+    public IRectangularShape RotatedHorizontally()
     {
         IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
 
         return GetRectangle(shapeExtentList.ToArray());
     }
 
-    public (IRectangularShape, IRectangularShape) RotatedWith(IRectangularShape other)
+    public (IRectangularShape, IRectangularShape) RotatedHorizontallyWith(IRectangularShape other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
         other.ValidateShapeTraits(ShapeTrait.Plane);
 
-        return (Rotated(), other.Rotated());
+        return (RotatedHorizontally(), other.RotatedHorizontally());
     }
 }

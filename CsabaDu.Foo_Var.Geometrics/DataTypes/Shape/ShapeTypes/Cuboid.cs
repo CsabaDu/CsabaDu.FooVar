@@ -130,7 +130,22 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
         return ShapeFactory.GetCylinder(bases, Height);
     }
 
-    public ICuboid RotatedHorizontally()
+    public ICuboid RotatedSpatially()
+    {
+        IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
+
+        return GetCuboid(shapeExtentList.ToArray());
+
+    }
+
+    public (ICuboid, ICuboid) RotatedSpatiallyWith(ICuboid other)
+    {
+        _ = other ?? throw new ArgumentNullException(nameof(other));
+
+        return (RotatedSpatially(), other.RotatedSpatially());
+    }
+
+    public IRectangularShape RotatedHorizontally()
     {
         IExtent length = Bases.GetComparedShapeExtent(Comparison.Greater);
         IExtent width = Bases.GetComparedShapeExtent(Comparison.Less);
@@ -138,26 +153,12 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
         return GetCuboid(length, width, Height);
     }
 
-    public (ICuboid, ICuboid) RotatedHorizontallyWith(ICuboid other)
-    {
-        _ = other ?? throw new ArgumentNullException(nameof(other));
-
-        return (RotatedHorizontally(), other.RotatedHorizontally());
-    }
-
-    public IRectangularShape Rotated()
-    {
-        IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
-
-        return GetCuboid(shapeExtentList.ToArray());
-    }
-
-    public (IRectangularShape, IRectangularShape) RotatedWith(IRectangularShape other)
+    public (IRectangularShape, IRectangularShape) RotatedHorizontallyWith(IRectangularShape other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
         other.ValidateShapeTraits(ShapeTrait.None);
 
-        return (Rotated(), other.Rotated());
+        return (RotatedHorizontally(), other.RotatedHorizontally());
     }
 }

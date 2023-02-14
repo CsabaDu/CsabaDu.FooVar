@@ -2,7 +2,7 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
-public interface IRectangularShape : IShape, IRotate<IRectangularShape>
+public interface IRectangularShape : IShape, IHorizontalRotation<IRectangularShape>
 {
     IExtent Length { get; init; }
     IExtent Width { get; init; }
