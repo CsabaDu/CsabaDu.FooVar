@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
+using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
@@ -81,11 +81,7 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-<<<<<<< HEAD
         return GetCuboid(geometricBody.GetBaseFace(), geometricBody.GetHeight());
-=======
-        return GetCuboid(geometricBody.GetBaseShape(), geometricBody.GetHeight());
->>>>>>> main
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)

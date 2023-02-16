@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
+using CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
@@ -35,21 +35,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public IExtent GetComparedShapeExtent(Comparison? comparison)
     {
-<<<<<<< HEAD
         return CalculateGeometrics.GetComparedShapeExtent(Length, Width, comparison);
-=======
-        IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
-
-        comparison ??= Comparison.Greater;
-
-        return comparison switch
-        {
-            Comparison.Greater => shapeExtentList.First(),
-            Comparison.Less => shapeExtentList.Last(),
-
-            _ => throw new ArgumentOutOfRangeException(nameof(comparison), comparison, null),
-        };
->>>>>>> main
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
@@ -131,10 +117,6 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
         other.ValidateShapeTraits(ShapeTrait.Plane);
 
-<<<<<<< HEAD
         return (RotatedHorizontally(), other.RotatedHorizontally());
-=======
-        return (Rotated(), other.Rotated());
->>>>>>> main
     }
 }

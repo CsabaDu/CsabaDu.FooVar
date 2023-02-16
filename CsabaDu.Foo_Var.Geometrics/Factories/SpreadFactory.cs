@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Spread.SpreadTypes;
+using CsabaDu.Foo_Var.Geometrics.DataTypes.Spread.SpreadTypes;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
@@ -50,11 +50,7 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories
 
         private static ISurface CreateSurface(IGeometricBody geometricBody)
         {
-<<<<<<< HEAD
             IArea baseArea = geometricBody.GetBaseFace().Area;
-=======
-            IArea baseArea = geometricBody.GetBaseShape().Area;
->>>>>>> main
             IExtent height = geometricBody.GetHeight();
             IMeasure basePerimeter = height;
 

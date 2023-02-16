@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Factories;
+using CsabaDu.Foo_Var.Geometrics.Factories;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
@@ -13,11 +13,7 @@ internal abstract class GeometricBody : Shape, IGeometricBody
     public abstract IVolume Volume { get; init; }
     public IBodyFactory BodyFactory { get; init; }
 
-<<<<<<< HEAD
     private protected GeometricBody(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
-=======
-    private protected GeometricBody(ShapeTrait shapeTraits) : base(shapeTraits)
->>>>>>> main
     {
         BodyFactory = new SpreadFactory();
     }
