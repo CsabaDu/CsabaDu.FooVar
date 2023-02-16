@@ -9,7 +9,7 @@ internal abstract class Rate : Measure, IRate
     #region Properties
     public IDenominator Denominator { get; init; }
 
-    public IRateFactory RateFactory { get; init; }
+    public IRateFactory RateFactory => new RateFactory(this);
     #endregion
 
     #region Constructors

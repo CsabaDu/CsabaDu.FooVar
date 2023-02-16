@@ -7,12 +7,21 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Spread;
 
 internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U : struct, Enum
 {
+<<<<<<< HEAD
     public ISpreadFactory SpreadFactory { get; init; }
 
     private protected Spread(ISpreadFactory spreadFactory)
     {
         SpreadFactory = spreadFactory ?? throw new ArgumentNullException(nameof(spreadFactory));
     }
+=======
+    //public ISpreadFactory BodyFactory { get; init; }
+
+    //private protected Spread()
+    //{
+    //    BodyFactory = new BodyFactory();
+    //}
+>>>>>>> main
 
     public int CompareTo(ISpread<T, U>? other)
     {

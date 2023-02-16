@@ -65,7 +65,11 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     {
 
         
+<<<<<<< HEAD
         IArea baseArea = geometricBody.GetBaseFace().Area;
+=======
+        IArea baseArea = geometricBody.GetBaseShape().Area;
+>>>>>>> main
         IExtent height = geometricBody.GetHeight();
         IMeasure basePerimeter = height;
 
