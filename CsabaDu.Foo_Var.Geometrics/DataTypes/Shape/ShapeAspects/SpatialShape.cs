@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeAspects;
@@ -17,11 +17,6 @@ internal abstract class SpatialShape<T> : GeometricBody, ISpatialShape<T> where 
     private protected SpatialShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         BaseFace = (T)GetBaseFace(shapeExtentList);
-        Height = shapeExtentList.Last();
-    }
-
-    public T BaseFace { get; init; }
-    public IExtent Height { get; init; }
 
     public override sealed IExtent GetHeight() => Height;
 

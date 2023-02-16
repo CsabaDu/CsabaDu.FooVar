@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Factories;
+using CsabaDu.Foo_Var.Geometrics.Factories;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;

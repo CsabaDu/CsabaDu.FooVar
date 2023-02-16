@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
@@ -116,7 +116,7 @@ public static class ValidateGeometrics
         if (!extentUnit.IsDefinedMeasureUnit(typeof(ExtentUnit))) throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
     }
 
-    internal static void ValidateShapeExtents(params IExtent[] shapeExtents)
+   internal static void ValidateShapeExtents(params IExtent[] shapeExtents)
     {
         int count = shapeExtents?.Length ?? throw new ArgumentNullException(nameof(shapeExtents));
 
@@ -127,12 +127,4 @@ public static class ValidateGeometrics
             item.ValidateShapeExtent();
         }
     }
-    //private static Type[] GetShapeTypeInterfaces(ShapeTrait shapeTraits, Type shapeType)
-    //{
-    //    _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
-
-    //    shapeTraits.ValidateShapeTraits();
-
-    //    return shapeType.GetInterfaces();
-    //}
 }

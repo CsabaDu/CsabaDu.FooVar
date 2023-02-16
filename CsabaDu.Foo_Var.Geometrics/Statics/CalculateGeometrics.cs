@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.Foo_Var.Measures.Factories;
 using CsabaDu.Foo_Var.Measures.Interfaces.Factories;
 
@@ -47,14 +47,13 @@ public static class CalculateGeometrics
 
         return new List<IExtent>() { length, width, height };
     }
-
+    
     internal static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison? comparison = Comparison.Greater)
     {
         bool isFirstExtentShorter = firstExtent.CompareTo(lastExtent) < 0;
 
         IExtent shorterExtent = isFirstExtentShorter ? firstExtent : lastExtent;
         IExtent longerExtent = isFirstExtentShorter ? lastExtent : firstExtent;
-
         return comparison switch
         {
             Comparison.Greater => longerExtent,
