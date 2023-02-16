@@ -11,7 +11,7 @@ internal abstract class Shape : IShape
     public ShapeTrait ShapeTraits { get; init; }
     public ImmutableSortedSet<ShapeExtentType> ShapeExtentTypeSet { get; init; }
     public int ShapeExtentTypeCount { get; init; }
-    public IShapeFactory ShapeFactory => new ShapeFactory();
+    public IShapeFactory ShapeFactory { get; init; }
 
     private protected Shape(IShapeFactory shapeFactory, ShapeTrait shapeTraits)
     {

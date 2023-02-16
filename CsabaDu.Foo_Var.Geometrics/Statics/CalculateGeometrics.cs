@@ -1,9 +1,6 @@
 ﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.Foo_Var.Measures.Factories;
-<<<<<<< HEAD
 using CsabaDu.Foo_Var.Measures.Interfaces.Factories;
-=======
->>>>>>> main
 
 namespace CsabaDu.Foo_Var.Geometrics.Statics;
 
@@ -38,11 +35,7 @@ public static class CalculateGeometrics
 
         for (int i = 1; i < count; i++)
         {
-<<<<<<< HEAD
             int lengthIndex = i * CuboidShapeExtentCount; // TODO Gondold át
-=======
-            int lengthIndex = i * CuboidShapeExtentCount;
->>>>>>> main
             length = GetComparedShapeExtent(length, innerShapeExtentList.ElementAt(lengthIndex));
 
             int widthIndex = lengthIndex + 1;
@@ -55,20 +48,12 @@ public static class CalculateGeometrics
         return new List<IExtent>() { length, width, height };
     }
 
-<<<<<<< HEAD
     internal static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison? comparison = Comparison.Greater)
     {
         bool isFirstExtentShorter = firstExtent.CompareTo(lastExtent) < 0;
 
         IExtent shorterExtent = isFirstExtentShorter ? firstExtent : lastExtent;
         IExtent longerExtent = isFirstExtentShorter ? lastExtent : firstExtent;
-=======
-    private static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison comparison = Comparison.Greater)
-    {
-        int argumentsComparisonResult = firstExtent.CompareTo(lastExtent);
-        IExtent longerExtent = argumentsComparisonResult >= 0 ? firstExtent : lastExtent;
-        IExtent shorterExtent = argumentsComparisonResult >= 0 ? lastExtent : firstExtent;
->>>>>>> main
 
         return comparison switch
         {

@@ -7,7 +7,7 @@ public interface IRate : IProportional<IRate, IRate>, IExchange<IRate, IDenomina
 {
     IDenominator Denominator { get; init; }
 
-    IRateFactory RateFactory { get; }
+    IRateFactory RateFactory { get; init; }
 
     IMeasure GetNumerator(IBaseMeasure? other = null);
 

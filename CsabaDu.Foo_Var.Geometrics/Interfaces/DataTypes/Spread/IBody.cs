@@ -6,11 +6,7 @@ namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
 public interface IBody : ISpread<IVolume, VolumeUnit>
 {
     IVolume Volume { get; init; }
-<<<<<<< HEAD
     //IBodyFactory BodyFactory { get; init; }
-=======
-    IBodyFactory BodyFactory { get; init; }
->>>>>>> main
 
     IBody GetBody(VolumeUnit? volumeUnit = null);
     IBody GetBody(IVolume volume);

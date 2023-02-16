@@ -15,11 +15,7 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
         Volume = GetCylinderVolume(radius, Height);
     }
 
-<<<<<<< HEAD
     public Cylinder(ICircle baseFace, IExtent height) : base(baseFace, height, ShapeTrait.Circular)
-=======
-    public Cylinder(ICircle baseShape, IExtent height) : base(baseShape, height, ShapeTrait.Circular)
->>>>>>> main
     {
         IExtent radius = baseFace.Radius;
 
@@ -85,11 +81,7 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
-<<<<<<< HEAD
         return GetCylinder(geometricBody.GetBaseFace(), geometricBody.GetHeight());
-=======
-        return GetCylinder(geometricBody.GetBaseShape(), geometricBody.GetHeight());
->>>>>>> main
     }
 
     public ICircularShape GetCircularShape(params IExtent[] shapeExtents) => ShapeFactory.GetCircularShape(shapeExtents);
