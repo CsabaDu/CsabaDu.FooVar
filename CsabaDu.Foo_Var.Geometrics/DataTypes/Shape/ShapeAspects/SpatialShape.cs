@@ -17,6 +17,11 @@ internal abstract class SpatialShape<T> : GeometricBody, ISpatialShape<T> where 
     private protected SpatialShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         BaseFace = (T)GetBaseFace(shapeExtentList);
+        Height = shapeExtentList.Last();
+    }
+
+    public T BaseFace { get; init; }
+    public IExtent Height { get; init; }
 
     public override sealed IExtent GetHeight() => Height;
 
