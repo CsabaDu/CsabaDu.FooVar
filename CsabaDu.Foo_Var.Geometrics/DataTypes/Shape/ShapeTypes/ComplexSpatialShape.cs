@@ -5,7 +5,11 @@ using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Shape.ShapeTypes;
 
+<<<<<<< HEAD
+internal sealed class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
+=======
 internal class ComplexSpatialShape : GeometricBody, IComplexSpatialShape
+>>>>>>> main
 {
     public ComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions) : base(ShapeTrait.None)
     {

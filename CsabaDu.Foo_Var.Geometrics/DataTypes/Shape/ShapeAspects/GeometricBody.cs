@@ -13,7 +13,11 @@ internal abstract class GeometricBody : Shape, IGeometricBody
     public abstract IVolume Volume { get; init; }
     public IBodyFactory BodyFactory { get; init; }
 
+<<<<<<< HEAD
+    private protected GeometricBody(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
+=======
     private protected GeometricBody(ShapeTrait shapeTraits) : base(shapeTraits)
+>>>>>>> main
     {
         BodyFactory = new SpreadFactory();
     }
@@ -31,22 +35,22 @@ internal abstract class GeometricBody : Shape, IGeometricBody
 
     public bool? FitsIn(ISpread<IVolume, VolumeUnit>? other = null, LimitType? limitType = null) => Body.FitsIn(other, limitType);
 
-    public IPlaneShape GetBaseShape(ExtentUnit extentUnit)
+    public IPlaneShape GetBaseFace(ExtentUnit extentUnit)
     {
-        return GetBaseShape().GetPlaneShape(extentUnit);
+        return GetBaseFace().GetPlaneShape(extentUnit);
     }
 
-    public IPlaneShape GetBaseShape(IEnumerable<IExtent> shapeExtentList)
+    public IPlaneShape GetBaseFace(IEnumerable<IExtent> shapeExtentList)
     {
-        ValidateShapeExtentList(shapeExtentList, GetBaseShape().ShapeTraits);
+        ValidateShapeExtentList(shapeExtentList, GetBaseFace().ShapeTraits);
 
         int lastIndex = ShapeExtentTypeCount - 1;
-        IExtent[] baseShapeExtents = shapeExtentList.TakeWhile(x => x == shapeExtentList.ElementAt(lastIndex)).ToArray();
+        IExtent[] baseFaceExtents = shapeExtentList.TakeWhile(x => x == shapeExtentList.ElementAt(lastIndex)).ToArray();
 
-        return GetBaseShape(baseShapeExtents);
+        return GetBaseFace(baseFaceExtents);
     }
 
-    public IPlaneShape GetBaseShape(params IExtent[] shapeExtents)
+    public IPlaneShape GetBaseFace(params IExtent[] shapeExtents)
     {
         return ShapeFactory.GetPlaneShape(shapeExtents);
     }

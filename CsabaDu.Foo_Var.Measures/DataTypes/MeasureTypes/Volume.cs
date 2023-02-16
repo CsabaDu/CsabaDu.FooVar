@@ -1,23 +1,24 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Volume : Measure, IVolume
 {
-    public Volume(ValueType quantity, VolumeUnit volumeUnit) : base(quantity, volumeUnit)
+    public Volume(ValueType quantity, VolumeUnit volumeUnit) : base(new MeasureFactory(), quantity, volumeUnit)
     {
         Quantity = quantity.ToQuantity(typeof(double))!;
     }
 
-    public Volume(ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
+    public Volume(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(VolumeUnit));
 
         Quantity = quantity.ToQuantity(typeof(double))!;
     }
 
-    public Volume(IBaseMeasure other) : base(other)
+    public Volume(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(VolumeUnit));
 

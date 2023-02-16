@@ -9,15 +9,19 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
 {
     public Cylinder(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Circular)
     {
-        IExtent radius = BaseShape.Radius;
+        IExtent radius = BaseFace.Radius;
 
         Radius = radius;
         Volume = GetCylinderVolume(radius, Height);
     }
 
+<<<<<<< HEAD
+    public Cylinder(ICircle baseFace, IExtent height) : base(baseFace, height, ShapeTrait.Circular)
+=======
     public Cylinder(ICircle baseShape, IExtent height) : base(baseShape, height, ShapeTrait.Circular)
+>>>>>>> main
     {
-        IExtent radius = baseShape.Radius;
+        IExtent radius = baseFace.Radius;
 
         Radius = radius;
         Volume = GetCylinderVolume(radius, height);
@@ -39,9 +43,9 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
 
     public IRectangularShape GetDimensions()
     {
-        IRectangle baseShape = (IRectangle)BaseShape.GetDimensions();
+        IRectangle baseFace = (IRectangle)BaseFace.GetDimensions();
 
-        return ShapeFactory.GetCuboid(baseShape, Height);
+        return ShapeFactory.GetCuboid(baseFace, Height);
     }
 
     public ICylinder GetCylinder(params IExtent[] shapeExtents)
@@ -53,23 +57,23 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
         return ShapeFactory.GetCylinder(shapeExtents[0], shapeExtents[1]);
     }
 
-    public ICylinder GetCylinder(IPlaneShape baseShape, IExtent height)
+    public ICylinder GetCylinder(IPlaneShape baseFace, IExtent height)
     {
-        _ = baseShape ?? throw new ArgumentNullException(nameof(baseShape));
+        _ = baseFace ?? throw new ArgumentNullException(nameof(baseFace));
 
-        if (baseShape is ICircle circle)
+        if (baseFace is ICircle circle)
         {
             return GetCylinder(circle, height);
         }
 
-        if (baseShape is IRectangle rectangle)
+        if (baseFace is IRectangle rectangle)
         {
             ICuboid cuboid = ShapeFactory.GetCuboid(rectangle, height);
 
             return (ICylinder)cuboid.GetTangentShape();
         }
 
-        throw new ArgumentOutOfRangeException(nameof(baseShape), baseShape.GetShapeType(), null);
+        throw new ArgumentOutOfRangeException(nameof(baseFace), baseFace.GetShapeType(), null);
     }
 
     public ICylinder GetCylinder(ExtentUnit extentUnit)
@@ -81,7 +85,11 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
     {
         _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
 
+<<<<<<< HEAD
+        return GetCylinder(geometricBody.GetBaseFace(), geometricBody.GetHeight());
+=======
         return GetCylinder(geometricBody.GetBaseShape(), geometricBody.GetHeight());
+>>>>>>> main
     }
 
     public ICircularShape GetCircularShape(params IExtent[] shapeExtents) => ShapeFactory.GetCircularShape(shapeExtents);
@@ -97,8 +105,8 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
 
     public override IShape GetTangentShape(Side shapeSide = Side.Outer)
     {
-        IRectangle baseShape = (IRectangle)BaseShape.GetTangentShape(shapeSide);
+        IRectangle baseFace = (IRectangle)BaseFace.GetTangentShape(shapeSide);
 
-        return ShapeFactory.GetCuboid(baseShape, Height);
+        return ShapeFactory.GetCuboid(baseFace, Height);
     }
 }

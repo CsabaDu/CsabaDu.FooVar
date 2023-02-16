@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
+
+namespace CsabaDu.Foo_Var.Cargoes.Interfaces;
+
+public interface IBulk : IMass/*, IDensity*/
+{
+    IBulkBody BulkBody {get; init;}
+
+    IBulk GetBulk();
+    IBulk GetBulk(IWeight weight, IBody body);
+=======
 ﻿using CsabaDu.Foo_Var.Common.Interfaces.Behaviors;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
@@ -127,4 +140,5 @@ namespace CsabaDu.Foo_Var.Cargoes.Interfaces
     {
 
     }
+>>>>>>> main
 }

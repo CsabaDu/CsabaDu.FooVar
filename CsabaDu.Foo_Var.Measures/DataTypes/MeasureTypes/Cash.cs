@@ -1,23 +1,24 @@
-﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Factories;
+using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Cash : Measure, ICash
 {
-    public Cash(ValueType quantity, Currency currency, decimal? exchangeRate = null) : base(quantity, currency, exchangeRate)
+    public Cash(ValueType quantity, Currency currency, decimal? exchangeRate = null) : base(new MeasureFactory(), quantity, currency, exchangeRate)
     {
         Quantity = quantity.ToQuantity(typeof(decimal))!;
     }
 
-    public Cash(ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
+    public Cash(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(Currency));
 
         Quantity = quantity.ToQuantity(typeof(decimal))!;
     }
 
-    public Cash(IBaseMeasure other) : base(other)
+    public Cash(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(Currency));
 

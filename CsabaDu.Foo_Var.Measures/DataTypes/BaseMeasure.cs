@@ -16,26 +16,26 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Constructors
-    private protected BaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(measureUnit)
+    private protected BaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(new MeasurementFactory(), measureUnit)
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
-        Measurement = new MeasurementFactory().GetMeasurement(measureUnit, exchangeRate);
+        Measurement = MeasurementFactory.GetMeasurement(measureUnit, exchangeRate);
 
         DecimalQuantity = GetDecimalQuantity(quantity);
     }
 
-    private protected BaseMeasure(ValueType quantity, IMeasurement measurement) : base(measurement)
+    private protected BaseMeasure(ValueType quantity, IMeasurement measurement) : base(new MeasurementFactory(), measurement)
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
-        Measurement = new MeasurementFactory().GetMeasurement(measurement);
+        Measurement = MeasurementFactory.GetMeasurement(measurement);
 
         DecimalQuantity = GetDecimalQuantity(quantity);
     }
 
-    private protected BaseMeasure(IBaseMeasure other) : base(other?.Measurement ?? throw new ArgumentNullException(nameof(other)))
+    private protected BaseMeasure(IBaseMeasure other) : base(new MeasurementFactory(), other?.Measurement ?? throw new ArgumentNullException(nameof(other)))
     {
         Quantity = other.Quantity;
-        Measurement = new MeasurementFactory().GetMeasurement(other.Measurement);
+        Measurement = MeasurementFactory.GetMeasurement(other.Measurement);
 
         DecimalQuantity = GetDecimalQuantity(other.GetQuantity());
     }
@@ -214,8 +214,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         {
             quantity = decimal.Round(quantity, 8);
         }
-
-        //if (DecimalQuantity < 0 && (type == typeof(uint) || type == typeof(ulong))) return null;
 
         return quantity.ToQuantity(type);
     }

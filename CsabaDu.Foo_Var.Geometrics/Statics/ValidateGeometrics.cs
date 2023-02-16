@@ -116,12 +116,32 @@ public static class ValidateGeometrics
         if (!extentUnit.IsDefinedMeasureUnit(typeof(ExtentUnit))) throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
     }
 
+<<<<<<< HEAD
+    internal static void ValidateShapeExtents(params IExtent[] shapeExtents)
+    {
+        int count = shapeExtents?.Length ?? throw new ArgumentNullException(nameof(shapeExtents));
+
+        if (count == 0) throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null);
+
+        foreach (IExtent item in shapeExtents)
+        {
+            item.ValidateShapeExtent();
+        }
+    }
     //private static Type[] GetShapeTypeInterfaces(ShapeTrait shapeTraits, Type shapeType)
     //{
     //    _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
 
     //    shapeTraits.ValidateShapeTraits();
 
+=======
+    //private static Type[] GetShapeTypeInterfaces(ShapeTrait shapeTraits, Type shapeType)
+    //{
+    //    _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
+
+    //    shapeTraits.ValidateShapeTraits();
+
+>>>>>>> main
     //    return shapeType.GetInterfaces();
     //}
 }

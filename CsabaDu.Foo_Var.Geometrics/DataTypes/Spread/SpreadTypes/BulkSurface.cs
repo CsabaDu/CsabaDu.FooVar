@@ -12,28 +12,28 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 {
     public IArea Area { get; init; }
 
-    public BulkSurface(IArea area)
+    public BulkSurface(IArea area) : base(new SpreadFactory())
     {
         ValidateSpreadMeasure(area);
 
         Area = area;
     }
 
-    public BulkSurface(ISpread<IArea, AreaUnit> surface)
+    public BulkSurface(ISpread<IArea, AreaUnit> surface) : base(new SpreadFactory())
     {
         _ = surface ?? throw new ArgumentNullException(nameof(surface));
 
         Area = surface.GetSpreadMeasure();
     }
 
-    public BulkSurface(IPlaneShape planeShape)
+    public BulkSurface(IPlaneShape planeShape) : base(new SpreadFactory())
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
 
         Area = planeShape.Area;
     }
 
-    public BulkSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
+    public BulkSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(new SpreadFactory())
     {
         shapeTraits.ValidateShapeTraitsBySpreadType(typeof(IPlaneShape));
         shapeTraits.ValidateShapeExtentList(shapeExtentList);
@@ -65,7 +65,11 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     {
 
         
+<<<<<<< HEAD
+        IArea baseArea = geometricBody.GetBaseFace().Area;
+=======
         IArea baseArea = geometricBody.GetBaseShape().Area;
+>>>>>>> main
         IExtent height = geometricBody.GetHeight();
         IMeasure basePerimeter = height;
 
@@ -76,7 +80,7 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 
         if (geometricBody is ICylinder cylinder)
         {
-            basePerimeter = cylinder.BaseShape.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
+            basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
         }
 
         IExtent mantleBaseExtent = height.GetExtent(basePerimeter);

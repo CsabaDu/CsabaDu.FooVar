@@ -2,10 +2,10 @@
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 
-public interface IRotate<T> where T : IShape
+public interface IHorizontalRotation<T> where T : IShape
 {
-    T Rotated();
-    (T, T) RotatedWith(T other);
+    T RotatedHorizontally();
+    (T, T) RotatedHorizontallyWith(T other);
     IExtent GetComparedShapeExtent(Comparison? comparison);
     IEnumerable<IExtent> GetSortedShapeExtentList();
 }

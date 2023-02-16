@@ -10,12 +10,10 @@ internal sealed class Measurement : Measurable, IMeasurement
     public decimal ExchangeRate { get; init; }
 
     public Type MeasureUnitType { get; init; }
-
-    public IMeasurementFactory MeasurementFactory { get; init; }
     #endregion
 
     #region Constructors
-    internal Measurement(Enum measureUnit, decimal? exchangeRate = null) : base(measureUnit)
+    internal Measurement(Enum measureUnit, decimal? exchangeRate = null) : base(new MeasurementFactory(), measureUnit)
     {
         measureUnit.ValidateExchangeRate(exchangeRate, false);
 
@@ -23,7 +21,6 @@ internal sealed class Measurement : Measurable, IMeasurement
 
         ExchangeRate = measureUnit.GetExchangeRate();
         MeasureUnitType = GetMeasureUnitType();
-        MeasurementFactory = new MeasurementFactory();
     }
     #endregion
 

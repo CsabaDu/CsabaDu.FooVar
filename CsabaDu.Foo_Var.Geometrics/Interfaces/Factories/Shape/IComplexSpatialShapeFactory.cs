@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+﻿namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape;
+
+public interface IComplexSpatialShapeFactory
+{
+    // TODO
+=======
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,4 +16,5 @@ namespace CsabaDu.Foo_Var.Geometrics.Interfaces.Factories.Shape
     public interface IComplexSpatialShapeFactory
     {
     }
+>>>>>>> main
 }

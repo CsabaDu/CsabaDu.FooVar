@@ -50,7 +50,11 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories
 
         private static ISurface CreateSurface(IGeometricBody geometricBody)
         {
+<<<<<<< HEAD
+            IArea baseArea = geometricBody.GetBaseFace().Area;
+=======
             IArea baseArea = geometricBody.GetBaseShape().Area;
+>>>>>>> main
             IExtent height = geometricBody.GetHeight();
             IMeasure basePerimeter = height;
 
@@ -61,7 +65,7 @@ namespace CsabaDu.Foo_Var.Geometrics.Factories
 
             if (geometricBody is ICylinder cylinder)
             {
-                basePerimeter = cylinder.BaseShape.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
+                basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
             }
 
             IExtent mantleBaseExtent = height.GetExtent(basePerimeter);

@@ -7,15 +7,24 @@ namespace CsabaDu.Foo_Var.Measures.DataTypes;
 internal abstract class Measure : BaseMeasure, IMeasure
 {
     #region Properties
-    public IMeasureFactory MeasureFactory => new MeasureFactory();
+    public IMeasureFactory MeasureFactory { get; init; }
     #endregion
 
     #region Constructors
-    private protected Measure(ValueType quantity, IMeasurement measurement) : base(quantity, measurement) { }
+    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
+    {
+        MeasureFactory = measureFactory ?? throw new ArgumentException(nameof(measureFactory));
+    }
 
-    private protected Measure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate) { }
+    private protected Measure(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate)
+    {
+        MeasureFactory = measureFactory ?? throw new ArgumentException(nameof(measureFactory));
+    }
 
-    private protected Measure(IBaseMeasure other) : base(other) { }
+    private protected Measure(IMeasureFactory measureFactory, IBaseMeasure other) : base(other)
+    {
+        MeasureFactory = measureFactory ?? throw new ArgumentException(nameof(measureFactory));
+    }
     #endregion
 
     #region Public methods

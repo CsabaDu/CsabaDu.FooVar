@@ -35,6 +35,9 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
     public IExtent GetComparedShapeExtent(Comparison? comparison)
     {
+<<<<<<< HEAD
+        return CalculateGeometrics.GetComparedShapeExtent(Length, Width, comparison);
+=======
         IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
 
         comparison ??= Comparison.Greater;
@@ -46,6 +49,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
 
             _ => throw new ArgumentOutOfRangeException(nameof(comparison), comparison, null),
         };
+>>>>>>> main
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
@@ -114,19 +118,23 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         return ShapeFactory.GetCircle(radius);
     }
 
-    public IRectangularShape Rotated()
+    public IRectangularShape RotatedHorizontally()
     {
         IEnumerable<IExtent> shapeExtentList = GetSortedShapeExtentList();
 
         return GetRectangle(shapeExtentList.ToArray());
     }
 
-    public (IRectangularShape, IRectangularShape) RotatedWith(IRectangularShape other)
+    public (IRectangularShape, IRectangularShape) RotatedHorizontallyWith(IRectangularShape other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
         other.ValidateShapeTraits(ShapeTrait.Plane);
 
+<<<<<<< HEAD
+        return (RotatedHorizontally(), other.RotatedHorizontally());
+=======
         return (Rotated(), other.Rotated());
+>>>>>>> main
     }
 }

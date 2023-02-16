@@ -13,5 +13,5 @@ public interface IShape : IShapeTraits, IShapeExtentList, IDiagonal, ITangentSha
     IShape GetShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
     IShape GetShape(IShape other);
 
-    void ValidateShapeExtents(params IExtent[] shapeExtents);
+    //void ValidateShapeExtents(params IExtent[] shapeExtents);
 }
