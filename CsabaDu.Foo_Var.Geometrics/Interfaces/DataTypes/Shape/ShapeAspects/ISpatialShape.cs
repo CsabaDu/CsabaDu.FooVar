@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
+using CsabaDu.Foo_Var.Geometrics.Interfaces.Behaviors.Shape;
 
 namespace CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 

@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.Factories;
+using CsabaDu.Foo_Var.Geometrics.Factories;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
@@ -41,7 +41,6 @@ namespace CsabaDu.Foo_Var.Geometrics.DataTypes.Spread
         }
         public IBody GetBody(IVolume volume) => SpreadFactory.GetBody(volume);
         public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => SpreadFactory.GetBody(spread);
-
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
 
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(ISpread<IVolume, VolumeUnit> spread) => GetBody(spread);

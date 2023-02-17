@@ -1,4 +1,4 @@
-﻿using CsabaDu.Foo_Var.Geometrics.DataTypes.Spread.SpreadTypes;
+using CsabaDu.Foo_Var.Geometrics.DataTypes.Spread.SpreadTypes;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.Foo_Var.Geometrics.Interfaces.DataTypes.Spread;
