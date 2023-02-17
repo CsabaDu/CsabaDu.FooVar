@@ -13,7 +13,7 @@ internal sealed class FlatRate : Rate, IFlatRate
 
     internal FlatRate(ValueType quantity, IMeasurement measurement, IDenominator denominator) : base(new RateFactory(new MeasureFactory()), quantity, measurement, denominator) { }
 
-    internal FlatRate(IMeasure numerator, IDenominator denominator) : base(new RateFactory(new MeasureFactory()), numerator, denominator) { }
+    internal FlatRate(IMeasure numerator, IDenominator denominator) : base(new RateFactory(numerator.MeasureFactory), numerator, denominator) { }
 
     internal FlatRate(IRate rate) : base(new RateFactory(new MeasureFactory()), rate) { }
     #endregion
