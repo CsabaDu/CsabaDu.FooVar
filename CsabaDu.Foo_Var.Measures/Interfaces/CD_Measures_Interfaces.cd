@@ -228,7 +228,7 @@
   <Interface Name="CsabaDu.Foo_Var.Measures.Interfaces.DataTypes.IMeasurable" Collapsed="true">
     <Position X="3.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\IMeasurable.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -274,7 +274,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAIQAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAIQAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\IMeasurement.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -290,8 +290,8 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.Foo_Var.Common.Interfaces.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="3.438" Y="1.062" />
-        <Point X="3.438" Y="1.437" />
+        <Point X="3.5" Y="1.062" />
+        <Point X="3.5" Y="1.437" />
         <Point X="8" Y="1.437" />
         <Point X="8" Y="11" />
       </Path>
@@ -312,8 +312,8 @@
     <Position X="0.5" Y="6.5" Width="1.75" />
     <InheritanceLine Type="CsabaDu.Foo_Var.Common.Interfaces.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="3.062" Y="1.062" />
-        <Point X="3.062" Y="1.437" />
+        <Point X="3" Y="1.062" />
+        <Point X="3" Y="1.437" />
         <Point X="1.375" Y="1.437" />
         <Point X="1.375" Y="6.5" />
       </Path>
@@ -439,7 +439,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Measures.Interfaces.Factories.IMeasurementFactory" Collapsed="true">
-    <Position X="3.25" Y="19" Width="1.75" />
+    <Position X="3.25" Y="18.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Factories\IMeasurementFactory.cs</FileName>
@@ -453,7 +453,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.Foo_Var.Measures.Interfaces.Builders.IRateBuilder" Collapsed="true">
-    <Position X="3.5" Y="22" Width="1.5" />
+    <Position X="3.25" Y="22.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAEAAAAABAAAIAAAAAAAAABAgAAAABAA=</HashCode>
       <FileName>Interfaces\Builders\IRateBuilder.cs</FileName>
