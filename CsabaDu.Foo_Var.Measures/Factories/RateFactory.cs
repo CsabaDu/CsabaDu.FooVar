@@ -8,7 +8,6 @@ public sealed class RateFactory : IRateFactory
 {
     #region Fields
     private readonly IMeasureFactory _measureFactory;
-    private readonly ILimitFactory _limitFactory = new LimitFactory();
     #endregion
 
     #region Constructors
@@ -53,17 +52,17 @@ public sealed class RateFactory : IRateFactory
 
     public ILimit GetLimit(IMeasurement measurement, ValueType? quantity = null, LimitType limitType = default)
     {
-        return _limitFactory.GetLimit(measurement, quantity, limitType);
+        return  new Limit(measurement, quantity, limitType);
     }
 
     public ILimit GetLimit(IBaseMeasure baseMeasure, LimitType limitType = default)
     {
-        return _limitFactory.GetLimit(baseMeasure, limitType);
+        return new Limit(baseMeasure, limitType);
     }
 
     public ILimit GetLimit(Enum measureUnit, ValueType? quantity = null, decimal? exchangeRate = null, LimitType limitType = default)
     {
-        return _limitFactory.GetLimit(measureUnit, quantity, exchangeRate, limitType);
+        return new Limit(measureUnit, quantity, exchangeRate, limitType);
     }
 
     public IFlatRate GetFlatRate(IRate rate)

@@ -25,7 +25,7 @@ internal abstract class Rate : Measure, IRate
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
     }
 
-    private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(new MeasureFactory(), numerator)
+    private protected Rate(IRateFactory rateFactory, IMeasure numerator, IDenominator denominator) : base(numerator.MeasureFactory, numerator)
     {
         RateFactory = rateFactory ?? throw new ArgumentNullException(nameof(rateFactory));
         Denominator = denominator ?? throw new ArgumentNullException(nameof(denominator));
