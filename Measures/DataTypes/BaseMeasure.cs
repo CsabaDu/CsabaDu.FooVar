@@ -66,7 +66,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         _ = type ?? throw new ArgumentNullException(nameof(type));
 
-        return ConvertDecimalToQuantityType(DecimalQuantity) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        return ConvertDecimalToType(DecimalQuantity, type) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
     }
 
     public decimal GetDecimalQuantity() => DecimalQuantity;
@@ -202,11 +202,16 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         Type type = Quantity.GetType();
 
+        return ConvertDecimalToType(quantity, type);
+    }
+
+    private static ValueType? ConvertDecimalToType(decimal quantity, Type type)
+    {
         if (type == typeof(decimal)) return quantity;
 
         if (type == typeof(uint) || type == typeof(ulong))
         {
-            if (DecimalQuantity < 0) return null;
+            if (quantity < 0) return null;
 
             quantity = decimal.Round(quantity);
         }

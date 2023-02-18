@@ -675,13 +675,100 @@ public class BaseMeasureTests
         // Arrange
         var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        var expected = quantity;
 
         // Act
         var actual = baseMeasure.GetQuantity();
 
         // Assert
-        Assert.AreEqual(quantity, actual);
+        Assert.AreEqual(expected, actual);
     }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_InvalidRoundingModeArg_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        int roundingModeMaxValue = Enum.GetNames(typeof(RoundingMode)).Length;
+        RoundingMode invalidRoundingMode = (RoundingMode)roundingModeMaxValue + 1;
+        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+
+        // Act
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => baseMeasure.GetQuantity(invalidRoundingMode));
+        Assert.AreEqual(ParamNames.roundingMode, ex.ParamName);
+    }
+
+    [DataTestMethod, TestCategory("UnitTest")]
+    [DataRow(default(RoundingMode), 3.0)]
+    [DataRow(RoundingMode.Ceiling, 4.0)]
+    [DataRow(RoundingMode.Floor, 3.0)]
+    [DataRow(RoundingMode.Half, 3.5)]
+    public void GetQuantity_ValidRoundingModeArg_ReturnsExpected(RoundingMode roundingMode, ValueType expected)
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        ValueType quantity = Math.PI;
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+
+        // Act
+        var actual = baseMeasure.GetQuantity(roundingMode);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_NullArg_ThrowsArgumentNullException()
+    {
+        // Arrange
+        // Act
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(() => _baseMeasure.GetQuantity(null));
+        Assert.AreEqual(ParamNames.type, ex.ParamName);
+    }
+
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_InvalidTypeArg_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        Type invalidType = typeof(bool);
+
+        // Act
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _baseMeasure.GetQuantity(invalidType));
+        Assert.AreEqual(ParamNames.type, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_ValidTypeArg_ReturnsExpected()
+    {
+        // Arrange
+        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        Type type;
+        if (baseMeasure.GetDecimalQuantity() < 0)
+        {
+            do
+            {
+                type = RandomParams.GetRandomQuantityType();
+            }
+            while (type != typeof(uint) && type != typeof(ulong));
+        }
+        else
+        {
+            type = RandomParams.GetRandomQuantityType();
+        }
+        var expected = quantity.ToQuantity(type);
+
+        // Act
+        var actual = baseMeasure.GetQuantity(type);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
     #endregion
 
     #region ExchangeTo

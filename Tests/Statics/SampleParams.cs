@@ -6,7 +6,7 @@ namespace CsabaDu.FooVar.Tests.Statics
         internal static ValueType ZeroQuantity => default(int);
         internal static ValueType PositiveQuantity => uint.MaxValue;
         internal static ValueType NegativeQuantity => DecimalMinusOne;
-        internal static ValueType FractionQuantity => double.Epsilon;
+        internal static ValueType FractionQuantity => Math.PI;
         #endregion
 
         #region MeasureUnits

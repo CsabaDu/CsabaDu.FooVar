@@ -3,6 +3,7 @@
 internal static class ParamNames
 {
     internal static string measurementFactory => "measurementFactory";
+    internal static string roundingMode => "roundingMode";
     internal static string baseMeasure => "baseMeasure";
     internal static string exchangeRate => "exchangeRate";
     internal static string measurement => "measurement";

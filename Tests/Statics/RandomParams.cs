@@ -187,8 +187,6 @@ internal static class RandomParams
 
         quantity = quantity >= 1 ? quantity : 1;
 
-        //Type quantityType = GetRandomQuantityType();
-
         return (decimal)quantity.ToQuantity(typeof(decimal))!;
     }
 
@@ -197,7 +195,7 @@ internal static class RandomParams
         return (uint)R.Next(int.MaxValue);
     }
 
-    private static Type GetRandomQuantityType()
+    internal static Type GetRandomQuantityType()
     {
         int typeIndex = R.Next(ValidQuantityTypesCount);
         return ValidQuantityTypes.ElementAt(typeIndex);
