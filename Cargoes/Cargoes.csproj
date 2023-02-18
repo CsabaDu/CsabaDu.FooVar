@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Commodities\Commodities.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Geometrics\Geometrics.csproj" />
+    <ProjectReference Include="..\Measures\Measures.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Statics\" />
+  </ItemGroup>
+
+</Project>
