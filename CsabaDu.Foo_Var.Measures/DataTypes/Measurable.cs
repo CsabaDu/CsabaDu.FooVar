@@ -1,5 +1,4 @@
-﻿using CsabaDu.Foo_Var.Measures.Factories;
-using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
+﻿using CsabaDu.Foo_Var.Measures.Interfaces.DataTypes;
 using CsabaDu.Foo_Var.Measures.Interfaces.Factories;
 
 namespace CsabaDu.Foo_Var.Measures.DataTypes;
@@ -15,18 +14,18 @@ internal abstract class Measurable : IMeasurable
     #region Constructors
     private protected Measurable(IMeasurementFactory measurementFactory, Enum measureUnit)
     {
-        _ = measureUnit ?? throw new ArgumentNullException(nameof(measureUnit));
+        MeasurementFactory = measurementFactory ?? throw new ArgumentNullException(nameof(measurementFactory));
 
+        _ = measureUnit ?? throw new ArgumentNullException(nameof(measureUnit));
         if (!measureUnit.IsDefinedMeasureUnit()) throw new ArgumentOutOfRangeException(nameof(measureUnit));
 
-        MeasurementFactory = measurementFactory ?? throw new ArgumentNullException(nameof(measurementFactory));
         MeasureUnit = measureUnit;
     }
 
-    private protected Measurable(IMeasurementFactory measurementFactory, IMeasurement measurement)
+    private protected Measurable(IMeasurement measurement)
     {
-        MeasurementFactory = measurementFactory ?? throw new ArgumentNullException(nameof(measurementFactory));
-        MeasureUnit = measurement?.MeasureUnit ?? throw new ArgumentNullException(nameof(measurement));
+        MeasurementFactory = measurement?.MeasurementFactory ?? throw new ArgumentNullException(nameof(measurement));
+        MeasureUnit = measurement.MeasureUnit;
     }
     #endregion
 

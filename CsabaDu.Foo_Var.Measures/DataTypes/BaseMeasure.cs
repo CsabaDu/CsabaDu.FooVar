@@ -24,7 +24,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         DecimalQuantity = GetDecimalQuantity(quantity);
     }
 
-    private protected BaseMeasure(ValueType quantity, IMeasurement measurement) : base(new MeasurementFactory(), measurement)
+    private protected BaseMeasure(ValueType quantity, IMeasurement measurement) : base(measurement)
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
         Measurement = MeasurementFactory.GetMeasurement(measurement);
@@ -32,7 +32,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         DecimalQuantity = GetDecimalQuantity(quantity);
     }
 
-    private protected BaseMeasure(IBaseMeasure other) : base(new MeasurementFactory(), other?.Measurement ?? throw new ArgumentNullException(nameof(other)))
+    private protected BaseMeasure(IBaseMeasure other) : base(other?.Measurement ?? throw new ArgumentNullException(nameof(other)))
     {
         Quantity = other.Quantity;
         Measurement = MeasurementFactory.GetMeasurement(other.Measurement);
