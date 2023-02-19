@@ -728,7 +728,6 @@ public class BaseMeasureTests
         Assert.AreEqual(ParamNames.type, ex.ParamName);
     }
 
-
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_InvalidTypeArg_ThrowsArgumentOutOfRangeException()
     {
@@ -738,6 +737,34 @@ public class BaseMeasureTests
         // Act
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _baseMeasure.GetQuantity(invalidType));
+        Assert.AreEqual(ParamNames.type, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_UIntTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        ValueType quantity = SampleParams.NegativeQuantity;
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+
+        // Act
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => baseMeasure.GetQuantity(typeof(uint)));
+        Assert.AreEqual(ParamNames.type, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetQuantity_ULongTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        ValueType quantity = SampleParams.NegativeQuantity;
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+
+        // Act
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => baseMeasure.GetQuantity(typeof(ulong)));
         Assert.AreEqual(ParamNames.type, ex.ParamName);
     }
 
