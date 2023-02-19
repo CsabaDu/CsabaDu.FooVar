@@ -81,7 +81,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         decimal exchangeRate = measurement.ExchangeRate;
 
-        if (ExchangeTo(exchangeRate) is not ValueType quantity) return null;
+        ValueType quantity = ExchangeTo(exchangeRate)!;
 
         return GetBaseMeasure(quantity, measurement);
     }
