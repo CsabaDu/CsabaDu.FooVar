@@ -782,21 +782,11 @@ public class BaseMeasureTests
     public void GetQuantity_ValidTypeArg_ReturnsExpected()
     {
         // Arrange
-        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
+        ValueType quantity = RandomParams.GetRandomNotNegativeValueTypeQuantity();
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-        Type type;
-        if (baseMeasure.GetDecimalQuantity() < 0)
-        {
-            do
-            {
-                type = RandomParams.GetRandomQuantityType();
-            }
-            while (type != typeof(uint) && type != typeof(ulong));
-        }
-        else
-        {
-            type = RandomParams.GetRandomQuantityType();
-        }
+        Type type = RandomParams.GetRandomQuantityType();
+
         var expected = quantity.ToQuantity(type);
 
         // Act
@@ -900,7 +890,7 @@ public class BaseMeasureTests
         var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs(RandomParams.RandomMeasureUnitType.Constant);
         Type expectedType = quantity.GetType();
         var baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-        decimal exchangeRate = (decimal)RandomParams.GetRandomUInt64Quantity().ToQuantity(typeof(decimal));
+        decimal exchangeRate = (decimal)RandomParams.GetRandomNotNegativeValueTypeQuantity().ToQuantity(typeof(decimal));
 
         decimal expectedValue = (decimal)quantity.ToQuantity(typeof(decimal)) / exchangeRate;
         expectedValue *= measureUnit.GetExchangeRate();
