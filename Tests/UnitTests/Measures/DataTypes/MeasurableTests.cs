@@ -12,6 +12,7 @@ public class MeasurableTests
     #region Private fields
 
     private IMeasurable _measurableChild;
+    private IMeasurementFactory _factory;
 
     #endregion
 
@@ -24,7 +25,8 @@ public class MeasurableTests
 
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
-        _measurableChild = new MeasurableChild(new MeasurementFactory(), measureUnit);
+        _factory = new MeasurementFactory();
+        _measurableChild = new MeasurableChild(_factory, measureUnit);
     }
 
     #endregion
@@ -67,7 +69,7 @@ public class MeasurableTests
 
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new MeasurableChild(new MeasurementFactory(), measureUnit));
+        var ex = Assert.ThrowsException<ArgumentNullException>(() => new MeasurableChild(_factory, measureUnit));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -77,7 +79,7 @@ public class MeasurableTests
         // Arrange
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new MeasurableChild(new MeasurementFactory(),SampleParams.NotMeasureUnitTypeEnum));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new MeasurableChild(_factory, SampleParams.NotMeasureUnitTypeEnum));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -87,7 +89,7 @@ public class MeasurableTests
         // Arrange
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new MeasurableChild(new MeasurementFactory(), SampleParams.NotDefinedSampleMeasureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new MeasurableChild(_factory, SampleParams.NotDefinedSampleMeasureUnit));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -109,7 +111,7 @@ public class MeasurableTests
     {
         // Arrange
         // Act
-        var measurableChild = new MeasurableChild(new MeasurementFactory(), expected);
+        var measurableChild = new MeasurableChild(_factory, expected);
 
         // Assert
         Assert.IsNotNull(measurableChild);
@@ -147,8 +149,7 @@ public class MeasurableTests
     {
         // Arrange
         Enum expectedMeasureUnit = RandomParams.GetRandomDefaultMeasureUnit();
-        IMeasurementFactory factory = new MeasurementFactory();
-        IMeasurement measurement = factory.GetMeasurement(expectedMeasureUnit);
+        IMeasurement measurement = _factory.GetMeasurement(expectedMeasureUnit);
 
         // Act
         var actual = new MeasurableChild(measurement);
@@ -203,7 +204,7 @@ public class MeasurableTests
     {
         // Arrange
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
-        IMeasurable expected = new MeasurableChild(new MeasurementFactory(), measureUnit);
+        IMeasurable expected = new MeasurableChild(_factory, measureUnit);
 
         // Act
         var actual = expected.GetMeasurable(null);
@@ -217,7 +218,7 @@ public class MeasurableTests
     {
         // Arrange
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
-        IMeasurable expected = new MeasurableChild(new MeasurementFactory(), measureUnit);
+        IMeasurable expected = new MeasurableChild(_factory, measureUnit);
 
         // Act
         var actual = expected.GetMeasurable();
@@ -291,7 +292,7 @@ public class MeasurableTests
     public void ValidateMeasureUnitType_DifferentMeasureUnitTypeArg_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
-        IMeasurable measurable = new MeasurableChild(new MeasurementFactory(), SampleParams.DifferentTypeSampleMeasureUnit);
+        IMeasurable measurable = new MeasurableChild(_factory, SampleParams.DifferentTypeSampleMeasureUnit);
 
         // Act
         // Assert
@@ -304,7 +305,7 @@ public class MeasurableTests
     public void ValidateMeasureUnitType_ValidArg_VoidPasses()
     {
         // Arrange
-        IMeasurable measurable = new MeasurableChild(new MeasurementFactory(), SampleParams.DefaultSampleMeasureUnit);
+        IMeasurable measurable = new MeasurableChild(_factory, SampleParams.DefaultSampleMeasureUnit);
         bool hasCompleted = false;
 
         try
