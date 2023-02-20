@@ -912,22 +912,22 @@ public class BaseMeasureTests
     {
         // Arrange
         var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs(RandomParams.RandomMeasureUnitType.Constant);
-        Type expectedType = quantity.GetType();
-        var baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        Type expectedQuantityType = quantity.GetType();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
         decimal exchangeRate = (decimal)RandomParams.GetRandomPositiveValueTypeQuantity().ToQuantity(typeof(decimal));
 
         decimal expectedValue = (decimal)quantity.ToQuantity(typeof(decimal)) / exchangeRate;
         expectedValue *= measureUnit.GetExchangeRate();
-        expectedValue = TestSupport.GetQuantityDecimalValue(expectedValue, expectedType);
+        expectedValue = TestSupport.GetQuantityDecimalValue(expectedValue, expectedQuantityType);
 
         // Act
         var actual = baseMeasure.ExchangeTo(exchangeRate);
-        decimal actualValue = (decimal)actual.ToQuantity(typeof(decimal));
-        Type actualType = actual.GetType();
+        var actualValue = (decimal)actual.ToQuantity(typeof(decimal));
+        var actualQuantityType = actual.GetType();
 
         // Assert
         Assert.AreEqual(expectedValue, actualValue);
-        Assert.AreEqual(expectedType, actualType);
+        Assert.AreEqual(expectedQuantityType, actualQuantityType);
     }
 
     #endregion
@@ -935,22 +935,22 @@ public class BaseMeasureTests
 
     #region TryExchangeTo
     [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(LimitType), false)]
-    [DataRow(default(Currency), false)]
-    [DataRow(default(VolumeUnit), false)]
-    [DataRow((WeightUnit)3, false)]
-    public void TryExchangeTo_InvalidArg_ReturnsExpected_OutNull(Enum measureUnit, bool expected)
+    [DataRow(default(LimitType), null)]
+    [DataRow(default(Currency), null)]
+    [DataRow(default(VolumeUnit), null)]
+    [DataRow((WeightUnit)3, null)]
+    public void TryExchangeTo_InvalidArg_ReturnsExpected_OutNull(Enum measureUnit, IBaseMeasure expected)
     {
         // Arrange
         ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, SampleParams.MediumValueSampleMeasureUnit);
 
         // Act
-        var actual = baseMeasure.TryExchangeTo(measureUnit, out IBaseMeasure exchanged);
+        var result = baseMeasure.TryExchangeTo(measureUnit, out IBaseMeasure actual);
 
         // Assert
+        Assert.IsFalse(result);
         Assert.AreEqual(expected, actual);
-        Assert.IsNull(exchanged);
     }
 
     [TestMethod, TestCategory("UnitTest")]
