@@ -115,7 +115,7 @@ public class MeasurementFactoryTests
             () => _factory.GetMeasurement(measureUnit, differentExchangeRate));
         Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
     }
 
@@ -137,7 +137,7 @@ public class MeasurementFactoryTests
         IMeasurement expected = _factory.GetMeasurement(expectedMeasureUnit);
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
 
@@ -159,7 +159,7 @@ public class MeasurementFactoryTests
         IMeasurement expected = _factory.GetMeasurement(expectedMeasureUnit, null);
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
 
@@ -178,7 +178,7 @@ public class MeasurementFactoryTests
         Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
         Assert.AreEqual(expectedExchangeRate, actual.ExchangeRate);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
 
@@ -236,7 +236,7 @@ public class MeasurementFactoryTests
         // Assert
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(Currency.HUF);
     }
     #endregion

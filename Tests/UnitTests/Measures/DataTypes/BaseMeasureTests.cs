@@ -1,6 +1,6 @@
-using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
+using CsabaDu.FooVar.Measures.Statics;
 using CsabaDu.FooVar.Tests.Fakes.Measures;
 
 namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
@@ -23,11 +23,11 @@ public class BaseMeasureTests
     {
         TestSupport.RestoreDefaultMeasureUnits();
 
-        _factory = new MeasurementFactory();
-
         ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+
         _baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        _factory = _baseMeasure.MeasurementFactory;
     }
 
     #endregion
@@ -230,7 +230,7 @@ public class BaseMeasureTests
         Assert.AreEqual(expectedQuantity, actual.Quantity);
         Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
 
@@ -262,7 +262,7 @@ public class BaseMeasureTests
         Assert.AreEqual(expectedQuantity, actual.Quantity);
         Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
 
@@ -364,7 +364,7 @@ public class BaseMeasureTests
         Assert.AreEqual(expectedQuantity, actual.Quantity);
         Assert.AreEqual(expectedMeasurement, actual.Measurement);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
     }
     #endregion
@@ -516,7 +516,7 @@ public class BaseMeasureTests
         // Assert
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
     }
 
@@ -539,7 +539,7 @@ public class BaseMeasureTests
         Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
         Assert.AreEqual(expectedExchangeRate, actual.GetExchangeRate());
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(Pieces.Default);
     }
 
@@ -562,7 +562,7 @@ public class BaseMeasureTests
         Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
         Assert.AreEqual(expectedExchangeRate, actual.GetExchangeRate());
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(Pieces.Default);
     }
     #endregion
@@ -571,29 +571,34 @@ public class BaseMeasureTests
 
     #region GetExchangeRate
     [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(WeightUnit), 1)]
-    [DataRow(WeightUnit.kg, 1000)]
-    [DataRow((WeightUnit)2, 1000000)]
-    [DataRow(VolumeUnit.mmCubic, 1)]
-    [DataRow(VolumeUnit.cmCubic, 1000)]
-    [DataRow(VolumeUnit.dmCubic, 1000000)]
-    [DataRow(VolumeUnit.meterCubic, 1000000000)]
-    [DataRow(default(Currency), 1)]
-    [DataRow(Currency.EUR, 409)]
-    public void GetExchangeRate_ReturnsExpected(Enum measureUnit, int expected)
+    [DataRow(default(WeightUnit), 1.0)]
+    [DataRow(WeightUnit.kg, 1000.0)]
+    [DataRow((WeightUnit)2, 1000000.0)]
+    [DataRow(VolumeUnit.mmCubic, 1.0)]
+    [DataRow(VolumeUnit.cmCubic, 1000.0)]
+    [DataRow(VolumeUnit.dmCubic, 1000000.0)]
+    [DataRow(VolumeUnit.meterCubic, 1000000000.0)]
+    [DataRow(default(Currency), 1.0)]
+    [DataRow(Currency.EUR, 409.2987)] // SampleParams.EurExchangeRate
+    public void GetExchangeRate_ReturnsExpected(Enum measureUnit, double expected)
     {
         // Arrange
-        _ = Currency.EUR.TryAddExchangeRate(409);
+        if (measureUnit is Currency.EUR)
+        {
+            _ = measureUnit.TryAddExchangeRate(SampleParams.EurExchangeRate);
+        }
+
         var baseMeasure = new BaseMeasureChild(SampleParams.ZeroQuantity, measureUnit);
 
         // Act
         var result = baseMeasure.GetExchangeRate();
+        double actual = (double)result.ToQuantity(typeof(double))!;
 
         // Assert
-        Assert.AreEqual(result, expected);
+        Assert.AreEqual(expected, actual);
 
-        // Rearrange
-        TestSupport.RemoveIfNotDefaultMeasureUnit(Currency.EUR);
+        // Restore
+        TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
     }
     #endregion
 
@@ -799,6 +804,25 @@ public class BaseMeasureTests
     #endregion
     #endregion
 
+    #region GetDecimalQuaintity
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDecimalQuaintity_ReturnsExpected()
+    {
+        // Arrange
+        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        var expected = (decimal)quantity.ToQuantity(typeof(decimal));
+
+        // Act
+        var actual = baseMeasure.GetDecimalQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    #endregion
+
     #region ExchangeTo
     #region ExchangeTo(Enum measureUnit)
     [DataTestMethod, TestCategory("UnitTest")]
@@ -890,11 +914,10 @@ public class BaseMeasureTests
         var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs(RandomParams.RandomMeasureUnitType.Constant);
         Type expectedType = quantity.GetType();
         var baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-        decimal exchangeRate = (decimal)RandomParams.GetRandomNotNegativeValueTypeQuantity().ToQuantity(typeof(decimal));
+        decimal exchangeRate = (decimal)RandomParams.GetRandomPositiveValueTypeQuantity().ToQuantity(typeof(decimal));
 
         decimal expectedValue = (decimal)quantity.ToQuantity(typeof(decimal)) / exchangeRate;
         expectedValue *= measureUnit.GetExchangeRate();
-        expectedValue = (decimal)expectedValue.ToQuantity(typeof(decimal));
         expectedValue = TestSupport.GetQuantityDecimalValue(expectedValue, expectedType);
 
         // Act

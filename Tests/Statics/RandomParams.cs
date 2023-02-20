@@ -87,13 +87,26 @@ internal static class RandomParams
     {
         ValueType quantity = GetRandomValueTypeQuantity();
 
-        while (Convert.ToDouble(quantity) < 0)
+        while ((double)quantity.ToQuantity(typeof(double))! < 0)
         {
             quantity = GetRandomValueTypeQuantity();
         }
 
         return quantity;
     }
+
+    internal static ValueType GetRandomPositiveValueTypeQuantity()
+    {
+        ValueType quantity = GetRandomNotNegativeValueTypeQuantity();
+
+        while ((double)quantity.ToQuantity(typeof(double))! == 0)
+        {
+            quantity = GetRandomNotNegativeValueTypeQuantity();
+        }
+
+        return quantity;
+    }
+
 
     internal static ValueType GetRandomDenominatorQuantity()
     {

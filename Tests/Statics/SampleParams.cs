@@ -28,6 +28,7 @@ namespace CsabaDu.FooVar.Tests.Statics
         internal static decimal DecimalNegative => decimal.MinValue;
         internal static decimal DecimalOne => decimal.One;
         internal static decimal DecimalMinusOne => decimal.MinusOne;
+        internal static decimal EurExchangeRate => 409.2987m;
         #endregion
 
         #region LimitTypes

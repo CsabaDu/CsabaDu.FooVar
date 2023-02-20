@@ -156,7 +156,7 @@ public class MeasurementTests
             () => new Measurement(measureUnitHasAdHocRate, SampleParams.DecimalPositive));
         Assert.AreEqual(ParamNames.exchangeRate, ex4.ParamName);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnitHasAdHocRate);
     }
 
@@ -186,7 +186,7 @@ public class MeasurementTests
         Assert.AreEqual(expectedMeasureUnit, measurement.MeasureUnit);
         Assert.AreEqual(expectedExchangeRate, measurement.ExchangeRate);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
 
@@ -224,7 +224,7 @@ public class MeasurementTests
             () => new Measurement(SampleParams.MeasureUnitShouldHaveAdHocRate, SampleParams.DecimalOne));
         Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(SampleParams.MeasureUnitShouldHaveAdHocRate);
     }
 
@@ -244,7 +244,7 @@ public class MeasurementTests
         Assert.AreEqual(expectedMeasureUnit, measurement.MeasureUnit);
         Assert.AreEqual(expectedExchangeRate, measurement.ExchangeRate);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
     #endregion
@@ -298,7 +298,7 @@ public class MeasurementTests
         // Assert
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
     }
     #endregion
@@ -326,7 +326,7 @@ public class MeasurementTests
         // Assert
         Assert.AreEqual(excpected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(excpected);
     }
     #endregion
@@ -411,7 +411,7 @@ public class MeasurementTests
         // Assert
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
     }
 
@@ -449,7 +449,7 @@ public class MeasurementTests
         // Assert
         Assert.AreEqual(expected, actual);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
     }
     #endregion
@@ -531,7 +531,7 @@ public class MeasurementTests
         Assert.AreEqual(expectedExchangeRate, actual1.ExchangeRate);
         Assert.AreEqual(actual1, actual2);
 
-        // Rearrange
+        // Restore
         TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
     }
     #endregion
@@ -671,7 +671,7 @@ public class MeasurementTests
     //    // Assert
     //    Assert.AreEqual(expected, actual);
 
-    //    // Rearrange
+    //    // Restore
     //    TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
     //}
     //#endregion
@@ -728,7 +728,7 @@ public class MeasurementTests
     //    // Assert
     //    Assert.AreEqual(expected, actual);
 
-    //    // Rearrange
+    //    // Restore
     //    TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
     //}
     //#endregion
