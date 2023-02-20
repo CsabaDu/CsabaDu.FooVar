@@ -1,15 +1,15 @@
 ﻿namespace CsabaDu.FooVar.Common.Statics;
 
 // Measures
-public enum LimitType : byte { BeNotLess, BeNotGreater, BeGreater, BeLess, BeEqual }
+public enum LimitType : { BeNotLess, BeNotGreater, BeGreater, BeLess, BeEqual }
 
-public enum RoundingMode : byte { General, Ceiling, Floor, Half }
+public enum RoundingMode : { General, Ceiling, Floor, Half }
 
-public enum SummingMode : byte { Add, Subtract }
+public enum SummingMode : { Add, Subtract }
 
-public enum BaseMeasureType : byte { Measure, Denominator, Limit }
+public enum BaseMeasureType : { Measure, Denominator, Limit }
 
 // Geometrics
-public enum Side : byte { Outer, Inner }
+public enum Side : { Outer, Inner }
 
-public enum Comparison : byte { Greater, Less }
+public enum Comparison : { Greater, Less }
