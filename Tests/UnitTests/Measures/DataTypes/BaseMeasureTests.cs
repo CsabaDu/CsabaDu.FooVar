@@ -701,7 +701,7 @@ public class BaseMeasureTests
     {
         // Arrange
         int roundingModeMaxValue = Enum.GetNames(typeof(RoundingMode)).Length;
-        RoundingMode invalidRoundingMode = (RoundingMode)roundingModeMaxValue + 1;
+        RoundingMode invalidRoundingMode = (RoundingMode)roundingModeMaxValue;
         var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
 

@@ -32,7 +32,7 @@ namespace CsabaDu.FooVar.Tests.Statics
         #endregion
 
         #region LimitTypes
-        internal static LimitType DefaultLimitType = default(LimitType);
+        internal static LimitType DefaultLimitType;
         internal static LimitType NonDefaultLimitType => (LimitType)Enum.GetNames(typeof(LimitType)).Length - 1;
         #endregion
     }
