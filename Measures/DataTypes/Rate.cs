@@ -116,7 +116,7 @@ internal abstract class Rate : Measure, IRate
         return Denominator.HasSameMeasureUnitType(otherDenominatorMeasureUnit);
     }
 
-    public decimal ProportionalTo(IRate? other)
+    public decimal ProportionalTo(IRate other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
@@ -125,7 +125,7 @@ internal abstract class Rate : Measure, IRate
         IMeasure otherNumerator = other.GetNumerator();
 
         decimal numeratorRatio = ProportionalTo(otherNumerator);
-
+            
         IDenominator otherDenominator = other.Denominator;
 
         if (otherDenominator.GetExchangeRate() == Denominator.GetExchangeRate()) return numeratorRatio;

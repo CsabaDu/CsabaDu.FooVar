@@ -96,6 +96,7 @@ public class BaseMeasureTests
     }
     #endregion
 
+    #region BaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null)
     #region MeasureUnitType validation
 
     [TestMethod, TestCategory("UnitTest")]
@@ -162,7 +163,6 @@ public class BaseMeasureTests
     }
     #endregion
 
-    #region BaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null)
     [TestMethod, TestCategory("UnitTest")]
     public void Ctor_ThreeNullArgs_ThrowsArgumentNullException()
     {
@@ -398,6 +398,7 @@ public class BaseMeasureTests
     }
 
     #endregion
+
     #endregion
 
     #region GetBaseMeasure
@@ -995,6 +996,5 @@ public class BaseMeasureTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
-
 }
 #nullable enable

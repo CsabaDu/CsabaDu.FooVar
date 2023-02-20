@@ -54,7 +54,7 @@ internal sealed class Measurement : Measurable, IMeasurement
         return HashCode.Combine(MeasureUnitType, ExchangeRate);
     }
 
-    public decimal ProportionalTo(IMeasurement? other)
+    public decimal ProportionalTo(IMeasurement other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 

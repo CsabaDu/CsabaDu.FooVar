@@ -33,6 +33,7 @@ public class MeasurableTests
 
     #region Constructor
 
+    #region Measurable(IMeasurementFactory measurementFactory, Enum measureUnit)
     #region MeasurementFactory validation
 
     [TestMethod, TestCategory("UnitTest")]
@@ -119,7 +120,9 @@ public class MeasurableTests
     }
 
     #endregion
+    #endregion
 
+    #region Measurable(IMeasurement measurement)
     #region IMeasurement validation
 
     [TestMethod, TestCategory("UnitTest")]
@@ -159,6 +162,7 @@ public class MeasurableTests
         Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
     }
 
+    #endregion
     #endregion
 
     #endregion

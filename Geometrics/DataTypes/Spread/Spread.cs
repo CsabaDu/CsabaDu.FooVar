@@ -99,7 +99,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
         return GetSpreadMeasure().IsExchangeableTo(spreadMeasureUnit);
     }
 
-    public decimal ProportionalTo(ISpread<T, U>? other)
+    public decimal ProportionalTo(ISpread<T, U> other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 

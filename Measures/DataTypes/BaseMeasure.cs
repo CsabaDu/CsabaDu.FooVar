@@ -111,7 +111,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(roundedQuantity);
     }
 
-    public decimal ProportionalTo(IBaseMeasure? other)
+    public decimal ProportionalTo(IBaseMeasure other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
