@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+﻿using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 
-public interface IDivide<in U, out T> where U : notnull where T : class
+namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+
+public interface IDivide<in U, out T> where U : notnull where T : class, IMeasure
 {
     T DividedBy(U divisor);
 }

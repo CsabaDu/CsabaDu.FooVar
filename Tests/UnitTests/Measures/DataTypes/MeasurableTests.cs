@@ -10,14 +10,11 @@ namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
 public class MeasurableTests
 {
     #region Private fields
-
     private IMeasurable _measurableChild;
     private IMeasurementFactory _factory;
-
     #endregion
 
     #region TestInitialize
-
     [TestInitialize]
     public void IntitializeMeasurableTests()
     {
@@ -28,7 +25,6 @@ public class MeasurableTests
         _factory = new MeasurementFactory();
         _measurableChild = new MeasurableChild(_factory, measureUnit);
     }
-
     #endregion
 
     #region Constructor

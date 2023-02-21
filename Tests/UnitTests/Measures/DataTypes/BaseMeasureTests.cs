@@ -10,26 +10,22 @@ namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
 public class BaseMeasureTests
 {
     #region Fields
-
     private IMeasurementFactory _factory;
     private IBaseMeasure _baseMeasure;
-
     #endregion
 
     #region TestInitialize
-
     [TestInitialize]
     public void IniitializeMaseMeasureTests()
     {
         TestSupport.RestoreDefaultMeasureUnits();
 
-        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
 
         _baseMeasure = new BaseMeasureChild(quantity, measureUnit);
         _factory = _baseMeasure.MeasurementFactory;
     }
-
     #endregion
 
     #region Constructor

@@ -27,7 +27,7 @@ public static class ValidateMeasures
 
     internal static ICollection<Enum> ValidMeasureUnits => ExchangeMeasures.Rates.Keys;
 
-    private static HashSet<Type> ValidMeasureUnitTypes => ValidMeasureUnits.Select(x => x.GetType()).ToHashSet();
+    private static IEnumerable<Type> ValidMeasureUnitTypes => ValidMeasureUnits.Select(x => x.GetType());
     #endregion
 
     #region Quantity
@@ -35,28 +35,6 @@ public static class ValidateMeasures
     {
         return ValidQuantityTypes.Contains(type);
     }
-
-    //internal static bool IsValidQuantityParam(this ValueType quantity, Type? baseMeasureType = null) // TODO
-    //{
-    //    if (!IsValidBaseMeasureType(baseMeasureType)) return false;
-
-    //    if (!IsValidQuantityParamType(quantity.GetType())) return false;
-
-    //    if (baseMeasureType == null || baseMeasureType == typeof(IMeasure)) return true;
-
-    //    if (quantity is not decimal decimalQuantity)
-    //    {
-    //        ValueType? nullableQuantity = quantity.ToQuantity(typeof(decimal));
-
-    //        if (nullableQuantity == null) return false;
-
-    //        decimalQuantity = (decimal)nullableQuantity;
-    //    }
-
-    //    return IsValidQuantity(decimalQuantity, baseMeasureType);
-
-    //    //throw new ArgumentOutOfRangeException(nameof(baseMeasureType));
-    //}
 
     internal static bool IsValidQuantityParamType(Type? type)
     {
@@ -67,8 +45,6 @@ public static class ValidateMeasures
 
     internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType = default)
     {
-        //baseMeasureType ??= typeof(IMeasure);
-
         if (!TryGetNotNullQuantityParam(quantityParam, out quantity, baseMeasureType)) return false;
 
         if (baseMeasureType == default)
@@ -95,18 +71,6 @@ public static class ValidateMeasures
                 default:
                     return false;
             }
-            //if (baseMeasureType == BaseMeasureType.Denominator)
-            //{
-            //    quantity = GetDenominatorQuantity(decimalQuantity);
-            //}
-            //else if (baseMeasureType == BaseMeasureType.Limit)
-            //{
-            //    quantity = GetLimitQuantity(decimalQuantity);
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         return quantity != null;
@@ -115,23 +79,6 @@ public static class ValidateMeasures
     private static bool TryGetNotNullQuantityParam(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType)
     {
         quantity = default;
-
-        //if (baseMeasureType == BaseMeasureType.Measure)
-        //{
-        //    quantity = quantityParam;
-        //}
-        //else if (baseMeasureType == BaseMeasureType.Denominator)
-        //{
-        //    quantity = quantityParam ?? decimal.One;
-        //}
-        //else if (baseMeasureType == BaseMeasureType.Limit)
-        //{
-        //    quantity = quantityParam ?? uint.MinValue;
-        //}
-        //else
-        //{
-        //    return false;
-        //}
 
         switch (baseMeasureType)
         {
@@ -213,7 +160,9 @@ public static class ValidateMeasures
         Type thisMeasureUnitType = measureUnit.GetType();
         measureUnitType ??= thisMeasureUnitType;
 
-        return measureUnitType.IsValidMeasureUnitType() && measureUnitType == thisMeasureUnitType && Enum.IsDefined(measureUnitType, measureUnit);
+        return measureUnitType.IsValidMeasureUnitType()
+            && measureUnitType == thisMeasureUnitType
+            && Enum.IsDefined(measureUnitType, measureUnit);
     }
 
     public static bool IsValidMeasureUnit(this Enum measureUnit)
@@ -251,17 +200,4 @@ public static class ValidateMeasures
 
         return GetOrCreateLimit(other.Denominator, limit);
     }
-
-    //private static HashSet<Type> BaseMeasureTypes => new()
-    //{
-    //    typeof(IMeasure),
-    //    typeof(IDenominator),
-    //    typeof(ILimit),
-    //};
-
-    //private static bool IsValidBaseMeasureType(Type? baseMeasureType)
-    //{
-    //    return baseMeasureType == null || BaseMeasureTypes.Contains(baseMeasureType);
-    //}
-
 }

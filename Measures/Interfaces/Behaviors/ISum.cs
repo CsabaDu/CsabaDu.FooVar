@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+﻿using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 
-public interface ISum<T> where T : class
+namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+
+public interface ISum<T> where T : class, IMeasure
 {
     T SumWith(T? other, SummingMode summingMode = SummingMode.Add);
 }

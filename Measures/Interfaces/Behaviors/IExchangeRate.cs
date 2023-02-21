@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+﻿using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 
-public interface IExchangeRate<T> : IExchange<T, Enum> where T : class
+namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+
+public interface IExchangeRate<T> : IExchange<T, Enum> where T : class, IBaseMeasure
 {
     decimal GetExchangeRate();
 }

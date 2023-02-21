@@ -10,7 +10,6 @@ public class MeasurementTests
 {
     #region Private fields
     private IMeasurementFactory _factory;
-
     private IMeasurement _measurement;
     #endregion
 
