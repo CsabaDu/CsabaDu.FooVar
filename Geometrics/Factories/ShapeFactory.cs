@@ -120,7 +120,7 @@ public sealed class ShapeFactory : IShapeFactory
     {
         return CreateShape(shapeExtentList, shapeTraits);
     }
-
+    // TODO ComplexDryBody
     private static IShape CreateShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
     {
         shapeTraits.ValidateShapeTraits();
@@ -128,11 +128,6 @@ public sealed class ShapeFactory : IShapeFactory
 
         if (!shapeTraits.Equals(ShapeTrait.None))
         {
-            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
-            {
-                return new Circle(shapeExtentList);
-            }
-
             if (shapeTraits.HasFlag(ShapeTrait.Plane))
             {
                 return new Rectangle(shapeExtentList);
@@ -141,6 +136,11 @@ public sealed class ShapeFactory : IShapeFactory
             if (shapeTraits.HasFlag(ShapeTrait.Circular))
             {
                 return new Cylinder(shapeExtentList);
+            }
+
+            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
+            {
+                return new Circle(shapeExtentList);
             }
         }
 

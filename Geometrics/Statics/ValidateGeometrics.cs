@@ -77,6 +77,11 @@ public static class ValidateGeometrics
     {
         shapeTraits.ValidateShapeTraits();
 
+        if (shapeTraits == ShapeTrait.None)
+        {
+            throw new NotImplementedException(); // TODO
+        }
+
         if (count != shapeTraits.GetShapeExtentCount()) throw new ArgumentOutOfRangeException(nameof(count), count, null);
     }
 

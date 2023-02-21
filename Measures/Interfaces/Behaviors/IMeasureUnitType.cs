@@ -2,8 +2,6 @@
 
 public interface IMeasureUnitType
 {
-    object MeasureUnit { get; init; }
-
     Type GetMeasureUnitType();
 
     bool HasSameMeasureUnitType(Enum measureUnit);
