@@ -73,7 +73,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Factories.ShapeFactory" Collapsed="true">
-    <Position X="6" Y="5" Width="1.5" />
+    <Position X="6" Y="5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>oAAABgAAIAABBAAAAAAEAIAAAAQAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Factories\ShapeFactory.cs</FileName>
@@ -96,7 +96,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.ShapeTraits" Collapsed="true">
-    <Position X="0.5" Y="3.5" Width="1.5" />
+    <Position X="0.5" Y="3.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAVBAAAAAAABAAAAAAAAAAABAAAAAAAACAAA=</HashCode>
       <FileName>Statics\ShapeTraits.cs</FileName>
