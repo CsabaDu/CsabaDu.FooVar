@@ -120,19 +120,19 @@
     <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IFit&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="5.875" Y="3.062" />
-        <Point X="5.875" Y="3.185" />
-        <Point X="6.377" Y="3.185" />
-        <Point X="6.377" Y="4.29" />
-        <Point X="6.5" Y="4.29" />
+        <Point X="5.875" Y="3.45" />
+        <Point X="7.625" Y="3.45" />
+        <Point X="7.625" Y="3.75" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
       <Path>
         <Point X="5.75" Y="2.062" />
-        <Point X="5.75" Y="2.185" />
-        <Point X="6.377" Y="2.185" />
-        <Point X="6.377" Y="4.29" />
-        <Point X="6.5" Y="4.29" />
+        <Point X="5.75" Y="2.34" />
+        <Point X="6.5" Y="2.34" />
+        <Point X="6.5" Y="3.45" />
+        <Point X="7.625" Y="3.45" />
+        <Point X="7.625" Y="3.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
