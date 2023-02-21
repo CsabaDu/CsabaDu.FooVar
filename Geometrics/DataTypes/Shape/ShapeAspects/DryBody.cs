@@ -8,7 +8,7 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
 
 internal abstract class DryBody : Shape, IDryBody
 {
-    private IBody _body => BodyFactory.GetBody(this);
+    private readonly IBody _body;
 
     public abstract IVolume Volume { get; init; }
     public IBodyFactory BodyFactory { get; init; }
@@ -16,11 +16,15 @@ internal abstract class DryBody : Shape, IDryBody
     private protected DryBody(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
     {
         BodyFactory = new SpreadFactory();
+
+        _body = BodyFactory.GetBody(this);
     }
 
     private protected DryBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         BodyFactory = new SpreadFactory();
+
+        _body = BodyFactory.GetBody(this);
     }
 
     public int CompareTo(ISpread<IVolume, VolumeUnit>? other) => _body.CompareTo(other);
