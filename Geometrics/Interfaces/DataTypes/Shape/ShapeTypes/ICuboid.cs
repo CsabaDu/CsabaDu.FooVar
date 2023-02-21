@@ -8,5 +8,5 @@ public interface ICuboid : ISpatialShape<IRectangle>, IRectangularShape, ISpatia
     ICuboid GetCuboid(params IExtent[] shapeExtents);
     ICuboid GetCuboid(IPlaneShape baseFace, IExtent height);
     ICuboid GetCuboid(ExtentUnit extentUnit);
-    ICuboid GetCuboid(IGeometricBody geometricBody);
+    ICuboid GetCuboid(IDryBody dryBody);
 }

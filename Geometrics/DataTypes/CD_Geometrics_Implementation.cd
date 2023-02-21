@@ -24,11 +24,11 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects.GeometricBody" Collapsed="true">
+  <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects.DryBody" Collapsed="true">
     <Position X="6" Y="5.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>QAAAARAAAAAAgAQAgAIhAABAAAAAUACABAKAIAAAEAA=</HashCode>
-      <FileName>DataTypes\Shape\ShapeAspects\GeometricBody.cs</FileName>
+      <FileName>DataTypes\Shape\ShapeAspects\DryBody.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

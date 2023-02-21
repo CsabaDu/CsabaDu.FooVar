@@ -70,7 +70,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
         {
             IExtent secondShapeExtent = shapeExtentList.ElementAt(1);
 
-            return GetGeometricBodyVolume(spreadMeasureUnit, firstShapeExtent, secondShapeExtent, lastShapeExtent, shapeTraits);
+            return GetDryBodyVolume(spreadMeasureUnit, firstShapeExtent, secondShapeExtent, lastShapeExtent, shapeTraits);
         }
 
         throw new ArgumentOutOfRangeException(nameof(spreadMeasureUnit), spreadMeasureUnit, null);
@@ -85,7 +85,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
         return (T)GetRectangleArea(firstShapeExtent, lastShapeExtent, (AreaUnit)measureUnit);
     }
 
-    private static T GetGeometricBodyVolume(U? spreadMeasureUnit, IExtent firstShapeExtent, IExtent secondShapeExtent, IExtent lastShapeExtent, ShapeTrait shapeTraits)
+    private static T GetDryBodyVolume(U? spreadMeasureUnit, IExtent firstShapeExtent, IExtent secondShapeExtent, IExtent lastShapeExtent, ShapeTrait shapeTraits)
     {
         Enum measureUnit = spreadMeasureUnit ?? (Enum)VolumeUnit.meterCubic;
 

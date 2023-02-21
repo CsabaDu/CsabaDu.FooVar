@@ -7,5 +7,5 @@ public interface ICylinder : ISpatialShape<ICircle>, ICircularShape
     ICylinder GetCylinder(params IExtent[] shapeExtents);
     ICylinder GetCylinder(IPlaneShape baseFace, IExtent height);
     ICylinder GetCylinder(ExtentUnit extentUnit);
-    ICylinder GetCylinder(IGeometricBody geometricBody);
+    ICylinder GetCylinder(IDryBody dryBody);
 }

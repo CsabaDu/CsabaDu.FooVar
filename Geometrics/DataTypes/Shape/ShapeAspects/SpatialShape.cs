@@ -3,7 +3,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
 
-internal abstract class SpatialShape<T> : GeometricBody, ISpatialShape<T> where T : IPlaneShape
+internal abstract class SpatialShape<T> : DryBody, ISpatialShape<T> where T : IPlaneShape
 {
     private protected SpatialShape(T baseFace, IExtent height, ShapeTrait shapeTraits) : base(shapeTraits)
     {

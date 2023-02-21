@@ -43,23 +43,23 @@ namespace CsabaDu.FooVar.Geometrics.Factories
             return new BulkSurface(planeShape);
         }
 
-        public ISurface GetSurface(IGeometricBody geometricBody)
+        public ISurface GetSurface(IDryBody dryBody)
         {
-            return CreateSurface(geometricBody);
+            return CreateSurface(dryBody);
         }
 
-        private static ISurface CreateSurface(IGeometricBody geometricBody)
+        private static ISurface CreateSurface(IDryBody dryBody)
         {
-            IArea baseArea = geometricBody.GetBaseFace().Area;
-            IExtent height = geometricBody.GetHeight();
+            IArea baseArea = dryBody.GetBaseFace().Area;
+            IExtent height = dryBody.GetHeight();
             IMeasure basePerimeter = height;
 
-            if (geometricBody is ICuboid cuboid)
+            if (dryBody is ICuboid cuboid)
             {
                 basePerimeter = cuboid.Length.SumWith(cuboid.Width).MultipliedBy(2);
             }
 
-            if (geometricBody is ICylinder cylinder)
+            if (dryBody is ICylinder cylinder)
             {
                 basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
             }

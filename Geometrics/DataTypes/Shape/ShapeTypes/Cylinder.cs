@@ -77,11 +77,11 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
         return (ICylinder)ExchangeTo(extentUnit)!;
     }
 
-    public ICylinder GetCylinder(IGeometricBody geometricBody)
+    public ICylinder GetCylinder(IDryBody dryBody)
     {
-        _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
+        _ = dryBody ?? throw new ArgumentNullException(nameof(dryBody));
 
-        return GetCylinder(geometricBody.GetBaseFace(), geometricBody.GetHeight());
+        return GetCylinder(dryBody.GetBaseFace(), dryBody.GetHeight());
     }
 
     public ICircularShape GetCircularShape(params IExtent[] shapeExtents) => ShapeFactory.GetCircularShape(shapeExtents);

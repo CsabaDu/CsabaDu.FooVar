@@ -13,11 +13,11 @@ internal sealed class BulkBody : Body, IBulkBody
 
     public BulkBody(ISpread<IVolume, VolumeUnit> spread) : base(spread) { }
 
-    //public BulkBody(IGeometricBody geometricBody)
+    //public BulkBody(IDryBody dryBody)
     //{
-    //    _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
+    //    _ = dryBody ?? throw new ArgumentNullException(nameof(dryBody));
 
-    //    Volume = geometricBody.Volume;
+    //    Volume = dryBody.Volume;
     //}
 
     public BulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits) { }
@@ -43,7 +43,7 @@ internal sealed class BulkBody : Body, IBulkBody
     {
         _ = shape ?? throw new ArgumentNullException(nameof(shape));
 
-        if (shape is IGeometricBody geometricBody) return new BulkBody(geometricBody);
+        if (shape is IDryBody dryBody) return new BulkBody(dryBody);
 
         throw new ArgumentOutOfRangeException(nameof(shape), shape.GetType(), null);
     }

@@ -56,25 +56,25 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 
         if (shape is IPlaneShape planeShape) return new BulkSurface(planeShape);
 
-        if (shape is IGeometricBody geometricBody) return GetBulkSurface(geometricBody);
+        if (shape is IDryBody dryBody) return GetBulkSurface(dryBody);
 
         throw new ArgumentOutOfRangeException(nameof(shape), shape.GetType(), null);
     }
 
-    private static IBulkSurface GetBulkSurface(IGeometricBody geometricBody)
+    private static IBulkSurface GetBulkSurface(IDryBody dryBody)
     {
 
         
-        IArea baseArea = geometricBody.GetBaseFace().Area;
-        IExtent height = geometricBody.GetHeight();
+        IArea baseArea = dryBody.GetBaseFace().Area;
+        IExtent height = dryBody.GetHeight();
         IMeasure basePerimeter = height;
 
-        if (geometricBody is ICuboid cuboid)
+        if (dryBody is ICuboid cuboid)
         {
             basePerimeter = cuboid.Length.SumWith(cuboid.Width).MultipliedBy(2);
         }
 
-        if (geometricBody is ICylinder cylinder)
+        if (dryBody is ICylinder cylinder)
         {
             basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
         }

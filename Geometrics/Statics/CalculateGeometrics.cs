@@ -253,17 +253,17 @@ public static class CalculateGeometrics
     {
         decimal basePlateQuantity = GetCircleAreaQuantity(radiusQuantity);
 
-        return GetGeometricBodyVolumeQuantity(basePlateQuantity, heightQuantity);
+        return GetDryBodyVolumeQuantity(basePlateQuantity, heightQuantity);
     }
 
     private static decimal GetCuboidVolumeQuantity(decimal lengthQuantity, decimal widthQuantity, decimal heightQuantity)
     {
         decimal basePlateQuantity = GetRectangleAreaQuantity(lengthQuantity, widthQuantity);
 
-        return GetGeometricBodyVolumeQuantity(basePlateQuantity, heightQuantity);
+        return GetDryBodyVolumeQuantity(basePlateQuantity, heightQuantity);
     }
 
-    private static decimal GetGeometricBodyVolumeQuantity(decimal basePlateQuantity, decimal heightQuantity)
+    private static decimal GetDryBodyVolumeQuantity(decimal basePlateQuantity, decimal heightQuantity)
     {
         return basePlateQuantity * heightQuantity;
     }

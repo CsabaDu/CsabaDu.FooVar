@@ -25,16 +25,16 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
             Volume = spread.GetSpreadMeasure();
         }
 
-        private protected Body(IGeometricBody geometricBody) : base(new SpreadFactory())
+        private protected Body(IDryBody dryBody) : base(new SpreadFactory())
         {
-            _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
+            _ = dryBody ?? throw new ArgumentNullException(nameof(dryBody));
 
-            Volume = geometricBody.Volume;
+            Volume = dryBody.Volume;
         }
 
         private protected Body(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(new SpreadFactory())
         {
-            shapeTraits.ValidateShapeTraitsBySpreadType(typeof(IGeometricBody));
+            shapeTraits.ValidateShapeTraitsBySpreadType(typeof(IDryBody));
             shapeTraits.ValidateShapeExtentList(shapeExtentList);
 
             Volume = GetSpreadMeasure(shapeExtentList, shapeTraits);

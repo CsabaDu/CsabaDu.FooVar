@@ -9,5 +9,5 @@ public interface ISurfaceFactory
     ISurface GetSurface(ISpread<IArea, AreaUnit> spread);
     ISurface GetSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
     ISurface GetSurface(IPlaneShape planeShape);
-    ISurface GetSurface(IGeometricBody geometricBody);
+    ISurface GetSurface(IDryBody dryBody);
 }

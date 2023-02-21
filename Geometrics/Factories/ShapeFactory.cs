@@ -38,7 +38,7 @@ public class ShapeFactory : IShapeFactory
         return new Rectangle(length, width);
     }
 
-    public IGeometricBody GetGeometricBody(params IExtent[] shapeExtents)
+    public IDryBody GetDryBody(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
 
@@ -53,13 +53,13 @@ public class ShapeFactory : IShapeFactory
         };
     }
 
-    public IGeometricBody GetGeometricBody(IGeometricBody geometricBody)
+    public IDryBody GetDryBody(IDryBody dryBody)
     {
-        _ = geometricBody ?? throw new ArgumentNullException(nameof(geometricBody));
+        _ = dryBody ?? throw new ArgumentNullException(nameof(dryBody));
 
-        IExtent[] shapeExtents = geometricBody.GetShapeExtentList().ToArray();
+        IExtent[] shapeExtents = dryBody.GetShapeExtentList().ToArray();
 
-        return GetGeometricBody(shapeExtents);
+        return GetDryBody(shapeExtents);
     }
 
     public IPlaneShape GetPlaneShape(params IExtent[] shapeExtents)

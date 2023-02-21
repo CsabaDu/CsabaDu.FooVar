@@ -207,7 +207,7 @@
       <FileName>Interfaces\DataTypes\Spread\SpreadTypes\IBulkSurface.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IGeometricBody" Collapsed="true">
+  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IDryBody" Collapsed="true">
     <Position X="6.5" Y="9" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.IShape" FixedFromPoint="true">
       <Path>
@@ -235,7 +235,7 @@
     </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAACAAAAAAAAAAAA=</HashCode>
-      <FileName>Interfaces\DataTypes\Shape\ShapeAspects\IGeometricBody.cs</FileName>
+      <FileName>Interfaces\DataTypes\Shape\ShapeAspects\IDryBody.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ICircularShape" Collapsed="true">
@@ -307,7 +307,7 @@
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ISpatialShape&lt;T&gt;" Collapsed="true">
     <Position X="7.5" Y="10.75" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IGeometricBody" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IDryBody" FixedFromPoint="true">
       <Path>
         <Point X="7.5" Y="10.079" />
         <Point X="7.5" Y="10.375" />
@@ -419,11 +419,11 @@
       <FileName>Interfaces\Factories\Shape\ICircleFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape.IGeometricBodyFactory" Collapsed="true">
+  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape.IDryBodyFactory" Collapsed="true">
     <Position X="5.25" Y="19.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
-      <FileName>Interfaces\Factories\Shape\IGeometricBodyFactory.cs</FileName>
+      <FileName>Interfaces\Factories\Shape\IDryBodyFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape.IPlaneShapeFactory" Collapsed="true">
@@ -514,7 +514,7 @@
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes.IComplexSpatialShape" Collapsed="true">
     <Position X="5.5" Y="10.75" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IGeometricBody" FixedFromPoint="true">
+    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IDryBody" FixedFromPoint="true">
       <Path>
         <Point X="7" Y="10.079" />
         <Point X="7" Y="10.375" />

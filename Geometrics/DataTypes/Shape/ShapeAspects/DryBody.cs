@@ -6,19 +6,19 @@ using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
 
-internal abstract class GeometricBody : Shape, IGeometricBody
+internal abstract class DryBody : Shape, IDryBody
 {
     private IBody Body => BodyFactory.GetBody(this);
 
     public abstract IVolume Volume { get; init; }
     public IBodyFactory BodyFactory { get; init; }
 
-    private protected GeometricBody(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
+    private protected DryBody(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
     {
         BodyFactory = new SpreadFactory();
     }
 
-    private protected GeometricBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
+    private protected DryBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         BodyFactory = new SpreadFactory();
     }
@@ -61,29 +61,29 @@ internal abstract class GeometricBody : Shape, IGeometricBody
 
     public IBody GetBody(IShape shape) => Body.GetBody(shape);
 
-    public IGeometricBody GetGeometricBody(params IExtent[] shapeExtents)
+    public IDryBody GetDryBody(params IExtent[] shapeExtents)
     {
-        return ShapeFactory.GetGeometricBody(shapeExtents);
+        return ShapeFactory.GetDryBody(shapeExtents);
     }
 
-    public IGeometricBody GetGeometricBody(IGeometricBody geometricBody)
+    public IDryBody GetDryBody(IDryBody dryBody)
     {
-        return ShapeFactory.GetGeometricBody(geometricBody);
+        return ShapeFactory.GetDryBody(dryBody);
     }
 
-    public IGeometricBody GetGeometricBody(VolumeUnit? volumeUnit = null)
+    public IDryBody GetDryBody(VolumeUnit? volumeUnit = null)
     {
         if (volumeUnit is not VolumeUnit measureUnit) return this;
 
-        return ExchangeTo(measureUnit) as IGeometricBody ?? throw new ArgumentOutOfRangeException(nameof(volumeUnit), volumeUnit, null);
+        return ExchangeTo(measureUnit) as IDryBody ?? throw new ArgumentOutOfRangeException(nameof(volumeUnit), volumeUnit, null);
     }
 
-    public IGeometricBody GetGeometricBody(ExtentUnit extentUnit)
+    public IDryBody GetDryBody(ExtentUnit extentUnit)
     {
-        return ExchangeTo(extentUnit) as IGeometricBody ?? throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
+        return ExchangeTo(extentUnit) as IDryBody ?? throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
     }
 
-    public override IShape GetShape(params IExtent[] shapeExtents) => GetGeometricBody(shapeExtents);
+    public override IShape GetShape(params IExtent[] shapeExtents) => GetDryBody(shapeExtents);
 
     public ISpread<IVolume, VolumeUnit> GetSpread(VolumeUnit? volumeUnit = null) => GetBody(volumeUnit);
 

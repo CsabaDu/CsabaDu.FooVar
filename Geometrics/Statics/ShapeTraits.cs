@@ -89,11 +89,11 @@ public static class ShapeTraits
 
     private static void AddShapeExtentTypesBySpreadType(ISet<ShapeExtentType> shapeExtentTypeSet, Type[] interfaces, Type shapeType)
     {
-        if (interfaces.Contains(typeof(IGeometricBody)) && interfaces.Contains(typeof(IPlaneShape)))
+        if (interfaces.Contains(typeof(IDryBody)) && interfaces.Contains(typeof(IPlaneShape)))
         {
             throw new ArgumentOutOfRangeException(nameof(shapeType), shapeType, null);
         }
-        else if (interfaces.Contains(typeof(IGeometricBody)))
+        else if (interfaces.Contains(typeof(IDryBody)))
         {
             shapeExtentTypeSet.Add(ShapeExtentType.Height);
         }

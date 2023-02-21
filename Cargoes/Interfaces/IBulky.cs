@@ -7,7 +7,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
     public interface IDryCargo
     {
-        IGeometricBody GetGeometricBody();
+        IDryBody GetDryBody();
     }
 
     public interface ICargoPallet : IPallet
@@ -30,12 +30,12 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         IEnumerable<ICargoItem> PackingList { get; init; }
     }
 
-    public interface IBulkCargoContainer<T> : ICargoContainer<T> where T : class, IGeometricBody
+    public interface IBulkCargoContainer<T> : ICargoContainer<T> where T : class, IDryBody
     {
 
     }
 
-    public interface IUld<T> : ICargoContainer<T> where T : class, IGeometricBody
+    public interface IUld<T> : ICargoContainer<T> where T : class, IDryBody
     {
 
     }

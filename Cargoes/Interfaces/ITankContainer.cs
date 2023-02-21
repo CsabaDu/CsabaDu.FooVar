@@ -5,7 +5,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
     public interface ITankContainer : /*IContainerCapacity<ICylinder>, */IContainerBody<ICylinder>
     {
         //IDry<ICylinder> TankContainerCapacity { get; init; }
-        //ICylinder? GeometricBody { get; init; }
+        //ICylinder? DryBody { get; init; }
 
         IBulkContainer GetTankContainer();
         IBulkContainer GetTankContainer(IDry<ICylinder> tankContainerCapacity);

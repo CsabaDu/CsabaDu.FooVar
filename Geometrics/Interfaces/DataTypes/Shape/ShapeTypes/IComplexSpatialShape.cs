@@ -3,7 +3,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-public interface IComplexSpatialShape : IGeometricBody, IDimensions
+public interface IComplexSpatialShape : IDryBody, IDimensions
 {
     IEnumerable<ICuboid> InnerTangentCuboidList { get; init; }
     ICuboid Dimensions { get; init; }
