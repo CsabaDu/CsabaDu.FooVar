@@ -105,7 +105,7 @@ internal abstract class DryBody : Shape, IDryBody
 
     public bool IsExchangeableTo(VolumeUnit volumeUnit) => _body.IsExchangeableTo(volumeUnit);
 
-    public decimal ProportionalTo(ISpread<IVolume, VolumeUnit>? other) => _body.ProportionalTo(other);
+    public decimal ProportionalTo(ISpread<IVolume, VolumeUnit> other) => _body.ProportionalTo(other);
 
     public bool TryExchangeTo(VolumeUnit volumeUnit, [NotNullWhen(true)] out ISpread<IVolume, VolumeUnit>? exchanged) => _body.TryExchangeTo(volumeUnit, out exchanged);
 

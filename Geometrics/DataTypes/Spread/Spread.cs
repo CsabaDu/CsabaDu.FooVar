@@ -23,7 +23,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
 
     public  bool Equals(ISpread<T, U>? other)
     {
-        return other is ISpread<T, U> spread && GetSpreadMeasure().Equals(spread.GetSpreadMeasure()); 
+        return other is ISpread<T, U> spread && GetSpreadMeasure().Equals(spread.GetSpreadMeasure());
     }
 
     public ISpread<T, U>? ExchangeTo(U spreadMeasureUnit)
@@ -65,7 +65,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
         {
             return GetPlaneShapeArea(spreadMeasureUnit, firstShapeExtent, lastShapeExtent, shapeTraits);
         }
-        
+
         if (spreadMeasureUnit == null || spreadMeasureUnit is VolumeUnit)
         {
             IExtent secondShapeExtent = shapeExtentList.ElementAt(1);

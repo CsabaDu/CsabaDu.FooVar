@@ -6,7 +6,7 @@ namespace CsabaDu.FooVar.Geometrics.Statics;
 
 public static class ValidateGeometrics
 {
-    private static readonly ShapeTrait AllShapeTraits = ShapeTrait.Plane | ShapeTrait.Circular;
+    private const ShapeTrait AllShapeTraits = ShapeTrait.Plane | ShapeTrait.Circular;
     internal static readonly int CuboidShapeExtentCount = ShapeTrait.None.GetShapeExtentCount();
 
     public static void ValidateInnerShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
@@ -77,12 +77,13 @@ public static class ValidateGeometrics
     {
         shapeTraits.ValidateShapeTraits();
 
-        if (shapeTraits == ShapeTrait.None)
-        {
-            throw new NotImplementedException(); // TODO
-        }
+        int shapeExtentCount = shapeTraits.GetShapeExtentCount();
 
-        if (count != shapeTraits.GetShapeExtentCount()) throw new ArgumentOutOfRangeException(nameof(count), count, null);
+        if (shapeTraits == ShapeTrait.None && count % shapeExtentCount == 0) return;
+
+        if (count == shapeExtentCount) return;
+
+        throw new ArgumentOutOfRangeException(nameof(count), count, null);
     }
 
     public static void ValidateShapeExtentList(this ShapeTrait shapeTraits, IEnumerable<IExtent> shapeExtentList)
