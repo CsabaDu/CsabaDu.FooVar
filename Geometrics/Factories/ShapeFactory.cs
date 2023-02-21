@@ -147,13 +147,13 @@ public class ShapeFactory : IShapeFactory
         return new Cuboid(shapeExtentList);
     }
 
-    public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)
+    public IComplexDryBody GetComplexDryBody(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)
     {
-        return new ComplexSpatialShape(innerTangentCuboidList, dimensions);
+        return new ComplexDryBody(innerTangentCuboidList, dimensions);
     }
 
-    public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
+    public IComplexDryBody GetComplexDryBody(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
     {
-        return new ComplexSpatialShape(innerShapeExtentList, outerShapeExtentList);
+        return new ComplexDryBody(innerShapeExtentList, outerShapeExtentList);
     }
 }

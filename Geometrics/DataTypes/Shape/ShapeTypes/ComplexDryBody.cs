@@ -5,9 +5,9 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
-internal sealed class ComplexSpatialShape : DryBody, IComplexSpatialShape
+internal sealed class ComplexDryBody : DryBody, IComplexDryBody
 {
-    public ComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions) : base(ShapeTrait.None)
+    public ComplexDryBody(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions) : base(ShapeTrait.None)
     {
         ValidateCuboids(innerTangentCuboidList, dimensions);
 
@@ -16,7 +16,7 @@ internal sealed class ComplexSpatialShape : DryBody, IComplexSpatialShape
         Volume = Dimensions.Volume;
     }
 
-    public ComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList) : base(outerShapeExtentList ??= GetValidatedEnclosingShapeExtentList(innerShapeExtentList), ShapeTrait.None)
+    public ComplexDryBody(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList) : base(outerShapeExtentList ??= GetValidatedEnclosingShapeExtentList(innerShapeExtentList), ShapeTrait.None)
     {
         Dimensions = GetDimensions(outerShapeExtentList);
         InnerTangentCuboidList = GetInnerTangentCuboidList(innerShapeExtentList);
@@ -52,9 +52,9 @@ internal sealed class ComplexSpatialShape : DryBody, IComplexSpatialShape
         return innerTangentCuboidList;
     }
 
-    public IComplexSpatialShape GetComplexSpatialShape() => this;
+    public IComplexDryBody GetComplexDryBody() => this;
 
-    public IComplexSpatialShape GetComplexSpatialShape(ExtentUnit extentUnit)
+    public IComplexDryBody GetComplexDryBody(ExtentUnit extentUnit)
     {
         ICuboid dimensions = (ICuboid)Dimensions.ExchangeTo(extentUnit)!;
         List<ICuboid> innerTangentCuboidList = new();
@@ -65,17 +65,17 @@ internal sealed class ComplexSpatialShape : DryBody, IComplexSpatialShape
             innerTangentCuboidList.Add(innerTangentCuboid);
         }
 
-        return GetComplexSpatialShape(innerTangentCuboidList, dimensions);
+        return GetComplexDryBody(innerTangentCuboidList, dimensions);
     }
 
-    public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)
+    public IComplexDryBody GetComplexDryBody(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)
     {
-        return new ComplexSpatialShape(innerTangentCuboidList, dimensions);
+        return new ComplexDryBody(innerTangentCuboidList, dimensions);
     }
 
-    public IComplexSpatialShape GetComplexSpatialShape(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
+    public IComplexDryBody GetComplexDryBody(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
     {
-        return new ComplexSpatialShape(innerShapeExtentList, outerShapeExtentList);
+        return new ComplexDryBody(innerShapeExtentList, outerShapeExtentList);
     }
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)

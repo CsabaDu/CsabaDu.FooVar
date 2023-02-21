@@ -24,7 +24,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 
     }
 
-    public interface IIglu : IDryContainer<IComplexSpatialShape>
+    public interface IIglu : IDryContainer<IComplexDryBody>
     {
 
     }
