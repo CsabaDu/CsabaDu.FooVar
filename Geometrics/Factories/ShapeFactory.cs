@@ -3,6 +3,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape;
+using CsabaDu.FooVar.Geometrics.Statics;
 
 namespace CsabaDu.FooVar.Geometrics.Factories;
 
@@ -120,7 +121,7 @@ public sealed class ShapeFactory : IShapeFactory
     {
         return CreateShape(shapeExtentList, shapeTraits);
     }
-    // TODO ComplexDryBody
+
     private static IShape CreateShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
     {
         shapeTraits.ValidateShapeTraits();
@@ -144,7 +145,9 @@ public sealed class ShapeFactory : IShapeFactory
             }
         }
 
-        return new Cuboid(shapeExtentList);
+        if (shapeExtentList.Count() == shapeTraits.GetShapeExtentCount()) return new Cuboid(shapeExtentList);
+
+        return new ComplexDryBody(shapeExtentList, null);
     }
 
     public IComplexDryBody GetComplexDryBody(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)

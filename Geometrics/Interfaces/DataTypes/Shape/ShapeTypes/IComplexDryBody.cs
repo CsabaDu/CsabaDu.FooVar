@@ -6,7 +6,7 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 public interface IComplexDryBody : IDryBody, IDimensions
 {
     IEnumerable<ICuboid> InnerTangentCuboidList { get; init; }
-    // int InnerTangentCuboidCount { get; init; }
+    int InnerTangentCuboidCount { get; init; }
     ICuboid Dimensions { get; init; }
 
     int GetInnerTangentCuboidListCount();

@@ -13,6 +13,7 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
 
         Dimensions = dimensions ?? GetDimensions(innerTangentCuboidList);
         InnerTangentCuboidList = innerTangentCuboidList;
+        InnerTangentCuboidCount = innerTangentCuboidList.Count();
         Volume = Dimensions.Volume;
     }
 
@@ -20,12 +21,14 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
     {
         Dimensions = GetDimensions(outerShapeExtentList);
         InnerTangentCuboidList = GetInnerTangentCuboidList(innerShapeExtentList);
+        InnerTangentCuboidCount = InnerTangentCuboidList.Count();
         Volume = Dimensions.Volume;
     }
 
-    public override IVolume Volume { get; init; }
-    public IEnumerable<ICuboid> InnerTangentCuboidList { get; init; }
     public ICuboid Dimensions { get; init; }
+    public IEnumerable<ICuboid> InnerTangentCuboidList { get; init; }
+    public int InnerTangentCuboidCount { get; init; }
+    public override IVolume Volume { get; init; }
 
     private IEnumerable<ICuboid> GetInnerTangentCuboidList(IEnumerable<IExtent> innerShapeExtentList)
     {
