@@ -6,7 +6,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape;
 
 namespace CsabaDu.FooVar.Geometrics.Factories;
 
-public class ShapeFactory : IShapeFactory
+public sealed class ShapeFactory : IShapeFactory
 {
     public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
     {

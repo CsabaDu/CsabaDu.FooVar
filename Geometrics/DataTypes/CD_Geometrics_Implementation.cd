@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Spread.SpreadTypes.BulkBody" Collapsed="true">
-    <Position X="5.75" Y="3.75" Width="1.5" />
+    <Position X="3.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
       <FileName>DataTypes\Spread\SpreadTypes\BulkBody.cs</FileName>
@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Spread.SpreadTypes.BulkSurface" Collapsed="true">
-    <Position X="1.5" Y="2.25" Width="1.75" />
+    <Position X="0.75" Y="2" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAEAAAAAQAAQAgAAA=</HashCode>
       <FileName>DataTypes\Spread\SpreadTypes\BulkSurface.cs</FileName>
@@ -17,23 +17,23 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Spread.Spread&lt;T, U&gt;" Collapsed="true">
-    <Position X="3.75" Y="0.75" Width="1.5" />
+    <Position X="2.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAACgAQAgAIgAAAAAAQAUAAQAACAIAAAAAA=</HashCode>
+      <HashCode>QAAAAAAAAAAAgAQAgAIgAAAAAAQAUAAQAACAIAAAQAA=</HashCode>
       <FileName>DataTypes\Spread\Spread.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects.DryBody" Collapsed="true">
-    <Position X="6" Y="5.75" Width="1.25" />
+    <Position X="11.75" Y="2" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>QAAAARAAAAAAgAQAgAIhAABAAAAAUACABAKAIAAAEAA=</HashCode>
+      <HashCode>QAAAARAAAAAAgAQAgAIlAABAAAAAUAAABAKAIAAAEAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\DryBody.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects.PlaneShape" Collapsed="true">
-    <Position X="1.5" Y="5.75" Width="1.25" />
+    <Position X="7.25" Y="2" Width="1.25" />
     <TypeIdentifier>
       <HashCode>wAAAAAAAAAAAgAQAgAIgAAAAAAAAUAAABATAIQAAEAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\PlaneShape.cs</FileName>
@@ -41,7 +41,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects.SpatialShape&lt;T&gt;" Collapsed="true">
-    <Position X="7" Y="7.25" Width="1.5" />
+    <Position X="10.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAABAAAAAAAAAAAAABAAAAAAAQAgAAAABAAAAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\SpatialShape.cs</FileName>
@@ -49,7 +49,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.Circle" Collapsed="true">
-    <Position X="0.5" Y="7.25" Width="1.25" />
+    <Position X="6.25" Y="3.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>IAAYAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABIA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\Circle.cs</FileName>
@@ -57,7 +57,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.Rectangle" Collapsed="true">
-    <Position X="2.5" Y="7.25" Width="1.25" />
+    <Position X="8.25" Y="3.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAARIIAgIAAAAAAAAAAAAMBAAAAAAAAAAAAAAQABBAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\Rectangle.cs</FileName>
@@ -65,7 +65,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.Shape" Collapsed="true">
-    <Position X="3.75" Y="4.25" Width="1.25" />
+    <Position X="9.5" Y="0.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>EAAQIIAgAAAAAAQIgAAgAAAIAAAEAQBQBACAIAACBAA=</HashCode>
       <FileName>DataTypes\Shape\Shape.cs</FileName>
@@ -73,15 +73,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Factories.ShapeFactory" Collapsed="true">
-    <Position X="8.25" Y="4.75" Width="1.5" />
+    <Position X="6" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>oAAABgAAIAAABAAAAAAAAIAAAAQAAACABAAAAAAAAAA=</HashCode>
+      <HashCode>oAAABgAAIAABBAAAAAAEAIAAAAQAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Factories\ShapeFactory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Factories.SpreadFactory" Collapsed="true">
-    <Position X="8.25" Y="3.75" Width="1.5" />
+    <Position X="4" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAA=</HashCode>
       <FileName>Factories\SpreadFactory.cs</FileName>
@@ -89,28 +89,28 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.CalculateGeometrics" Collapsed="true">
-    <Position X="8" Y="0.75" Width="1.75" />
+    <Position X="0.5" Y="4.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>IEgHEAAAQEBAACAgAAUgACAAAJCACAABAACgFAEAAAA=</HashCode>
+      <HashCode>IEgHEAAAQEAAACAoAAUgACAAAJCACAABAACgFAEAAAA=</HashCode>
       <FileName>Statics\CalculateGeometrics.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.ShapeTraits" Collapsed="true">
-    <Position X="8.25" Y="2.25" Width="1.5" />
+    <Position X="0.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAVBAAAAAAABAAAAAAAAAAABAAAAAAAACAAA=</HashCode>
       <FileName>Statics\ShapeTraits.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.ValidateGeometrics" Collapsed="true">
-    <Position X="8" Y="1.5" Width="1.75" />
+    <Position X="0.5" Y="5.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAEEIAAAwAAIAAAAAAAAAIAAAQAAAAAAACYCA=</HashCode>
       <FileName>Statics\ValidateGeometrics.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.Cuboid" Collapsed="true">
-    <Position X="5.75" Y="8.75" Width="1.75" />
+    <Position X="11.75" Y="5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>ABARIIAgAAAAgAAAAAAAAMBAAAQAAAAAAAIAAAABFAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\Cuboid.cs</FileName>
@@ -118,7 +118,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.Cylinder" Collapsed="true">
-    <Position X="8.25" Y="8.75" Width="1.5" />
+    <Position X="9.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAYBoAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAABIA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\Cylinder.cs</FileName>
@@ -126,7 +126,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Spread.Body" Collapsed="true">
-    <Position X="5.5" Y="2.25" Width="2" />
+    <Position X="3.5" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAIAAAAAAAAAEAAAAAIAAAAAAAA=</HashCode>
       <FileName>DataTypes\Spread\Body.cs</FileName>
@@ -134,9 +134,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.ComplexDryBody" Collapsed="true">
-    <Position X="4.5" Y="7.25" Width="1.75" />
+    <Position X="12.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAYAAAEAAAACAAAAAAALAAAAAACAQAAqAAAAABIA=</HashCode>
+      <HashCode>AAAQAYAAAEABAACAAAAAAAJAAAAAACAQAAqAAAAABIA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\ComplexDryBody.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

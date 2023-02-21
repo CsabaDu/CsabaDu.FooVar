@@ -6,7 +6,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.FooVar.Geometrics.Factories
 {
-    public class SpreadFactory : ISpreadFactory
+    public sealed class SpreadFactory : ISpreadFactory
     {
         public IBody GetBody(IVolume volume)
         {
