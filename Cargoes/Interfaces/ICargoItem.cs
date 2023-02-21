@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces;
 
-public interface ICargoItem : IBulk
+public interface ICargoItem : IBulkMass
 {
     IEnumerable<IGoods> GoodsList { get; init; }
 

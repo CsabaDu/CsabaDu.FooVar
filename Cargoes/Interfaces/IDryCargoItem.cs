@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
-    public interface IDryCargoItem<T> : /*IContentSize, */ICargoItem/*, IDry<T>*/ where T : class, IDryBody
+    public interface IDryCargoItem<T> : /*IContentSize, */ICargoItem/*, IDryMass<T>*/ where T : class, IDryBody
     {
         IPacking<T> Packing { get; init; }
         IPieceCount PackageCount { get; init; }

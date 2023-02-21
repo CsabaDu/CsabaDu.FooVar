@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
-    public interface IPallet : IDry<ICuboid>
+    public interface IPallet : IDryMass<ICuboid>
     {
         IPallet GetPallet();
     }

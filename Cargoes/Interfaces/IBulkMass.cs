@@ -3,10 +3,10 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces;
 
-public interface IBulk : IMass/*, IDensity*/
+public interface IBulkMass : IMass/*, IDensity*/
 {
     IBulkBody BulkBody {get; init;}
 
-    IBulk GetBulk();
-    IBulk GetBulk(IWeight weight, IBody body);
+    IBulkMass GetBulkMass();
+    IBulkMass GetBulkMass(IWeight weight, IBody body);
 }

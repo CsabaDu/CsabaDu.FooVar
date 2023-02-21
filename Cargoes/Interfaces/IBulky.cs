@@ -22,10 +22,10 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 
     public interface IContentSize : IFit<ICuboid>
     {
-        IDry<ICuboid>? ContentSize { get; init; }
+        IDryMass<ICuboid>? ContentSize { get; init; }
     }
 
-    public interface ICargo : IBulk
+    public interface ICargo : IBulkMass
     {
         IEnumerable<ICargoItem> PackingList { get; init; }
     }

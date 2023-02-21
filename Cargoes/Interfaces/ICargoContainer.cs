@@ -29,16 +29,16 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 
     }
 
-    public interface ICargoContainer<T> : IDry<T>, IContainerCapacity<T> where T : class, IDryBody
+    public interface ICargoContainer<T> : IDryMass<T>, IContainerCapacity<T> where T : class, IDryBody
     {
-        IDry<T> GetDryCapacity();
+        IDryMass<T> GetDryCapacity();
         //ICargoContainer<T> GetCargoContainer();
     }
 
-    public interface ICargoContainer : IDry, IFit<ICargoContainer>
+    public interface ICargoContainer : IDryMass, IFit<ICargoContainer>
     {
-        IBulk GetBulkCapacity();
-        //IDry<IDryBody> GetDryCapacity();
+        IBulkMass GetBulkCapacity();
+        //IDryMass<IDryBody> GetDryCapacity();
         ICargoContainer GetCargoContainer();
     }
 
@@ -49,6 +49,6 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 
     public interface IContainerCapacity<T> : ICargoContainer where T : class, IDryBody
     {
-        IDry<T> DryCapacity { get; init; }
+        IDryMass<T> DryCapacity { get; init; }
     }
 }

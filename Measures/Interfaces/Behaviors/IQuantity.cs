@@ -1,6 +1,8 @@
-﻿namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+﻿using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 
-public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> where T : class
+namespace CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+
+public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> where T : class, IBaseMeasure
 {
     ValueType GetQuantity();
 
