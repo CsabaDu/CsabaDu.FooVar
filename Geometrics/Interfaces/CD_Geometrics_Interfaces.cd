@@ -274,14 +274,6 @@
       <FileName>Interfaces\DataTypes\Shape\ShapeAspects\IRectangularShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IDryBody&lt;T&gt;" Collapsed="true">
-    <Position X="7.5" Y="10.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
-      <FileName>Interfaces\DataTypes\Shape\ShapeAspects\IDryBody.cs</FileName>
-      <NewMemberFileName>Interfaces\DataTypes\Shape\ShapeAspects\ISpatialShape.cs</NewMemberFileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes.ICuboid" Collapsed="true">
     <Position X="3.25" Y="13.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IRectangularShape" FixedFromPoint="true">
