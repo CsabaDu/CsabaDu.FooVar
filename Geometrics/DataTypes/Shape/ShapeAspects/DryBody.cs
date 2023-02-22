@@ -89,8 +89,6 @@ internal abstract class DryBody : Shape, IDryBody
 
     public override IShape GetShape(params IExtent[] shapeExtents) => GetDryBody(shapeExtents);
 
-    public ISpread<IVolume, VolumeUnit> GetSpread(VolumeUnit? volumeUnit = null) => GetBody(volumeUnit);
-
     public ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
 
     public ISpread<IVolume, VolumeUnit> GetSpread(ISpread<IVolume, VolumeUnit> spread)=> GetBody(spread);

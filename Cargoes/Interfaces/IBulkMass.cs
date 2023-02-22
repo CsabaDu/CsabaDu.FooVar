@@ -7,6 +7,6 @@ public interface IBulkMass : IMass/*, IDensity*/
 {
     IBulkBody BulkBody {get; init;}
 
-    IBulkMass GetBulkMass();
+    IBulkMass GetBulkMass(IMass? mass = null);
     IBulkMass GetBulkMass(IWeight weight, IBody body);
 }

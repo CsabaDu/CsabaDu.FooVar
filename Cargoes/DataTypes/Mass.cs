@@ -1,8 +1,5 @@
 ﻿using CsabaDu.FooVar.Cargoes.Interfaces;
-using CsabaDu.FooVar.Geometrics.Factories;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
 using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
 
@@ -89,49 +86,5 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
 
         public abstract IBody GetBody();
         public abstract IMass GetMass(IWeight? weight = null);
-    }
-
-    internal abstract class BulkMass : Mass, IBulkMass
-    {
-        protected BulkMass(IWeight weight, IBody body) : base(weight)
-        {
-            _ = body ?? throw new ArgumentNullException(nameof(body));
-
-            BulkBody = new SpreadFactory().GetBody(body);
-        }
-
-        public IBulkBody BulkBody { get; init; }
-
-        public override IBody GetBody()
-        {
-            throw new NotImplementedException();
-        }
-
-        public abstract IBulkMass GetBulkMass();
-        public abstract IBulkMass GetBulkMass(IWeight weight, IBody body);
-
-        public override IMass GetMass(IWeight? weight = null)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    internal abstract class DryMass : Mass, IDryMass
-    {
-        private protected DryMass(IWeight weight) : base(weight) { }
-
-        public override IBody GetBody()
-        {
-            throw new NotImplementedException();
-        }
-
-        public abstract IBulkMass GetBulkMass();
-        public abstract IDryBody GetDryBody();
-        public abstract IDryMass GetDryMass();
-
-        public override IMass GetMass(IWeight? weight = null)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -41,9 +41,11 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         ICargoContainer GetCargoContainer();
     }
 
-    public interface IContainerBody
+    public interface IContainerBody<T> : ICargoContainer<T> where T : class, IDryBody
     {
-        IDryMass? ContainerBody { get; init; }
+        IDryMass? ContainerBody { get; }
+
+        void SetContainerBody(IDryMass containerBody);
     }
 
     public interface ICargoContainer<T> : IDryMass where T : class, IDryBody

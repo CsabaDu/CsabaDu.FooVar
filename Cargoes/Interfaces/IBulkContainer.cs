@@ -2,7 +2,7 @@
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
-    public interface IBulkContainer : ICargoContainer<ICuboid>, IContainerBody
+    public interface IBulkContainer : IContainerBody<ICuboid>
     {
         //IDryMass<ICuboid> BulkContainerCapacity { get; init; }
         //ICuboid? DryBody { get; init; }
