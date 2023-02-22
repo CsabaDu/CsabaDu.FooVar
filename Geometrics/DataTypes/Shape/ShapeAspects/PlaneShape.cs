@@ -84,7 +84,7 @@ internal abstract class PlaneShape : Shape, IPlaneShape
         return _surface.GetSpreadMeasure(shapeExtentList, shapeTraits, spreadMeasureUnit);
     }
 
-    public IArea GetSpreadMeasure(AreaUnit? areaUnit = null) => _surface.GetSpreadMeasure(areaUnit);
+    public IArea GetSpreadMeasure(AreaUnit areaUnit) => _surface.GetSpreadMeasure(areaUnit);
 
     public ISurface GetSurface(AreaUnit? areaUnit = null) => _surface.GetSurface(areaUnit);
 
@@ -103,4 +103,7 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     public bool TryExchangeTo(AreaUnit areaUnit, [NotNullWhen(true)] out ISpread<IArea, AreaUnit>? exchanged) => _surface.TryExchangeTo(areaUnit, out exchanged);
 
     public void ValidateSpreadMeasure(IArea spreadMeasure) => _surface.ValidateSpreadMeasure(spreadMeasure);
+    public ISpread<IArea, AreaUnit> GetSpread(AreaUnit spreadMeasureUnit) => GetSurface(spreadMeasureUnit);
+    public IMeasure GetSpreadMeasure() => _surface.GetSpreadMeasure();
+    public ISpread GetSpread() => GetSurface();
 }

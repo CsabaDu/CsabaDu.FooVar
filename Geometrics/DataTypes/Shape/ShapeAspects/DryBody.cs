@@ -99,9 +99,15 @@ internal abstract class DryBody : Shape, IDryBody
 
     public ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
 
+    public ISpread<IVolume, VolumeUnit> GetSpread(VolumeUnit volumeUnit) => _body.GetSpread(volumeUnit);
+
+    public ISpread GetSpread() => _body.GetSpread();
+
     public IVolume GetSpreadMeasure(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits, VolumeUnit? spreadMeasureUnit = null) => _body.GetSpreadMeasure(shapeExtentList, shapeTraits, spreadMeasureUnit);
 
-    public IVolume GetSpreadMeasure(VolumeUnit? spreadMeasureUnit = null) => _body.GetSpreadMeasure(spreadMeasureUnit);
+    public IVolume GetSpreadMeasure(VolumeUnit spreadMeasureUnit) => _body.GetSpreadMeasure(spreadMeasureUnit);
+
+    public IMeasure GetSpreadMeasure() => _body.GetSpreadMeasure();
 
     public bool IsExchangeableTo(VolumeUnit volumeUnit) => _body.IsExchangeableTo(volumeUnit);
 

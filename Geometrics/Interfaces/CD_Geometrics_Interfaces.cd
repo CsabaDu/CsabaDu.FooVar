@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape.IProjection" Collapsed="true">
-    <Position X="7.5" Y="8" Width="1.25" />
+    <Position X="7.25" Y="8" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Behaviors\Shape\IProjection.cs</FileName>
@@ -32,8 +32,8 @@
     <Position X="8" Y="9" Width="1.5" />
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape.IProjection" FixedFromPoint="true">
       <Path>
-        <Point X="8.375" Y="8.562" />
-        <Point X="8.375" Y="8.76" />
+        <Point X="8.125" Y="8.562" />
+        <Point X="8.125" Y="8.76" />
         <Point X="8.75" Y="8.76" />
         <Point X="8.75" Y="9" />
       </Path>
@@ -58,7 +58,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape.IShapeExtentList" Collapsed="true">
-    <Position X="3" Y="2.75" Width="1.5" />
+    <Position X="3" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQIAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Behaviors\Shape\IShapeExtentList.cs</FileName>
@@ -105,8 +105,8 @@
     <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IFit&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="5.375" Y="3.062" />
-        <Point X="5.375" Y="3.437" />
-        <Point X="4.75" Y="3.437" />
+        <Point X="5.375" Y="3.695" />
+        <Point X="4.75" Y="3.695" />
         <Point X="4.75" Y="5.5" />
       </Path>
     </InheritanceLine>
@@ -115,78 +115,35 @@
       <FileName>Interfaces\DataTypes\Shape\IShape.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISpread&lt;T, U&gt;" Collapsed="true">
-    <Position X="6.5" Y="3.75" Width="2.25" />
-    <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IFit&lt;T&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="5.875" Y="3.062" />
-        <Point X="5.875" Y="3.45" />
-        <Point X="7.625" Y="3.45" />
-        <Point X="7.625" Y="3.75" />
-      </Path>
-    </InheritanceLine>
-    <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="5.75" Y="2.062" />
-        <Point X="5.75" Y="2.34" />
-        <Point X="6.5" Y="2.34" />
-        <Point X="6.5" Y="3.45" />
-        <Point X="7.625" Y="3.45" />
-        <Point X="7.625" Y="3.75" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Interfaces\DataTypes\Spread\ISpread.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Spread.ISpreadMeasure&lt;T, U&gt;" Collapsed="true">
-    <Position X="5.5" Y="0.5" Width="2" />
+    <Position X="4.75" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Behaviors\Spread\ISpreadMeasure.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISurface" Collapsed="true">
-    <Position X="1" Y="5.75" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISpread&lt;T, U&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="7.344" Y="4.829" />
-        <Point X="7.344" Y="5.329" />
-        <Point X="4.833" Y="5.329" Type="JumpStart" />
-        <Point X="4.667" Y="5.329" Type="JumpEnd" />
-        <Point X="1.875" Y="5.329" />
-        <Point X="1.875" Y="5.75" />
-      </Path>
-    </InheritanceLine>
+    <Position X="1" Y="5.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAQAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Spread\ISurface.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.IBody" Collapsed="true">
-    <Position X="7.25" Y="5.75" Width="2" />
-    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISpread&lt;T, U&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="7.906" Y="4.829" />
-        <Point X="7.906" Y="5.375" />
-        <Point X="8.25" Y="5.375" />
-        <Point X="8.25" Y="5.75" />
-      </Path>
-    </InheritanceLine>
+    <Position X="6.5" Y="5.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Spread\IBody.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes.IBulkBody" Collapsed="true">
-    <Position X="8.25" Y="7" Width="1.25" />
+    <Position X="7.5" Y="7" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.IBody" FixedFromPoint="true">
       <Path>
-        <Point X="8.5" Y="6.441" />
-        <Point X="8.5" Y="6.7" />
-        <Point X="8.875" Y="6.7" />
-        <Point X="8.875" Y="7" />
+        <Point X="7.75" Y="6.191" />
+        <Point X="7.75" Y="6.625" />
+        <Point X="8.125" Y="6.625" />
+        <Point X="8.125" Y="7" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -198,7 +155,7 @@
     <Position X="1" Y="7" Width="1.25" />
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISurface" FixedFromPoint="true">
       <Path>
-        <Point X="1.625" Y="6.441" />
+        <Point X="1.625" Y="6.191" />
         <Point X="1.625" Y="7" />
       </Path>
     </InheritanceLine>
@@ -242,10 +199,10 @@
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISurface" FixedFromPoint="true">
       <Path>
-        <Point X="2.125" Y="6.441" />
-        <Point X="2.125" Y="6.741" />
-        <Point X="3.05" Y="6.741" />
-        <Point X="3.05" Y="8.875" />
+        <Point X="2.125" Y="6.191" />
+        <Point X="2.125" Y="6.566" />
+        <Point X="3" Y="6.566" />
+        <Point X="3" Y="8.875" />
         <Point X="3.375" Y="8.875" />
         <Point X="3.375" Y="9.25" />
       </Path>
@@ -261,8 +218,8 @@
       <Path>
         <Point X="4.562" Y="6.838" />
         <Point X="4.562" Y="7.75" />
-        <Point X="3.133" Y="7.75" Type="JumpStart" />
-        <Point X="2.967" Y="7.75" Type="JumpEnd" />
+        <Point X="3.083" Y="7.75" Type="JumpStart" />
+        <Point X="2.917" Y="7.75" Type="JumpEnd" />
         <Point X="2.75" Y="7.75" />
         <Point X="2.75" Y="8.875" />
         <Point X="1.625" Y="8.875" />
@@ -276,18 +233,18 @@
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes.ICuboid" Collapsed="true">
     <Position X="4.5" Y="13.75" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IRectangularShape" FixedFromPoint="true">
-      <Path>
-        <Point X="1.375" Y="10.07" />
-        <Point X="1.375" Y="13.375" />
-        <Point X="5.375" Y="13.375" />
-        <Point X="5.375" Y="13.75" />
-      </Path>
-    </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ISpatialShape&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="8.5" Y="11.57" />
         <Point X="8.5" Y="13.375" />
+        <Point X="5.375" Y="13.375" />
+        <Point X="5.375" Y="13.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.IRectangularShape" FixedFromPoint="true">
+      <Path>
+        <Point X="1.375" Y="10.07" />
+        <Point X="1.375" Y="13.375" />
         <Point X="5.375" Y="13.375" />
         <Point X="5.375" Y="13.75" />
       </Path>
@@ -322,18 +279,18 @@
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes.ICylinder" Collapsed="true">
     <Position X="4.75" Y="12.25" Width="1.5" />
-    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ICircularShape" FixedFromPoint="true">
-      <Path>
-        <Point X="5.25" Y="10.07" />
-        <Point X="5.25" Y="11.875" />
-        <Point X="5.5" Y="11.875" />
-        <Point X="5.5" Y="12.25" />
-      </Path>
-    </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ISpatialShape&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="8" Y="11.57" />
         <Point X="8" Y="11.875" />
+        <Point X="5.5" Y="11.875" />
+        <Point X="5.5" Y="12.25" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ICircularShape" FixedFromPoint="true">
+      <Path>
+        <Point X="5.25" Y="10.07" />
+        <Point X="5.25" Y="11.875" />
         <Point X="5.5" Y="11.875" />
         <Point X="5.5" Y="12.25" />
       </Path>
@@ -418,7 +375,7 @@
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Factories.ISpreadFactory" Collapsed="true">
     <Position X="3.25" Y="16" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Factories\Spread\ISpreadFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -477,7 +434,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEABAACAAAAAAAIAAAAAACAQAACAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEABAACAAAAAQAIAAAAAACAQAACAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Shape\ShapeTypes\IComplexDryBody.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -489,7 +446,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape.IBaseFace" Collapsed="true">
-    <Position X="6.5" Y="6.75" Width="1.25" />
+    <Position X="5.75" Y="7" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\Behaviors\Shape\IBaseFace.cs</FileName>
@@ -507,23 +464,23 @@
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.IShape" FixedFromPoint="true">
       <Path>
         <Point X="5.125" Y="6.838" />
-        <Point X="5.125" Y="7.75" />
-        <Point X="7.125" Y="7.75" />
+        <Point X="5.125" Y="7.84" />
+        <Point X="7.125" Y="7.84" />
         <Point X="7.125" Y="9" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.IBody" FixedFromPoint="true">
       <Path>
-        <Point X="8" Y="6.441" />
-        <Point X="8" Y="7.75" />
-        <Point X="7.125" Y="7.75" />
+        <Point X="7.25" Y="6.191" />
+        <Point X="7.25" Y="7.84" />
+        <Point X="7.125" Y="7.84" />
         <Point X="7.125" Y="9" />
       </Path>
     </InheritanceLine>
     <InheritanceLine Type="CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape.IProjection" FixedFromPoint="true">
       <Path>
-        <Point X="7.875" Y="8.562" />
-        <Point X="7.875" Y="8.76" />
+        <Point X="7.625" Y="8.562" />
+        <Point X="7.625" Y="8.76" />
         <Point X="7.125" Y="8.76" />
         <Point X="7.125" Y="9" />
       </Path>
@@ -538,6 +495,38 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Shape\ShapeAspects\ISpatialShape.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISpread&lt;T, U&gt;" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="2" />
+    <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IFit&lt;T&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="5.875" Y="3.062" />
+        <Point X="5.875" Y="3.45" />
+        <Point X="7.5" Y="3.45" />
+        <Point X="7.5" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+    <InheritanceLine Type="CsabaDu.FooVar.Common.Interfaces.Behaviors.IExchange&lt;T, U&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="5.75" Y="2.062" />
+        <Point X="5.75" Y="2.34" />
+        <Point X="6.41" Y="2.34" />
+        <Point X="6.41" Y="3.45" />
+        <Point X="7.5" Y="3.45" />
+        <Point X="7.5" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\DataTypes\Spread\ISpread.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.ISpread" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\DataTypes\Spread\ISpread.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

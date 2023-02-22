@@ -5,6 +5,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
+using static CsabaDu.FooVar.Measures.Statics.MeasureUnit;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread.SpreadTypes;
 
@@ -23,7 +24,7 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     {
         _ = surface ?? throw new ArgumentNullException(nameof(surface));
 
-        Area = surface.GetSpreadMeasure();
+        Area = (IArea)surface.GetSpreadMeasure();
     }
 
     public BulkSurface(IPlaneShape planeShape) : base(new SpreadFactory())
@@ -110,16 +111,16 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 
     public override ISpread<IArea, AreaUnit> GetSpread(IShape shape) => GetBulkSurface(shape);
 
-    public override IArea GetSpreadMeasure(AreaUnit? areaUnit = null)
-    {
-        if (areaUnit == null) return Area;
+    public override sealed ISpread<IArea, AreaUnit> GetSpread(AreaUnit areaUnit) => GetBulkSurface(areaUnit);
 
+    public override sealed IMeasure GetSpreadMeasure() => Area;
+
+    public override IArea GetSpreadMeasure(AreaUnit areaUnit)
+    {
         if (Area.TryExchangeTo(areaUnit, out IBaseMeasure? exchanged)) return Area.GetArea(exchanged);
 
         throw new ArgumentOutOfRangeException(nameof(areaUnit), areaUnit, null);
     }
-
-    public ISurface GetSurface(AreaUnit? areaUnit = null) => GetBulkSurface(areaUnit);
 
     public ISurface GetSurface(IShape shape) => GetBulkSurface(shape);
 
@@ -128,4 +129,7 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     public ISurface GetSurface(ISpread<IArea, AreaUnit> spread) => GetBulkSurface(spread);
 
     public ISurface GetSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBulkSurface(shapeExtentList, shapeTraits);
+
+    public ISurface GetSurface(AreaUnit? areaUnit = null) => GetBulkSurface(areaUnit);
+
 }

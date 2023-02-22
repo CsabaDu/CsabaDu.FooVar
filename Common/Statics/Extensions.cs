@@ -11,6 +11,7 @@ public static class Extensions
             LimitType.BeGreater => comparison > 0,
             LimitType.BeLess => comparison < 0,
             LimitType.BeEqual => comparison == 0,
+
             _ => null,
         };
     }

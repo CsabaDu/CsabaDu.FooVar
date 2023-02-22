@@ -5,7 +5,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread;
 
-internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U : struct, Enum
+internal abstract class Spread<T, U> : ISpread<T, U> where T : class, IMeasure where U : struct, Enum
 {
     public ISpreadFactory SpreadFactory { get; init; }
 
@@ -113,7 +113,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
         return exchanged != null;
     }
 
-    public abstract T GetSpreadMeasure(U? spreadMeasureUnit = null);
+    public abstract T GetSpreadMeasure(U spreadMeasureUnit);
 
     public void ValidateSpreadMeasure(T spreadMeasure)
     {
@@ -126,4 +126,7 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : IMeasure where U 
     public abstract ISpread<T, U> GetSpread(ISpread<T, U> spread);
     public abstract ISpread<T, U> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
     public abstract ISpread<T, U> GetSpread(IShape shape);
+    public abstract IMeasure GetSpreadMeasure();
+    public ISpread GetSpread() => this;
+    public abstract ISpread<T, U> GetSpread(U spreadMeasureUnit);
 }

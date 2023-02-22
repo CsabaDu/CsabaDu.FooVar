@@ -1,3 +1,8 @@
-﻿namespace CsabaDu.FooVar.Geometrics.Interfaces.Factories;
+﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
 
-public interface ISpreadFactory : IBodyFactory, ISurfaceFactory { }
+namespace CsabaDu.FooVar.Geometrics.Interfaces.Factories;
+
+public interface ISpreadFactory : IBodyFactory, ISurfaceFactory
+{
+    ISpread? GetSpread(params object[] args);
+}

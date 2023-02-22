@@ -1,12 +1,11 @@
-﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
+﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
+using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 public interface IBodyFactory
 {
-    IBody GetBody(IVolume volume);
-    IBody GetBody(ISpread<IVolume, VolumeUnit> spread);
-    IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
-    //IBody GetBody(IDryBody dryBody);
+    IBulkBody GetBody(IVolume volume);
+    IBulkBody GetBody(ISpread<IVolume, VolumeUnit> spread);
+    IBulkBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
 }

@@ -53,20 +53,5 @@ internal sealed class BulkBody : Body, IBulkBody
         throw new ArgumentOutOfRangeException(nameof(volumeUnit), volumeUnit, null);
     }
 
-    //public override ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
-
-    //public override ISpread<IVolume, VolumeUnit> GetSpread(ISpread<IVolume, VolumeUnit> spread) => GetBody(spread);
-
-    //public override ISpread<IVolume, VolumeUnit> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBody(shapeExtentList, shapeTraits);
-
-    //public override ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
-
-    //public override IVolume GetSpreadMeasure(VolumeUnit? volumeUnit = null)
-    //{
-    //    if (volumeUnit == null) return Volume;
-
-    //    IBaseMeasure exchanged = Volume.ExchangeTo(volumeUnit)!;
-
-    //    return Volume.GetVolume(exchanged);
-    //}
+    public override ISpread<IVolume, VolumeUnit> GetSpread(VolumeUnit volumeUnit) => GetBody(volumeUnit);
 }

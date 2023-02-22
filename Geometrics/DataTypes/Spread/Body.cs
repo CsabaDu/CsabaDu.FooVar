@@ -3,6 +3,8 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
 using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
+using CsabaDu.FooVar.Measures.Interfaces.DataTypes.MeasureTypes;
+using static CsabaDu.FooVar.Measures.Statics.MeasureUnit;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
 {
@@ -21,7 +23,7 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
         {
             _ = spread ?? throw new ArgumentNullException(nameof(spread));
 
-            Volume = spread.GetSpreadMeasure();
+            Volume = (IVolume)spread.GetSpreadMeasure();
         }
 
         private protected Body(IDryBody dryBody) : base(new SpreadFactory())
@@ -51,13 +53,12 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
 
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
 
-        public override sealed IVolume GetSpreadMeasure(VolumeUnit? volumeUnit = null)
+        public override sealed IMeasure GetSpreadMeasure() => Volume;
+        public override sealed IVolume GetSpreadMeasure(VolumeUnit volumeUnit)
         {
-            if (volumeUnit == null) return Volume;
+            if (Volume.TryExchangeTo(volumeUnit, out IBaseMeasure? exchanged)) return Volume.GetVolume(exchanged);
 
-            IBaseMeasure exchanged = Volume.ExchangeTo(volumeUnit)!;
-
-            return Volume.GetVolume(exchanged);
+            throw new ArgumentOutOfRangeException(nameof(volumeUnit), volumeUnit, null);
         }
 
         public abstract IBody GetBody(VolumeUnit? volumeUnit = null);
