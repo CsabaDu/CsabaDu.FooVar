@@ -3,7 +3,6 @@ using CsabaDu.FooVar.Geometrics.Factories;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
-using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
 
@@ -64,11 +63,11 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
         {
             int weightComparison = Weight.CompareTo(weight);
 
-            if (weightComparison == bodyComparison) return weightComparison;
+            if (weightComparison == 0 && bodyComparison == 0) return 0;
 
-            if (weightComparison > 0 && bodyComparison >= 0) return weightComparison;
+            if (weightComparison >= 0 && bodyComparison >= 0) return 1;
 
-            if (bodyComparison > 0 && weightComparison >= 0) return bodyComparison;
+            if (weightComparison <= 0 && bodyComparison <= 0) return -1;
 
             return null;
         }
@@ -99,7 +98,7 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
         {
             _ = body ?? throw new ArgumentNullException(nameof(body));
 
-            BulkBody = (IBulkBody)new SpreadFactory().GetBody(body);
+            BulkBody = new SpreadFactory().GetBody(body);
         }
 
         public IBulkBody BulkBody { get; init; }
