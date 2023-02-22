@@ -26,7 +26,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Cargoes.DataTypes.DryMass" Collapsed="true">
-    <Position X="2.75" Y="9" Width="1.5" />
+    <Position X="3.75" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAIAAgAAAAAAEAAAAAAAAQIAAAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\DryMass.cs</FileName>

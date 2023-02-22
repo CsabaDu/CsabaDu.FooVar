@@ -14,5 +14,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         T DryBody { get; init;}
 
         IDryMass<T> GetDryMass(IWeight weight, T dryBody);
+        IDryMass<T> GetDryMass(IDryMass<T> other);
+
     }
 }

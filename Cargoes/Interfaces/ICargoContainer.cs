@@ -31,13 +31,11 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
     public interface IContainerCapacity<T> : IDryMass<T>, ICargoContainer<T> where T : class, IDryBody
     {
         IDryMass<T> GetDryCapacity();
-        //ICargoContainer<T> GetCargoContainer();
     }
 
     public interface ICargoContainer : IDryMass/*, IFit<ICargoContainer>*/
     {
         IBulkMass GetBulkCapacity();
-        //IDryMass<IDryBody> GetDryCapacity();
         ICargoContainer GetCargoContainer();
     }
 

@@ -46,5 +46,14 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
         public override sealed IDryBody GetDryBody() => DryBody;
 
         public abstract IDryMass<T> GetDryMass(IWeight weight, T dryBody);
+        public IDryMass<T> GetDryMass(IDryMass<T> other)
+        {
+            _ = other ?? throw new ArgumentNullException(nameof(other));
+
+            IWeight weight = other.Weight;
+            T dryBody = other.DryBody;
+
+            return GetDryMass(weight, dryBody);
+        }
     }
 }
