@@ -2,9 +2,8 @@
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces;
 
-public interface IPacking<T> : ICargoContainer<T> where T : class, IDryBody
+public interface IPacking<T> : IContainerCapacity<T> where T : class, IDryBody
 {
-    IDryMass<T> DryCapacity { get; init; }
     object PackingMaterial { get; init; }
 
     IPacking<T> GetPacking();

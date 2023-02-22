@@ -46,8 +46,6 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
             return comparison.FitsIn(limitType);
         }
 
-        public abstract IBody GetBody();
-
         public IFlatRate GetDensity()
         {
             IFlatRateFactory factory = new RateFactory(Weight.MeasureFactory);
@@ -56,8 +54,6 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
 
             return factory.GetFlatRate(Weight, denominator);
         }
-
-        public abstract IMass GetMass(IWeight? weight = null);
 
         protected int? CompareTo(IWeight weight, int bodyComparison)
         {
@@ -90,6 +86,9 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
 
             return weight;
         }
+
+        public abstract IBody GetBody();
+        public abstract IMass GetMass(IWeight? weight = null);
     }
 
     internal abstract class BulkMass : Mass, IBulkMass
@@ -119,9 +118,7 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
 
     internal abstract class DryMass : Mass, IDryMass
     {
-        private protected DryMass(IWeight weight) : base(weight)
-        {
-        }
+        private protected DryMass(IWeight weight) : base(weight) { }
 
         public override IBody GetBody()
         {

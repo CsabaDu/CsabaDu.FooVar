@@ -4,7 +4,7 @@ using static CsabaDu.FooVar.Geometrics.Statics.ShapeTraits;
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
-    public interface IDryContainer<T> : ICargoContainer<T>/*, IFit<ICargoDoor>*/ where T : class, IDryBody
+    public interface IDryContainer<T> : IContainerCapacity<T>/*, IFit<ICargoDoor>*/ where T : class, IDryBody
     {
         ICargoDoor CargoDoor { get; init; }
 
@@ -28,7 +28,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 
     }
 
-    public interface ICargoContainer<T> : IDryMass<T>, IContainerCapacity<T> where T : class, IDryBody
+    public interface IContainerCapacity<T> : IDryMass<T>, ICargoContainer<T> where T : class, IDryBody
     {
         IDryMass<T> GetDryCapacity();
         //ICargoContainer<T> GetCargoContainer();
@@ -41,12 +41,12 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         ICargoContainer GetCargoContainer();
     }
 
-    public interface IContainerBody<T> : IContainerCapacity<T> where T : class, IDryBody
+    public interface IContainerBody
     {
-        T? ContainerBody { get; init; }
+        IDryMass? ContainerBody { get; init; }
     }
 
-    public interface IContainerCapacity<T> : ICargoContainer where T : class, IDryBody
+    public interface ICargoContainer<T> : ICargoContainer where T : class, IDryBody
     {
         IDryMass<T> DryCapacity { get; init; }
     }
