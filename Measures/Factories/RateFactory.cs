@@ -1,6 +1,8 @@
 ﻿using CsabaDu.FooVar.Measures.DataTypes;
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
+using System.Diagnostics.Metrics;
 
 namespace CsabaDu.FooVar.Measures.Factories;
 
@@ -48,6 +50,11 @@ public sealed class RateFactory : IRateFactory
     public IDenominator GetDenominator(IMeasurement measurement, ValueType? quantity = null)
     {
         return new Denominator(measurement, quantity);
+    }
+
+    public IDenominator GetDenominator(IBaseMeasure baseMeasure)
+    {
+        return new Denominator(baseMeasure);
     }
 
     public ILimit GetLimit(IMeasurement measurement, ValueType? quantity = null, LimitType limitType = default)

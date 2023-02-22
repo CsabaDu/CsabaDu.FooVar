@@ -7,18 +7,9 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread.SpreadTypes;
 
 internal sealed class BulkBody : Body, IBulkBody
 {
-    //public IVolume Volume { get; init; }
-
     public BulkBody(IVolume volume) : base(volume) { }
 
     public BulkBody(ISpread<IVolume, VolumeUnit> spread) : base(spread) { }
-
-    //public BulkBody(IDryBody dryBody)
-    //{
-    //    _ = dryBody ?? throw new ArgumentNullException(nameof(dryBody));
-
-    //    Volume = dryBody.Volume;
-    //}
 
     public BulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits) { }
 

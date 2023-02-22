@@ -9,7 +9,6 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
     internal abstract class Body : Spread<IVolume, VolumeUnit>, IBody
     {
         public IVolume Volume { get; init; }
-        //public IBodyFactory BodyFactory { get; init; }
 
         private protected Body(IVolume volume) : base(new SpreadFactory())
         {
@@ -39,13 +38,16 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
 
             Volume = GetSpreadMeasure(shapeExtentList, shapeTraits);
         }
+
         public IBody GetBody(IVolume volume) => SpreadFactory.GetBody(volume);
+
         public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => SpreadFactory.GetBody(spread);
+
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
 
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(ISpread<IVolume, VolumeUnit> spread) => GetBody(spread);
 
-        public override ISpread<IVolume, VolumeUnit> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBody(shapeExtentList, shapeTraits);
+        public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBody(shapeExtentList, shapeTraits);
 
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IShape shape) => GetBody(shape);
 

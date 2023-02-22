@@ -13,17 +13,17 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #region Constructors
     private protected Measure(IMeasureFactory measureFactory, ValueType quantity, IMeasurement measurement) : base(quantity, measurement)
     {
-        MeasureFactory = measureFactory ?? throw new ArgumentException(nameof(measureFactory));
+        MeasureFactory = measureFactory ?? throw new ArgumentNullException(nameof(measureFactory));
     }
 
     private protected Measure(IMeasureFactory measureFactory, ValueType quantity, Enum measureUnit, decimal? exchangeRate = null) : base(quantity, measureUnit, exchangeRate)
     {
-        MeasureFactory = measureFactory ?? throw new ArgumentException(nameof(measureFactory));
+        MeasureFactory = measureFactory ?? throw new ArgumentNullException(nameof(measureFactory));
     }
 
     private protected Measure(IMeasureFactory measureFactory, IBaseMeasure other) : base(other)
     {
-        MeasureFactory = measureFactory ?? throw new ArgumentException(nameof(measureFactory));
+        MeasureFactory = measureFactory ?? throw new ArgumentNullException(nameof(measureFactory));
     }
     #endregion
 

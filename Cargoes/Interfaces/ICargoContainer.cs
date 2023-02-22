@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVar.Common.Interfaces.Behaviors;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
+﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using static CsabaDu.FooVar.Geometrics.Statics.ShapeTraits;
 
@@ -35,7 +34,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         //ICargoContainer<T> GetCargoContainer();
     }
 
-    public interface ICargoContainer : IDryMass, IFit<ICargoContainer>
+    public interface ICargoContainer : IDryMass/*, IFit<ICargoContainer>*/
     {
         IBulkMass GetBulkCapacity();
         //IDryMass<IDryBody> GetDryCapacity();

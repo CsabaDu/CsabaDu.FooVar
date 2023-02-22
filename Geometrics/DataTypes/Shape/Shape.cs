@@ -36,7 +36,7 @@ internal abstract class Shape : IShape
 
         IEnumerable<IExtent> otherShapeExtentList = other.GetShapeExtentList();
 
-        return CompareTo(otherShapeExtentList) ?? throw new ArgumentException(null, nameof(other));
+        return CompareTo(otherShapeExtentList) ?? throw new ArgumentOutOfRangeException(nameof(other), "");
     }
 
     public bool Equals(IShape? other)
@@ -202,11 +202,6 @@ internal abstract class Shape : IShape
         shapeTraits.ValidateShapeExtentList(shapeExtentList);
     }
 
-    //public void ValidateShapeExtents(params IExtent[] shapeExtents)
-    //{
-    //    ValidateGeometrics.ValidateShapeExtents(shapeExtents);
-    //}
-
     public void ValidateShapeType(Type shapeType)
     {
         _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));
@@ -225,9 +220,9 @@ internal abstract class Shape : IShape
         int baseComparison = shapeExtentList.First().CompareTo(otherShapeExtentList.First());
         int count = ShapeExtentTypeCount;
 
-        if (ShapeExtentTypeCount == 1) return baseComparison;
+        if (count == 1) return baseComparison;
 
-        for (int i = 1; i < ShapeExtentTypeCount; i++)
+        for (int i = 1; i < count; i++)
         {
             IExtent other = otherShapeExtentList.ElementAt(i);
             int recentComparison = shapeExtentList.ElementAt(i).CompareTo(other);
