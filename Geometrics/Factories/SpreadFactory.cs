@@ -9,47 +9,47 @@ namespace CsabaDu.FooVar.Geometrics.Factories
 {
     public sealed class SpreadFactory : ISpreadFactory
     {
-        public IBulkBody GetBody(IVolume volume)
+        public IBulkBody GetBulkBody(IVolume volume)
         {
             return new BulkBody(volume);
         }
 
-        public IBulkBody GetBody(ISpread<IVolume, VolumeUnit> spread)
+        public IBulkBody GetBulkBody(ISpread<IVolume, VolumeUnit> spread)
         {
             return new BulkBody(spread);
         }
 
-        public IBulkBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
+        public IBulkBody GetBulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
         {
             return new BulkBody(shapeExtentList, shapeTraits);
         }
 
-        public IBulkSurface GetSurface(IArea area)
+        public IBulkSurface GetBulkSurface(IArea area)
         {
             return new BulkSurface(area);
         }
 
-        public IBulkSurface GetSurface(ISpread<IArea, AreaUnit> spread)
+        public IBulkSurface GetBulkSurface(ISpread<IArea, AreaUnit> spread)
         {
             return new BulkSurface(spread);
         }
 
-        public IBulkSurface GetSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
+        public IBulkSurface GetBulkSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
         {
             return new BulkSurface(shapeExtentList, shapeTraits);
         }
 
-        public IBulkSurface GetSurface(IPlaneShape planeShape)
+        public IBulkSurface GetBulkSurface(IPlaneShape planeShape)
         {
             return new BulkSurface(planeShape);
         }
 
-        public IBulkSurface GetSurface(IDryBody dryBody)
+        public IBulkSurface GetBulkSurface(IDryBody dryBody)
         {
-            return CreateSurface(dryBody);
+            return CreateBulkSurface(dryBody);
         }
 
-        private static IBulkSurface CreateSurface(IDryBody dryBody)
+        private static IBulkSurface CreateBulkSurface(IDryBody dryBody)
         {
             IArea baseArea = dryBody.GetBaseFace().Area;
             IExtent height = dryBody.GetHeight();

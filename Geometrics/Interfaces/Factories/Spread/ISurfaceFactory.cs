@@ -6,9 +6,9 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 public interface ISurfaceFactory
 {
-    IBulkSurface GetSurface(IArea area);
-    IBulkSurface GetSurface(ISpread<IArea, AreaUnit> spread);
-    IBulkSurface GetSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
-    IBulkSurface GetSurface(IPlaneShape planeShape);
-    IBulkSurface GetSurface(IDryBody dryBody);
+    IBulkSurface GetBulkSurface(IArea area);
+    IBulkSurface GetBulkSurface(ISpread<IArea, AreaUnit> spread);
+    IBulkSurface GetBulkSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
+    IBulkSurface GetBulkSurface(IPlaneShape planeShape);
+    IBulkSurface GetBulkSurface(IDryBody dryBody);
 }

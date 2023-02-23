@@ -16,19 +16,34 @@ namespace CsabaDu.FooVar.Cargoes.DataTypes
             _bulkMass = new BulkItem(weight, dryBody);
         }
 
+        public override sealed int CompareTo(IMass? other) // TODO
+        {
+            return base.CompareTo(other);
+        }
+
+        public override sealed bool? FitsIn(IMass? other = null, LimitType? limitType = null) // TODO
+        {
+            return base.FitsIn(other, limitType);
+        }
+
         public override sealed IBody GetBody() => GetDryBody();
 
         public IBulkMass GetBulkMass() => _bulkMass;
 
         public IDryMass GetDryMass() => this;
 
-        public override IMass GetMass(IWeight? weight = null)
+        public override sealed IMass GetMass(IWeight? weight = null)
         {
             if (weight == null) return this;
 
             IBody body = _bulkMass.GetBody();
 
             return _bulkMass.GetBulkMass(weight, body);
+        }
+
+        public override sealed bool Equals(IMass? other) // TODO
+        {
+            return base.Equals(other);
         }
 
         public abstract IDryBody GetDryBody();

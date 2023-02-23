@@ -17,14 +17,14 @@ internal abstract class DryBody : Shape, IDryBody
     {
         BodyFactory = new SpreadFactory();
 
-        _body = BodyFactory.GetBody(this);
+        _body = BodyFactory.GetBulkBody(this);
     }
 
     private protected DryBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
         BodyFactory = new SpreadFactory();
 
-        _body = BodyFactory.GetBody(this);
+        _body = BodyFactory.GetBulkBody(this);
     }
 
     public int CompareTo(ISpread<IVolume, VolumeUnit>? other) => _body.CompareTo(other);
@@ -116,5 +116,5 @@ internal abstract class DryBody : Shape, IDryBody
     public void ValidateSpreadMeasure(IVolume volume) => _body.ValidateSpreadMeasure(volume);
 
     public abstract IExtent GetHeight();
-    public abstract IPlaneShape GetProjection(ShapeExtentType shapeExtentType);
+    public abstract IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType);
 }

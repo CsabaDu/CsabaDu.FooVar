@@ -12,12 +12,12 @@ internal abstract class PlaneShape : Shape, IPlaneShape
 
     private protected PlaneShape(ShapeTrait shapeTraits) : base(new ShapeFactory(), shapeTraits)
     {
-       _surface = new SpreadFactory().GetSurface(this);
+       _surface = new SpreadFactory().GetBulkSurface(this);
     }
 
     private protected PlaneShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits)
     {
-        _surface = new SpreadFactory().GetSurface(this);
+        _surface = new SpreadFactory().GetBulkSurface(this);
     }
 
     public int CompareTo(ISpread<IArea, AreaUnit>? other) => _surface.CompareTo(other);

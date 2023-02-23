@@ -41,9 +41,9 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread
             Volume = GetSpreadMeasure(shapeExtentList, shapeTraits);
         }
 
-        public IBody GetBody(IVolume volume) => SpreadFactory.GetBody(volume);
+        public IBody GetBody(IVolume volume) => SpreadFactory.GetBulkBody(volume);
 
-        public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => SpreadFactory.GetBody(spread);
+        public IBody GetBody(ISpread<IVolume, VolumeUnit> spread) => SpreadFactory.GetBulkBody(spread);
 
         public override sealed ISpread<IVolume, VolumeUnit> GetSpread(IVolume spreadMeasure) => GetBody(spreadMeasure);
 

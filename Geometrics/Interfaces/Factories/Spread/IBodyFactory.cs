@@ -5,7 +5,7 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 public interface IBodyFactory
 {
-    IBulkBody GetBody(IVolume volume);
-    IBulkBody GetBody(ISpread<IVolume, VolumeUnit> spread);
-    IBulkBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
+    IBulkBody GetBulkBody(IVolume volume);
+    IBulkBody GetBulkBody(ISpread<IVolume, VolumeUnit> spread);
+    IBulkBody GetBulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
 }

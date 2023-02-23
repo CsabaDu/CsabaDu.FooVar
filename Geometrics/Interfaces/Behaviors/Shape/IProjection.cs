@@ -1,15 +1,23 @@
 ﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-namespace CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
-
-public interface IProjection
+namespace CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape
 {
-    IPlaneShape GetProjection(ShapeExtentType shapeExtentType);
-}
+    public interface IProjection
+    {
+        IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType);
+    }
 
-public interface IProjection<out T> : IProjection where T : IPlaneShape
-{
-    T GetHorizontalProjection();
-    IRectangle GetVerticalProjection(Comparison? comparison = null);
+    public interface IProjection<out T> : IProjection where T : IPlaneShape
+    {
+        T GetHorizontalProjection();
+        IRectangle GetVerticalProjection(Comparison? comparison = null);
+    }
+
+    public interface ISection : IDryBody
+    {
+        IPlaneShape PlaneSectionShape { get; init; }
+        ShapeExtentType PerpendicularShapeExtentType { get; init; }
+        IRectangle CornerPadding { get; init; }
+    }
 }

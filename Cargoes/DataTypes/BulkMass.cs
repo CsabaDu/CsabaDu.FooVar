@@ -11,7 +11,7 @@ internal abstract class BulkMass : Mass, IBulkMass
     {
         _ = body ?? throw new ArgumentNullException(nameof(body));
 
-        BulkBody = new SpreadFactory().GetBody(body);
+        BulkBody = new SpreadFactory().GetBulkBody(body);
     }
     public IBulkBody BulkBody { get; init; }
 
@@ -40,6 +40,7 @@ internal abstract class BulkMass : Mass, IBulkMass
     {
         return base.Equals(other);
     }
+
     public IBulkMass GetBulkMass(IWeight weight, IBody body)
     {
         return new BulkItem(weight, body);
