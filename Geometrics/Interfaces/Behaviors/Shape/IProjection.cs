@@ -19,5 +19,18 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape
         IPlaneShape PlaneSectionShape { get; init; }
         ShapeExtentType PerpendicularShapeExtentType { get; init; }
         IRectangle CornerPadding { get; init; }
+
+        ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
+    }
+
+    public interface IPlaneSection : ISection
+    {
+        IPlaneSection GetPlaneSection();
+    }
+
+    public interface ICrossSection : ISection
+    {
+        IDryBody GetCrossSectionBody();
+        ICrossSection GetCrossSection();
     }
 }
