@@ -31,7 +31,7 @@ internal abstract class PlaneShape : Shape, IPlaneShape
         return _surface.FitsIn(other, limitType);
     }
 
-    public IExtent GetEdge(IExtent diagonal)
+    public IExtent GetTangentEdge(IExtent diagonal)
     {
         ValidateShapeExtent(diagonal);
 

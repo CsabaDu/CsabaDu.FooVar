@@ -87,7 +87,7 @@ internal sealed class Circle : PlaneShape, ICircle
         IExtent edge = shapeSide switch
         {
             Side.Outer => diagonal,
-            Side.Inner => GetEdge(diagonal),
+            Side.Inner => GetTangentEdge(diagonal),
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeSide), shapeSide, null),
         };

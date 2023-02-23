@@ -4,7 +4,7 @@ using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
-public interface IPlaneShape : IShape, ISurface, IEdge
+public interface IPlaneShape : IShape, ISurface, ITangentEdge
 {
     //ISurfaceFactory SurfaceFactory { get; init; }
 
