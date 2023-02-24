@@ -8,8 +8,10 @@ public interface ISection : IPlaneShape
     IPlaneShape PlaneSectionShape { get; init; }
     IRectangle CornerPadding { get; init; }
 
+    IRectangle GetMinimumFace();
     ISection GetSection();
     ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
+    ISection GetSection(ISection section);
 
     void ValidateSection(IPlaneShape planeShape);
 }

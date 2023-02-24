@@ -6,6 +6,5 @@ public interface IPlaneSection : ISection
 {
     IPlaneSection GetPlaneSection();
     IPlaneSection GetPlaneSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
-
-    void ValidatePlaneSection(IPlaneShape planeShape);
+    IPlaneSection GetPlaneSection(ISection section);
 }

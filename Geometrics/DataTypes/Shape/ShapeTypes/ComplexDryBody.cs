@@ -116,9 +116,9 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
 
     public int GetInnerTangentCuboidListCount() => InnerTangentCuboidList.Count();
 
-    public override IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType)
+    public override IPlaneShape GetProjection(ShapeExtentType perpendicular)
     {
-        return Dimensions.GetProjection(perpendicularShapeExtentType);
+        return Dimensions.GetProjection(perpendicular);
     }
 
     public override IReadOnlyList<IExtent> GetShapeExtentList()

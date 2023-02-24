@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVar.Geometrics.Factories;
-using CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
+﻿using CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
@@ -15,52 +14,79 @@ internal abstract class Section : PlaneShape, ISection
         Area = planeSectionShape.Area;
     }
 
+    private protected Section(ISection section) : base(section?.ShapeTraits ?? throw new ArgumentNullException(nameof(section)))
+    {
+        CornerPadding = section.CornerPadding;
+        PlaneSectionShape = section.PlaneSectionShape;
+        Area = section.Area;
+    }
+
     public IPlaneShape PlaneSectionShape { get; init; }
     public IRectangle CornerPadding { get; init; }
     public override IArea Area { get; init; }
-    public override IEnumerable<IExtent> DimensionsShapeExtentList => throw new NotImplementedException();
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => PlaneSectionShape.DimensionsShapeExtentList;
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter) => PlaneSectionShape.GetDiagonal(extentUnit);
 
+    public IRectangle GetMinimumFace()
+    {
+        IMeasure length = CornerPadding.GetShapeExtent(ShapeExtentType.Length);
+        length = length.SumWith(GetShapeExtent(ShapeExtentType.Length), SummingMode.Add);
+
+        IMeasure width = CornerPadding.GetShapeExtent(ShapeExtentType.Width);
+        width = width.SumWith(GetShapeExtent(ShapeExtentType.Width), SummingMode.Add);
+
+        return new Rectangle((IExtent)length, (IExtent)width);
+    }
+
     public ISection GetSection() => this;
-    public abstract ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
 
     public override IReadOnlyList<IExtent> GetShapeExtentList() => PlaneSectionShape.GetShapeExtentList();
 
     public override IShape GetTangentShape(Side shapeSide = Side.Outer) => PlaneSectionShape.GetTangentShape();
 
-    public abstract void ValidateSection(IPlaneShape planeShape);
+    public void ValidateSection(IPlaneShape planeShape)
+    {
+        _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
+
+        IShape minimumFace = GetMinimumFace();
+
+        if (minimumFace.FitsIn(planeShape, LimitType.BeLess) != true) throw new ArgumentOutOfRangeException(nameof(planeShape), "");
+    }
+
+    public abstract ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
+    public abstract ISection GetSection(ISection section);
 }
 
 //internal abstract class Section : DryBody, ISection
 //{
-//    private protected Section(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType) : base(planeSectionShape?.ShapeTraits - (int)ShapeTrait.Plane ?? throw new ArgumentNullException(nameof(planeSectionShape)))
+//    private protected Section(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular) : base(planeSectionShape?.ShapeTraits - (int)ShapeTrait.Plane ?? throw new ArgumentNullException(nameof(planeSectionShape)))
 //    {
-//        ValidateSectionArgs(planeSectionShape!, cornerPadding, perpendicularShapeExtentType);
+//        ValidateSectionArgs(planeSectionShape!, cornerPadding, perpendicular);
 
 //        CornerPadding = cornerPadding;
-//        PerpendicularShapeExtentType = perpendicularShapeExtentType;
+//        Perpendicular = perpendicular;
 //        PlaneSectionShape = planeSectionShape!;
 //    }
 
 //    public IPlaneShape PlaneSectionShape { get; init; }
-//    public ShapeExtentType PerpendicularShapeExtentType { get; init; }
+//    public ShapeExtentType Perpendicular { get; init; }
 //    public IRectangle CornerPadding { get; init; }
 
 //    public abstract IRectangularShape GetDimensions();
 
-//    public override sealed IExtent GetHeight() => GetShapeExtent(PerpendicularShapeExtentType);
+//    public override sealed IExtent GetHeight() => GetShapeExtent(Perpendicular);
 
-//    public override IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType)
+//    public override IPlaneShape GetProjection(ShapeExtentType perpendicular)
 //    {
 //        if (ShapeTraits.HasFlag(ShapeTrait.Circular))
 //        {
-//            return (this as ICylinder)?.GetProjection(perpendicularShapeExtentType) ?? throw new Exception(); // TODO ?
+//            return (this as ICylinder)?.GetProjection(perpendicular) ?? throw new Exception(); // TODO ?
 //        }
 //        throw new NotImplementedException();
 //    }
 
-//    public abstract ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
+//    public abstract ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular);
 
 //    public override IReadOnlyList<IExtent> GetShapeExtentList()
 //    {
@@ -72,17 +98,17 @@ internal abstract class Section : PlaneShape, ISection
 //        throw new NotImplementedException();
 //    }
 
-//    public void ValidateSectionArgs(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType)
+//    public void ValidateSectionArgs(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular)
 //    {
 //        _ = planeSectionShape ?? throw new ArgumentNullException(nameof(planeSectionShape));
 //        _ = cornerPadding ?? throw new ArgumentNullException(nameof(cornerPadding));
 
-//        if (!GetShapeExtentTypeSet(ShapeTraits).Contains(perpendicularShapeExtentType))
+//        if (!GetShapeExtentTypeSet(ShapeTraits).Contains(perpendicular))
 //        {
-//            throw new ArgumentOutOfRangeException(nameof(perpendicularShapeExtentType), perpendicularShapeExtentType, null);
+//            throw new ArgumentOutOfRangeException(nameof(perpendicular), perpendicular, null);
 //        }
 
-//        IPlaneShape projection = GetProjection(perpendicularShapeExtentType);
+//        IPlaneShape projection = GetProjection(perpendicular);
 
 //        IRectangle rectangularProjection = GetRectangularTangentPlaneShape(projection, Side.Inner);
 //        IRectangle planeSectionRectangle = GetRectangularTangentPlaneShape(PlaneSectionShape, Side.Outer);

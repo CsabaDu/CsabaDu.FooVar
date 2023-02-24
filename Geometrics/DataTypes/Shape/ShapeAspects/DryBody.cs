@@ -117,5 +117,5 @@ internal abstract class DryBody : Shape, IDryBody
 
     public abstract IPlaneShape GetBaseFace();
     public abstract IExtent GetHeight();
-    public abstract IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType);
+    public abstract IPlaneShape GetProjection(ShapeExtentType perpendicular);
 }

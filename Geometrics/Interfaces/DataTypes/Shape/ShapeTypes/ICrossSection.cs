@@ -4,12 +4,13 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 public interface ICrossSection : ISection
 {
-    ShapeExtentType PerpendicularShapeExtentType { get; init; }
+    ShapeExtentType Perpendicular { get; init; }
 
-    IDryBody GetCrossSectionBody(IDryBody dryBody);
+    ICuboid GetCrossSectionCuboid(IExtent depth);
     ICrossSection GetCrossSection();
-    ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
-    ICrossSection GetCrossSection(IPlaneSection planeSection, ShapeExtentType perpendicularShapeExtentType);
+    ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular);
+    ICrossSection GetCrossSection(ISection section, ShapeExtentType perpendicular);
 
-    void ValidateCrossSection(IDryBody dryBody);
+    void ValidateCrossSection(ICuboid cuboid, ShapeExtentType perpendicular);
+    void ValidatePerpendicular(ShapeExtentType perpendicular);
 }

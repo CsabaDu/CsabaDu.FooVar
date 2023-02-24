@@ -5,7 +5,7 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
 
 public interface IProjection
 {
-    IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType);
+    IPlaneShape GetProjection(ShapeExtentType perpendicular);
 }
 
 public interface IProjection<out T> : IProjection where T : IPlaneShape

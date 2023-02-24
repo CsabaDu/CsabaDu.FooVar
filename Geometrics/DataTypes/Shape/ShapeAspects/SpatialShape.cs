@@ -27,21 +27,21 @@ internal abstract class SpatialShape<T> : DryBody, ISpatialShape<T> where T : IP
 
     public T GetHorizontalProjection() => BaseFace;
 
-    public override sealed IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType)
+    public override sealed IPlaneShape GetProjection(ShapeExtentType perpendicular)
     {
         T horizontalProjection = GetHorizontalProjection();
 
-        if (perpendicularShapeExtentType == ShapeExtentType.Height) return horizontalProjection;
+        if (perpendicular == ShapeExtentType.Height) return horizontalProjection;
 
-        if (horizontalProjection is ICircle && perpendicularShapeExtentType == ShapeExtentType.Radius) return GetVerticalProjection();
+        if (horizontalProjection is ICircle && perpendicular == ShapeExtentType.Radius) return GetVerticalProjection();
 
         if (horizontalProjection is IRectangle)
         {
-            if (perpendicularShapeExtentType == ShapeExtentType.Length) return GetVerticalProjection(Comparison.Less);
-            if (perpendicularShapeExtentType == ShapeExtentType.Width) return GetVerticalProjection(Comparison.Greater);
+            if (perpendicular == ShapeExtentType.Length) return GetVerticalProjection(Comparison.Less);
+            if (perpendicular == ShapeExtentType.Width) return GetVerticalProjection(Comparison.Greater);
         }
 
-        throw new ArgumentOutOfRangeException(nameof(perpendicularShapeExtentType), perpendicularShapeExtentType, null);
+        throw new ArgumentOutOfRangeException(nameof(perpendicular), perpendicular, null);
     }
 
     public IRectangle GetVerticalProjection(Comparison? comparison = null)
