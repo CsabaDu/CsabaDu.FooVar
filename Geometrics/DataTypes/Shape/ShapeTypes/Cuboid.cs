@@ -35,6 +35,8 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
     public IExtent Width { get; init; }
     public override IVolume Volume { get; init; }
 
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetShapeExtentList();
+
     public IRectangle GetComparedCuboidFace(Comparison? comparison)
     {
         if (comparison == null) return BaseFace;

@@ -22,32 +22,6 @@ public static class CalculateGeometrics
         return innerShapeExtentList;
     }
 
-    internal static IEnumerable<IExtent> GetValidatedEnclosingShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
-    {
-        ValidateInnerShapeExtentList(innerShapeExtentList);
-
-        IExtent length = innerShapeExtentList.ElementAt(0);
-        IExtent width = innerShapeExtentList.ElementAt(1);
-        IExtent height = innerShapeExtentList.ElementAt(2);
-        int count = innerShapeExtentList.Count() / CuboidShapeExtentCount;
-
-        if (count == 1) return new List<IExtent>() { length, width, height };
-
-        for (int i = 1; i < count; i++)
-        {
-            int lengthIndex = i * CuboidShapeExtentCount;
-            length = GetComparedShapeExtent(length, innerShapeExtentList.ElementAt(lengthIndex), Comparison.Greater);
-
-            int widthIndex = lengthIndex + 1;
-            width = GetComparedShapeExtent(width, innerShapeExtentList.ElementAt(widthIndex), Comparison.Greater);
-
-            int heightIndex = widthIndex + 1;
-            height = height.GetExtent(height.SumWith(innerShapeExtentList.ElementAt(heightIndex)));
-        }
-
-        return new List<IExtent>() { length, width, height };
-    }
-
     internal static IExtent GetComparedShapeExtent(IExtent firstExtent, IExtent lastExtent, Comparison? comparison = Comparison.Greater)
     {
         bool isFirstExtentShorter = firstExtent.CompareTo(lastExtent) < 0;

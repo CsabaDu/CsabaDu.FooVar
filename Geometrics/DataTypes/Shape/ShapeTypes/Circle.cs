@@ -28,6 +28,8 @@ internal sealed class Circle : PlaneShape, ICircle
     public override IArea Area { get; init; }
     public IExtent Radius { get; init; }
 
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetDimensions().GetShapeExtentList();
+
     public ICircle GetCircle(params IExtent[] shapeExtents)
     {
         if (shapeExtents == null || shapeExtents.Length == 0) return this;

@@ -33,6 +33,8 @@ internal sealed class Rectangle : PlaneShape, IRectangle
     public IExtent Length { get; init; }
     public IExtent Width { get; init; }
 
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetShapeExtentList();
+
     public IExtent GetComparedShapeExtent(Comparison? comparison)
     {
         return CalculateGeometrics.GetComparedShapeExtent(Length, Width, comparison);

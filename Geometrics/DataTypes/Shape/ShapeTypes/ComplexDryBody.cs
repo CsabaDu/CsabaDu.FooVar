@@ -30,6 +30,8 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
     public int InnerTangentCuboidCount { get; init; }
     public override IVolume Volume { get; init; }
 
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetShapeExtentList();
+
     private IEnumerable<ICuboid> GetInnerTangentCuboidList(IEnumerable<IExtent> innerShapeExtentList)
     {
         ValidateInnerShapeExtentList(innerShapeExtentList);
@@ -111,9 +113,9 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
 
     public int GetInnerTangentCuboidListCount() => InnerTangentCuboidList.Count();
 
-    public override IPlaneShape GetProjection(ShapeExtentType shapeExtentType)
+    public override IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType)
     {
-        return Dimensions.GetProjection(shapeExtentType);
+        return Dimensions.GetProjection(perpendicularShapeExtentType);
     }
 
     public override IReadOnlyList<IExtent> GetShapeExtentList()
@@ -161,5 +163,33 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
     public void ValidateInnerShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
     {
         ValidateGeometrics.ValidateInnerShapeExtentList(innerShapeExtentList);
+    }
+
+    private static IEnumerable<IExtent> GetValidatedEnclosingShapeExtentList(IEnumerable<IExtent> innerShapeExtentList)
+    {
+        ValidateGeometrics.ValidateInnerShapeExtentList(innerShapeExtentList);
+
+        int i = 0;
+
+        int lengthIndex = i * CuboidShapeExtentCount;
+        int widthIndex = lengthIndex + 1;
+        int heightIndex = widthIndex + 1;
+
+        IExtent length = innerShapeExtentList.ElementAt(lengthIndex);
+        IExtent width = innerShapeExtentList.ElementAt(widthIndex);
+        IExtent height = innerShapeExtentList.ElementAt(heightIndex);
+
+        int count = innerShapeExtentList.Count() / CuboidShapeExtentCount;
+
+        if (count == 1) return new List<IExtent>() { length, width, height };
+
+        for (i = 1; i < count; i++)
+        {
+            length = GetComparedShapeExtent(length, innerShapeExtentList.ElementAt(lengthIndex), Comparison.Greater);
+            width = GetComparedShapeExtent(width, innerShapeExtentList.ElementAt(widthIndex), Comparison.Greater);
+            height = height.GetExtent(height.SumWith(innerShapeExtentList.ElementAt(heightIndex), SummingMode.Add));
+        }
+
+        return new List<IExtent>() { length, width, height };
     }
 }

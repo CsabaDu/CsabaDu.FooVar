@@ -30,6 +30,8 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
     public IExtent Radius { get; init; }
     public override IVolume Volume { get; init; }
 
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetDimensions().GetShapeExtentList();
+
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
     {
         extentUnit.ValidateShapeExtentUnit();
