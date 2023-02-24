@@ -27,7 +27,7 @@ internal sealed class Rectangle : PlaneShape, IRectangle
         Area = GetRectangleArea(length, width);
     }
 
-    public Rectangle(IRectangle other) : this(other.GetShapeExtentList()) { }
+    public Rectangle(IRectangle other) : this(other?.GetShapeExtentList() ?? throw new ArgumentNullException(nameof(other))) { }
 
     public override IArea Area { get; init; }
     public IExtent Length { get; init; }

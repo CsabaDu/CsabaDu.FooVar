@@ -115,6 +115,7 @@ internal abstract class DryBody : Shape, IDryBody
 
     public void ValidateSpreadMeasure(IVolume volume) => _body.ValidateSpreadMeasure(volume);
 
+    public abstract IPlaneShape GetBaseFace();
     public abstract IExtent GetHeight();
     public abstract IPlaneShape GetProjection(ShapeExtentType perpendicularShapeExtentType);
 }

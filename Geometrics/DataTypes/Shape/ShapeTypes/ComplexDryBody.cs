@@ -1,4 +1,5 @@
 using CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
+using CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
@@ -31,6 +32,8 @@ internal sealed class ComplexDryBody : DryBody, IComplexDryBody
     public override IVolume Volume { get; init; }
 
     public override IEnumerable<IExtent> DimensionsShapeExtentList => GetShapeExtentList();
+
+    public override IPlaneShape GetBaseFace() => Dimensions.BaseFace;
 
     private IEnumerable<ICuboid> GetInnerTangentCuboidList(IEnumerable<IExtent> innerShapeExtentList)
     {

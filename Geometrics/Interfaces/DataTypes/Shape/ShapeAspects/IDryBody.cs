@@ -6,6 +6,7 @@ namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 public interface IDryBody : IBaseFace, IShape, IBody, IProjection
 {
     IExtent GetHeight();
+    IPlaneShape GetBaseFace();
     IDryBody GetDryBody(ExtentUnit extentUnit);
     IDryBody GetDryBody(params IExtent[] shapeExtents);
     IDryBody GetDryBody(IDryBody dryBody);

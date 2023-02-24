@@ -1,6 +1,5 @@
 ﻿using CsabaDu.FooVar.Common.Interfaces.Behaviors;
 using CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
-using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
 using CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
@@ -14,6 +13,4 @@ public interface IShape : IShapeTraits, IShapeExtentList, IDiagonal, ITangentSha
     IShape GetShape(params IExtent[] shapeExtents);
     IShape GetShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
     IShape GetShape(IShape other);
-
-    //void ValidateShapeExtents(params IExtent[] shapeExtents);
 }

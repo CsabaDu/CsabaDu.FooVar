@@ -2,13 +2,10 @@
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-public interface IPlaneSection : IPlaneShape
+public interface IPlaneSection : ISection
 {
-    IPlaneShape PlaneSectionShape { get; init; }
-    ShapeExtentType PerpendicularShapeExtentType { get; init; }
-    IRectangle CornerPadding { get; init; }
-
     IPlaneSection GetPlaneSection();
+    IPlaneSection GetPlaneSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
 
-    void ValidateSectionArgs(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
+    void ValidatePlaneSection(IPlaneShape planeShape);
 }

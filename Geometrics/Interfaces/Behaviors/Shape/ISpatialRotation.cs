@@ -6,5 +6,5 @@ public interface ISpatialRotation
 {
     ICuboid RotatedSpatially();
     (ICuboid, ICuboid) RotatedSpatiallyWith(ICuboid other);
-    IRectangle GetComparedCuboidFace(Comparison? comparison);
+    IRectangle GetComparedVerticalFace(Comparison comparison);
 }

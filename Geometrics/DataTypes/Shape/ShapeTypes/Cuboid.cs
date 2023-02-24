@@ -2,6 +2,7 @@ using CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
+using CsabaDu.FooVar.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
@@ -29,18 +30,17 @@ internal sealed class Cuboid : SpatialShape<IRectangle>, ICuboid
 
     public Cuboid(IExtent length, IExtent width, IExtent height) : this(new Rectangle(length, width), height) { }
 
-    public Cuboid(ICuboid other) : this(other.GetShapeExtentList()) { }
+    public Cuboid(ICuboid other) : this(other?.GetShapeExtentList() ?? throw new ArgumentNullException(nameof(other))) { }
 
     public IExtent Length { get; init; }
     public IExtent Width { get; init; }
     public override IVolume Volume { get; init; }
-
     public override IEnumerable<IExtent> DimensionsShapeExtentList => GetShapeExtentList();
 
-    public IRectangle GetComparedCuboidFace(Comparison? comparison)
-    {
-        if (comparison == null) return BaseFace;
+    public override IPlaneShape GetBaseFace() => BaseFace;
 
+    public IRectangle GetComparedVerticalFace(Comparison comparison)
+    {
         IExtent horizontalExtent = BaseFace.GetComparedShapeExtent(comparison);
 
         return ShapeFactory.GetRectangle(horizontalExtent, Height);

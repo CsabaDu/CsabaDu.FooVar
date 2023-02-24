@@ -3,13 +3,13 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
-public interface ISection : IDryBody, IDimensions
+public interface ISection : IPlaneShape
 {
     IPlaneShape PlaneSectionShape { get; init; }
-    ShapeExtentType PerpendicularShapeExtentType { get; init; }
     IRectangle CornerPadding { get; init; }
 
-    ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
+    ISection GetSection();
+    ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
 
-    void ValidateSectionArgs(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
+    void ValidateSection(IPlaneShape planeShape);
 }

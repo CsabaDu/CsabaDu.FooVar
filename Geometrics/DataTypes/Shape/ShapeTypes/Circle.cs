@@ -25,7 +25,7 @@ internal sealed class Circle : PlaneShape, ICircle
         Area = GetCircleArea(radius);
     }
 
-    public Circle(ICircle other) : this(other.GetShapeExtentList()) { }
+    public Circle(ICircle other) : this(other?.GetShapeExtentList() ?? throw new ArgumentNullException(nameof(other))) { }
 
     public override IArea Area { get; init; }
     public IExtent Radius { get; init; }

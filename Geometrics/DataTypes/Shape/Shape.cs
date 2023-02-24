@@ -203,6 +203,11 @@ internal abstract class Shape : IShape
         shapeTraits.ValidateShapeExtentList(shapeExtentList);
     }
 
+    public void ValidateShapeExtentType(ShapeExtentType shapeExtentType)
+    {
+        if (!ShapeExtentTypeSet.Contains(shapeExtentType)) throw new ArgumentOutOfRangeException(nameof(shapeExtentType), shapeExtentType, null);
+    }
+
     public void ValidateShapeType(Type shapeType)
     {
         _ = shapeType ?? throw new ArgumentNullException(nameof(shapeType));

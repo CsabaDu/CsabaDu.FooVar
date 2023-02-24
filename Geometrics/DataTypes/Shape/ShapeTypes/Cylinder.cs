@@ -2,6 +2,7 @@ using CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
+using CsabaDu.FooVar.Measures.Interfaces.DataTypes.MeasureTypes;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
@@ -27,12 +28,14 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
 
     public Cylinder(IExtent radius, IExtent height) : this(new Circle(radius), height) { }
 
-    public Cylinder(ICylinder other) : this(other.GetShapeExtentList()) { }
+    public Cylinder(ICylinder other) : this(other?.GetShapeExtentList() ?? throw new ArgumentNullException(nameof(other))) { }
 
     public IExtent Radius { get; init; }
     public override IVolume Volume { get; init; }
 
     public override IEnumerable<IExtent> DimensionsShapeExtentList => Dimensions.GetShapeExtentList();
+
+    public override IPlaneShape GetBaseFace() => BaseFace;
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
     {

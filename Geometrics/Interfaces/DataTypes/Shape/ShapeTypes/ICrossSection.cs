@@ -1,10 +1,15 @@
-﻿using CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
+﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-public interface ICrossSection : IDryBody/*, IDimensions*/
+public interface ICrossSection : ISection
 {
-    IDryBody GetCrossSectionBody();
+    ShapeExtentType PerpendicularShapeExtentType { get; init; }
+
+    IDryBody GetCrossSectionBody(IDryBody dryBody);
     ICrossSection GetCrossSection();
+    ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicularShapeExtentType);
+    ICrossSection GetCrossSection(IPlaneSection planeSection, ShapeExtentType perpendicularShapeExtentType);
+
+    void ValidateCrossSection(IDryBody dryBody);
 }
