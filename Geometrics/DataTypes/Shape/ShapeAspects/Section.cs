@@ -29,7 +29,7 @@ internal abstract class Section : DryBody, ISection
     {
         if (ShapeTraits.HasFlag(ShapeTrait.Circular))
         {
-            return (this as ICylinder)?.GetProjection(perpendicularShapeExtentType) ?? 
+            return (this as ICylinder)?.GetProjection(perpendicularShapeExtentType) ?? throw new Exception(); // TODO ?
         }
         throw new NotImplementedException();
     }
@@ -84,7 +84,7 @@ internal abstract class Section : DryBody, ISection
         return (IExtent)cornerPaddingExtent.SumWith(planeSectionShapeExtent);
     }
 
-    private IRectangle GetMinimumRectangle(IRectangle cornerPadding, IPlaneShape planeSectionShape)
+    private IRectangle GetMinimumRectangle(IRectangle cornerPadding, IRectangle planeSectionShape)
     {
         IExtent Length = GetMinimumShapeExtent(cornerPadding, planeSectionShape, ShapeExtentType.Length);
         IExtent Width = GetMinimumShapeExtent(cornerPadding, planeSectionShape, ShapeExtentType.Width);
