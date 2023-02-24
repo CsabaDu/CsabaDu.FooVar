@@ -7,6 +7,8 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
 internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
 {
+    private ICuboid Dimensions => (ICuboid)GetDimensions();
+
     public Cylinder(IEnumerable<IExtent> shapeExtentList) : base(shapeExtentList, ShapeTrait.Circular)
     {
         IExtent radius = BaseFace.Radius;
@@ -30,7 +32,7 @@ internal sealed class Cylinder : SpatialShape<ICircle>, ICylinder
     public IExtent Radius { get; init; }
     public override IVolume Volume { get; init; }
 
-    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetDimensions().GetShapeExtentList();
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => Dimensions.GetShapeExtentList();
 
     public override IExtent GetDiagonal(ExtentUnit extentUnit = ExtentUnit.meter)
     {

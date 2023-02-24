@@ -7,6 +7,8 @@ namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
 internal sealed class Circle : PlaneShape, ICircle
 {
+    private IRectangle Dimensions => (IRectangle)GetDimensions();
+
     public Circle(IExtent radius) : base(ShapeTrait.Plane | ShapeTrait.Circular)
     {
         ValidateShapeExtent(radius);
@@ -28,7 +30,7 @@ internal sealed class Circle : PlaneShape, ICircle
     public override IArea Area { get; init; }
     public IExtent Radius { get; init; }
 
-    public override IEnumerable<IExtent> DimensionsShapeExtentList => GetDimensions().GetShapeExtentList();
+    public override IEnumerable<IExtent> DimensionsShapeExtentList => Dimensions.GetShapeExtentList();
 
     public ICircle GetCircle(params IExtent[] shapeExtents)
     {
