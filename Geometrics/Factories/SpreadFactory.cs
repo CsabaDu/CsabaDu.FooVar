@@ -55,30 +55,6 @@ public sealed class SpreadFactory : ISpreadFactory
         return CreateBulkSurface(dryBody);
     }
 
-    private static IBulkSurface CreateBulkSurface(IDryBody dryBody)
-    {
-        IArea baseArea = dryBody.GetBaseFace().Area;
-        IExtent height = dryBody.GetHeight();
-        IMeasure basePerimeter = height;
-
-        if (dryBody is ICuboid cuboid)
-        {
-            basePerimeter = cuboid.Length.SumWith(cuboid.Width).MultipliedBy(2);
-        }
-
-        if (dryBody is ICylinder cylinder)
-        {
-            basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
-        }
-
-        IExtent mantleBaseExtent = height.GetExtent(basePerimeter);
-        IArea mantleArea = GetRectangleArea(mantleBaseExtent, height);
-
-        IArea fullSurfaceArea = baseArea.GetArea(baseArea.MultipliedBy(2).SumWith(mantleArea));
-
-        return new BulkSurface(fullSurfaceArea);
-    }
-
     public ISpread GetSpread(ISpread spread)
     {
         if (spread is ISpread<IArea, AreaUnit> surface) return GetBulkSurface(surface);
@@ -109,5 +85,29 @@ public sealed class SpreadFactory : ISpreadFactory
         return shape.ShapeTraits.HasFlag(ShapeTrait.Plane) ?
             GetBulkSurface((IPlaneShape)shape)
             : GetBulkBody((IDryBody)shape);
+    }
+
+    private static IBulkSurface CreateBulkSurface(IDryBody dryBody)
+    {
+        IArea baseArea = dryBody.GetBaseFace().Area;
+        IExtent height = dryBody.GetHeight();
+        IMeasure basePerimeter = height;
+
+        if (dryBody is ICuboid cuboid)
+        {
+            basePerimeter = cuboid.Length.SumWith(cuboid.Width).MultipliedBy(2);
+        }
+
+        if (dryBody is ICylinder cylinder)
+        {
+            basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
+        }
+
+        IExtent mantleBaseExtent = height.GetExtent(basePerimeter);
+        IArea mantleArea = GetRectangleArea(mantleBaseExtent, height);
+
+        IArea fullSurfaceArea = baseArea.GetArea(baseArea.MultipliedBy(2).SumWith(mantleArea));
+
+        return new BulkSurface(fullSurfaceArea);
     }
 }
