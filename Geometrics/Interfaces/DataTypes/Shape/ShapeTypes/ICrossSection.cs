@@ -6,7 +6,7 @@ public interface ICrossSection : ISection
 {
     ShapeExtentType Perpendicular { get; init; }
 
-    ICuboid GetCrossSectionCuboid(IExtent depth);
+    ICuboid GetCrossSectionBodyDimensions(IExtent depth);
     ICrossSection GetCrossSection();
     ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular);
     ICrossSection GetCrossSection(ISection section, ShapeExtentType perpendicular);

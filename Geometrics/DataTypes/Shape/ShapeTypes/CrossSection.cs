@@ -35,15 +35,21 @@ internal sealed class CrossSection : Section, ICrossSection
         return new CrossSection(section, perpendicular);
     }
 
-    public ICuboid GetCrossSectionCuboid(IExtent depth)
+    public ICuboid GetCrossSectionBodyDimensions(IExtent depth)
     {
         ValidateShapeExtent(depth);
 
-        IRectangle baseRectangle = ShapeTraits.HasFlag(ShapeTrait.Circular) ?
-            (IRectangle)(PlaneSectionShape as ICircle)!.GetDimensions()
-            : (IRectangle)PlaneSectionShape;
+        IExtent length = GetShapeExtent(ShapeExtentType.Length);
+        IExtent width = GetShapeExtent(ShapeExtentType.Width);
 
-        return new Cuboid(baseRectangle, depth);
+        return Perpendicular switch
+        {
+            ShapeExtentType.Radius => new Cuboid(length, depth, width),
+            ShapeExtentType.Length => new Cuboid(width, depth, length),
+            ShapeExtentType.Width => new Cuboid(length, depth, width),
+            ShapeExtentType.Height => new Cuboid(length, width, depth),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     public override ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding) => GetCrossSection(planeSectionShape, cornerPadding, Perpendicular);

@@ -6,4 +6,5 @@ public interface IDryBodyFactory : ICuboidFactory, ICylinderFactory, IComplexDry
 {
     IDryBody GetDryBody(params IExtent[] shapeExtents);
     IDryBody GetDryBody(IDryBody dryBody);
+    IDryBody GetDryBody(IPlaneShape baseFace, IExtent height);
 }

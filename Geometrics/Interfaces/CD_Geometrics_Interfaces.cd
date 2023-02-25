@@ -328,7 +328,7 @@
     <Position X="6.75" Y="18.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Interfaces\Factories\Shape\IGeometricBodyFactory.cs</FileName>
+      <FileName>Interfaces\Factories\Shape\IDryBodyFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape.IPlaneShapeFactory" Collapsed="true">
@@ -574,7 +574,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Shape\ShapeTypes\IPlaneSection.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -589,14 +589,14 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAAAAACAAEAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAABAAAAAAACAAAAAAAAAAAAAQAAEAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Shape\ShapeTypes\ICrossSection.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects.ISection" Collapsed="true">
     <Position X="3.5" Y="11" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAACAIAAEAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAAAACAAAAAAAAAAACAIAAEAAIAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\DataTypes\Shape\ShapeAspects\ISection.cs</FileName>
     </TypeIdentifier>
   </Interface>

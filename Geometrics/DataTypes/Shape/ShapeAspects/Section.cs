@@ -54,6 +54,10 @@ internal abstract class Section : PlaneShape, ISection
         if (minimumFace.FitsIn(planeShape, LimitType.BeLess) != true) throw new ArgumentOutOfRangeException(nameof(planeShape), "");
     }
 
+    public IDryBody GetCrossSectionBody(IExtent depth)
+    {
+        return ShapeFactory.GetDryBody(PlaneSectionShape, depth);
+    }
     public abstract ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
     public abstract ISection GetSection(ISection section);
 }

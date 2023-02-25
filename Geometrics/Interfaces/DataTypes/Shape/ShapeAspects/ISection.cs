@@ -9,6 +9,7 @@ public interface ISection : IPlaneShape
     IRectangle CornerPadding { get; init; }
 
     IRectangle GetMinimumFace();
+    IDryBody GetCrossSectionBody(IExtent depth);
     ISection GetSection();
     ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding);
     ISection GetSection(ISection section);

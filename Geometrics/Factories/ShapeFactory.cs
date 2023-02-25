@@ -63,6 +63,20 @@ public sealed class ShapeFactory : IShapeFactory
         return GetDryBody(shapeExtents);
     }
 
+    public IDryBody GetDryBody(IPlaneShape baseFace, IExtent height)
+    {
+        _ = baseFace ?? throw new ArgumentNullException(nameof(baseFace));
+
+        if (baseFace is ISection section)
+        {
+            baseFace = section.PlaneSectionShape;
+        }
+
+        return baseFace.ShapeTraits.HasFlag(ShapeTrait.Circular) ?
+            GetCylinder((ICircle)baseFace, height)
+            : GetCuboid((IRectangle)baseFace, height);
+    }
+
     public IPlaneShape GetPlaneShape(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
@@ -81,6 +95,11 @@ public sealed class ShapeFactory : IShapeFactory
     public IPlaneShape GetPlaneShape(IPlaneShape planeShape)
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
+
+        if (planeShape is ISection section)
+        {
+            planeShape = section.PlaneSectionShape;
+        }
 
         IExtent[] shapeExtents = planeShape.GetShapeExtentList().ToArray();
 
