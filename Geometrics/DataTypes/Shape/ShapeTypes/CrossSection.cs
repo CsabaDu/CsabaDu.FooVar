@@ -2,8 +2,9 @@
 using CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
+using CsabaDu.FooVar.Geometrics.Statics;
 
-namespace Geometrics.DataTypes.Shape.ShapeTypes;
+namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
 internal sealed class CrossSection : Section, ICrossSection
 {
@@ -48,7 +49,8 @@ internal sealed class CrossSection : Section, ICrossSection
             ShapeExtentType.Length => new Cuboid(width, depth, length),
             ShapeExtentType.Width => new Cuboid(length, depth, width),
             ShapeExtentType.Height => new Cuboid(length, width, depth),
-            _ => throw new NotImplementedException(),
+
+            _ => throw new InvalidOperationException(null),
         };
     }
 
@@ -67,21 +69,10 @@ internal sealed class CrossSection : Section, ICrossSection
 
     public void ValidatePerpendicular(ShapeExtentType perpendicular)
     {
-        if (IsValidPerpendicular(perpendicular)) return;
+        if (perpendicular == ShapeExtentType.Height) return;
+
+        if (perpendicular.IsValidShapeExtentType(ShapeTraits) == true) return;
 
         throw new ArgumentOutOfRangeException(nameof(perpendicular), perpendicular, null);
-    }
-
-    private bool IsValidPerpendicular(ShapeExtentType perpendicular)
-    {
-        return perpendicular switch
-        {
-            ShapeExtentType.Radius => ShapeTraits.HasFlag(ShapeTrait.Circular),
-            ShapeExtentType.Length => !ShapeTraits.HasFlag(ShapeTrait.Circular),
-            ShapeExtentType.Width => !ShapeTraits.HasFlag(ShapeTrait.Circular),
-            ShapeExtentType.Height => !ShapeTraits.HasFlag(ShapeTrait.Plane),
-
-            _ => false,
-        };
     }
 }

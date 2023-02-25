@@ -1,6 +1,7 @@
 ﻿using CsabaDu.FooVar.Geometrics.Factories;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
+using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects;
@@ -46,9 +47,10 @@ internal abstract class PlaneShape : Shape, IPlaneShape
         return ShapeFactory.GetPlaneShape(shapeExtents);
     }
 
-    public IPlaneShape GetPlaneShape(IPlaneShape planeShape)
+    public IPlaneShape GetPlaneShape(IPlaneShape planeShape, IPlaneShape? cornerPadding = null, ShapeExtentType? perpendicular = null)
     {
-        return ShapeFactory.GetPlaneShape(planeShape);
+        if (cornerPadding is not IRectangle? rectangle)
+        return ShapeFactory.GetPlaneShape(planeShape, rectangle, perpendicular);
     }
 
     public IPlaneShape GetPlaneShape(AreaUnit? areaUnit = null)

@@ -2,7 +2,7 @@
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 
-namespace Geometrics.DataTypes.Shape.ShapeTypes;
+namespace CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes;
 
 internal sealed class PlaneSection : Section, IPlaneSection
 {

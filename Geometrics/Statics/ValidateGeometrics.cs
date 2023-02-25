@@ -108,7 +108,20 @@ public static class ValidateGeometrics
 
         decimal quantity = shapeExtent.GetDecimalQuantity();
 
-        return quantity <= 0;
+        return quantity >= 0;
+    }
+
+    public static bool? IsValidShapeExtentType(this ShapeExtentType shapeExtentType, ShapeTrait shapeTraits)
+    {
+        return shapeExtentType switch
+        {
+            ShapeExtentType.Radius => shapeTraits.HasFlag(ShapeTrait.Circular),
+            ShapeExtentType.Length => !shapeTraits.HasFlag(ShapeTrait.Circular),
+            ShapeExtentType.Width => !shapeTraits.HasFlag(ShapeTrait.Circular),
+            ShapeExtentType.Height => !shapeTraits.HasFlag(ShapeTrait.Plane),
+
+            _ => null,
+        };
     }
 
     public static void ValidateShapeExtent(this IExtent shapeExtent)

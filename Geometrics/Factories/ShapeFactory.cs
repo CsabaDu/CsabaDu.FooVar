@@ -3,7 +3,6 @@ using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape;
-using CsabaDu.FooVar.Geometrics.Statics;
 
 namespace CsabaDu.FooVar.Geometrics.Factories;
 
@@ -92,18 +91,23 @@ public sealed class ShapeFactory : IShapeFactory
         };
     }
 
-    public IPlaneShape GetPlaneShape(IPlaneShape planeShape)
+    public IPlaneShape GetPlaneShape(IPlaneShape planeShape, IRectangle? cornerPadding = null, ShapeExtentType? perpendicular = null)
     {
         _ = planeShape ?? throw new ArgumentNullException(nameof(planeShape));
+
+        if (cornerPadding == null)
+        {
+            IExtent[] shapeExtents = planeShape.GetShapeExtentList().ToArray();
+
+            return GetPlaneShape(shapeExtents);
+        }
 
         if (planeShape is ISection section)
         {
             planeShape = section.PlaneSectionShape;
         }
 
-        IExtent[] shapeExtents = planeShape.GetShapeExtentList().ToArray();
-
-        return GetPlaneShape(shapeExtents);
+        return GetSection(planeShape, cornerPadding, perpendicular);
     }
 
     public IRectangularShape GetRectangularShape(params IExtent[] shapeExtents)
@@ -177,5 +181,39 @@ public sealed class ShapeFactory : IShapeFactory
     public IComplexDryBody GetComplexDryBody(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
     {
         return new ComplexDryBody(innerShapeExtentList, outerShapeExtentList);
+    }
+
+    public ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType? perpendicular = null)
+    {
+        return perpendicular is not ShapeExtentType notNullPerpendicular ?
+            GetPlaneSection(planeSectionShape, cornerPadding)
+            : GetCrossSection(planeSectionShape, cornerPadding, notNullPerpendicular);
+    }
+
+    public ISection GetSection(ISection section, ShapeExtentType? perpendicular = null)
+    {
+        return perpendicular is not ShapeExtentType notNullPerpendicular ?
+            GetPlaneSection(section)
+            : GetCrossSection(section, notNullPerpendicular);
+    }
+
+    public IPlaneSection GetPlaneSection(IPlaneShape planeSectionShape, IRectangle cornerPadding)
+    {
+        return new PlaneSection(planeSectionShape, cornerPadding);
+    }
+
+    public IPlaneSection GetPlaneSection(ISection section)
+    {
+        return new PlaneSection(section);
+    }
+
+    public ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular)
+    {
+        return new CrossSection(planeSectionShape, cornerPadding, perpendicular);
+    }
+
+    public ICrossSection GetCrossSection(ISection section, ShapeExtentType perpendicular)
+    {
+        return new CrossSection(section, perpendicular);
     }
 }

@@ -105,7 +105,7 @@
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.ValidateGeometrics" Collapsed="true">
     <Position X="11.5" Y="5.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAEEIAAAwAAIAAAAAAAAAIAAAQAAAAAAACYCA=</HashCode>
+      <HashCode>AAAAIAAAEEIAAAwAAIAAAgAAAAAIAAAQAAAAAAACYCA=</HashCode>
       <FileName>Statics\ValidateGeometrics.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -144,12 +144,12 @@
   <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeAspects.Section" Collapsed="true">
     <Position X="4" Y="4.75" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAgQAIAAAACAAAAAEAAAAACAIAAEAAAAAAAAAQAABAA=</HashCode>
+      <HashCode>AAgQAIAAAACAAAAAEAAAAACAIAAEAAIAAAAAAQAABAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeAspects\Section.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Geometrics.DataTypes.Shape.ShapeTypes.PlaneSection" Collapsed="true">
+  <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.PlaneSection" Collapsed="true">
     <Position X="3.25" Y="6.25" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -157,10 +157,10 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Geometrics.DataTypes.Shape.ShapeTypes.CrossSection" Collapsed="true">
+  <Class Name="CsabaDu.FooVar.Geometrics.DataTypes.Shape.ShapeTypes.CrossSection" Collapsed="true">
     <Position X="4.75" Y="6.25" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAQAABAAACAAACAAAAAAAAAAAAAQAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEAABAAACAAACAAAAAAAAAAAAAQAAEAAAAAAAAAAA=</HashCode>
       <FileName>DataTypes\Shape\ShapeTypes\CrossSection.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

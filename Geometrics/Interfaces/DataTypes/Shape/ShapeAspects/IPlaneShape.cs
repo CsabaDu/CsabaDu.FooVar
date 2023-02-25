@@ -10,5 +10,5 @@ public interface IPlaneShape : IShape, ISurface, ITangentEdge
 
     IPlaneShape GetPlaneShape(ExtentUnit extentUnit);
     IPlaneShape GetPlaneShape(params IExtent[] shapeExtents);
-    IPlaneShape GetPlaneShape(IPlaneShape planeShape);
+    IPlaneShape GetPlaneShape(IPlaneShape planeShape, IPlaneShape? cornerPadding = null, ShapeExtentType? perpendicular = null);
 }
