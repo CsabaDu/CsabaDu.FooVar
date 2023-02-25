@@ -13,6 +13,8 @@ internal sealed class BulkBody : Body, IBulkBody
 
     public BulkBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) : base(shapeExtentList, shapeTraits) { }
 
+    public BulkBody(IDryBody dryBody) : base(dryBody) { }
+
     public override IBody GetBody(VolumeUnit? volumeUnit = null) => GetBulkBody(volumeUnit);
 
 

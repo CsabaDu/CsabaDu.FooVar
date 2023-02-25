@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVar.Geometrics.Interfaces.Behaviors.Shape;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
+﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 
 namespace CsabaDu.FooVar.Geometrics.Interfaces.Factories.Shape;
 
