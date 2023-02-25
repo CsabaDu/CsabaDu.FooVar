@@ -49,8 +49,11 @@ internal abstract class PlaneShape : Shape, IPlaneShape
 
     public IPlaneShape GetPlaneShape(IPlaneShape planeShape, IPlaneShape? cornerPadding = null, ShapeExtentType? perpendicular = null)
     {
-        if (cornerPadding is not IRectangle? rectangle)
-        return ShapeFactory.GetPlaneShape(planeShape, rectangle, perpendicular);
+        if (cornerPadding == null) return ShapeFactory.GetPlaneShape(planeShape);
+
+        if (cornerPadding is IRectangle rectangle) return ShapeFactory.GetPlaneShape(planeShape, rectangle, perpendicular);
+
+        throw new ArgumentOutOfRangeException(nameof(cornerPadding), cornerPadding.GetShapeType(), null);
     }
 
     public IPlaneShape GetPlaneShape(AreaUnit? areaUnit = null)
