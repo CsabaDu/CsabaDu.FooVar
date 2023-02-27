@@ -1,6 +1,5 @@
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
-using CsabaDu.FooVar.Measures.Statics;
 using CsabaDu.FooVar.Tests.Fakes.Measures;
 
 namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
@@ -397,6 +396,140 @@ public class BaseMeasureTests
 
     #endregion
 
+    #region ExchangeTo
+    #region ExchangeTo(Enum measureUnit)
+    [DataTestMethod, TestCategory("UnitTest")]
+    [DataRow(null, null)]
+    [DataRow(default(LimitType), null)]
+    [DataRow(Currency.EUR, null)]
+    [DataRow(default(VolumeUnit), null)]
+    [DataRow((WeightUnit)3, null)]
+    public void ExchangeTo_InvalidMeasureUnitArg_ReturnsExpected(Enum measureUnit, IBaseMeasure expected)
+    {
+        // Arrange
+        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, SampleParams.MediumValueSampleMeasureUnit);
+
+        // Act
+        var actual = baseMeasure.ExchangeTo(measureUnit);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ExchangeTo_ValidMeasureUnitArg_ReturnsExpected()
+    {
+        // Arrange
+        Enum measureUnit = SampleParams.MediumValueSampleMeasureUnit;
+        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+
+        decimal decimalQuantity = (decimal)quantity.ToQuantity(typeof(decimal));
+        decimalQuantity *= baseMeasure.GetExchangeRate();
+        measureUnit = SampleParams.MaxValueSampleMeasureUnit;
+        decimalQuantity /= measureUnit.GetExchangeRate();
+        Type type = quantity.GetType();
+        quantity = decimalQuantity.ToQuantity(type);
+
+        IBaseMeasure expected = new BaseMeasureChild(quantity, measureUnit);
+
+        // Act
+        var actual = baseMeasure.ExchangeTo(measureUnit);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ExchangeTo_SameMeasureUnitArg_ReturnsExpected()
+    {
+        // Arrange
+        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+
+        IBaseMeasure expected = new BaseMeasureChild(quantity, measureUnit);
+
+        // Act
+        var actual = baseMeasure.ExchangeTo(measureUnit);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
+    #region ExchangeTo(decimal exchangeRate)
+    [TestMethod, TestCategory("UnitTest")]
+    public void ExchangeTo_ZeroExchangeRateArg_ReturnsExpected()
+    {
+        // Arrange
+        // Act
+        var result = _baseMeasure.ExchangeTo(SampleParams.DecimalZero);
+
+        // Assert
+        Assert.IsNull(result);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ExchangeTo_NegativeExchangeRateArg_ReturnsExpected()
+    {
+        // Arrange
+        // Act
+        var result = _baseMeasure.ExchangeTo(SampleParams.DecimalNegative);
+
+        // Assert
+        Assert.IsNull(result);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void ExchangeTo_PositiveExchangeRateArg_ReturnsExpected()
+    {
+        // Arrange
+        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs(RandomParams.RandomMeasureUnitType.Constant);
+        Type expectedQuantityType = quantity.GetType();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        decimal exchangeRate = (decimal)RandomParams.GetRandomPositiveValueTypeQuantity().ToQuantity(typeof(decimal));
+
+        decimal expectedValue = (decimal)quantity.ToQuantity(typeof(decimal));
+        expectedValue /= exchangeRate;
+        expectedValue *= measureUnit.GetExchangeRate();
+        expectedValue = TestSupport.GetQuantityDecimalValue(expectedValue, expectedQuantityType);
+
+        // Act
+        var actual = baseMeasure.ExchangeTo(exchangeRate);
+        var actualValue = (decimal)actual.ToQuantity(typeof(decimal));
+        var actualQuantityType = actual.GetType();
+
+        // Assert
+        Assert.AreEqual(expectedValue, actualValue);
+        Assert.AreEqual(expectedQuantityType, actualQuantityType);
+    }
+
+    #endregion
+    #endregion
+
+    #region IsExchangeableTo
+    [DataTestMethod, TestCategory("UnitTest")]
+    [DataRow(null, false)]
+    [DataRow(default(LimitType), false)]
+    [DataRow(default(Currency), false)]
+    [DataRow(default(VolumeUnit), false)]
+    [DataRow((WeightUnit)3, false)]
+    [DataRow(default(WeightUnit), true)]
+    public void IsExchangeableTo_MeasureUnitArg_ReturnsExpected(Enum measureUnit, bool expected)
+    {
+        // Arrange
+        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, SampleParams.MediumValueSampleMeasureUnit);
+
+        // Act
+        var actual = baseMeasure.IsExchangeableTo(measureUnit);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
     #region GetBaseMeasure
 
     #region GetBaseMeasure(IBaseMeasure? other = null)
@@ -564,6 +697,23 @@ public class BaseMeasureTests
     }
     #endregion
 
+    #endregion
+
+    #region GetDecimalQuantity
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetDecimalQuantity_ReturnsExpected()
+    {
+        // Arrange
+        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+        var expected = (decimal)quantity.ToQuantity(typeof(decimal));
+
+        // Act
+        var actual = baseMeasure.GetDecimalQuantity();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
     #endregion
 
     #region GetExchangeRate
@@ -801,144 +951,15 @@ public class BaseMeasureTests
     #endregion
     #endregion
 
-    #region GetDecimalQuaintity
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetDecimalQuaintity_ReturnsExpected()
-    {
-        // Arrange
-        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-        var expected = (decimal)quantity.ToQuantity(typeof(decimal));
-
-        // Act
-        var actual = baseMeasure.GetDecimalQuantity();
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    #endregion
-
-    #region ExchangeTo
-    #region ExchangeTo(Enum measureUnit)
-    [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(LimitType), null)]
-    [DataRow(Currency.EUR, null)]
-    [DataRow(default(VolumeUnit), null)]
-    [DataRow((WeightUnit)3, null)]
-    public void ExchangeTo_InvalidMeasureUnitArg_ReturnsExpected(Enum measureUnit, IBaseMeasure expected)
-    {
-        // Arrange
-        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, SampleParams.MediumValueSampleMeasureUnit);
-
-        // Act
-        var actual = baseMeasure.ExchangeTo(measureUnit);
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void ExchangeTo_ValidMeasureUnitArg_ReturnsExpected()
-    {
-        // Arrange
-        Enum measureUnit = SampleParams.MediumValueSampleMeasureUnit;
-        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-
-        decimal decimalQuantity = (decimal)quantity.ToQuantity(typeof(decimal));
-        decimalQuantity *= baseMeasure.GetExchangeRate();
-        measureUnit = SampleParams.MaxValueSampleMeasureUnit;
-        decimalQuantity /= measureUnit.GetExchangeRate();
-        Type type = quantity.GetType();
-        quantity = decimalQuantity.ToQuantity(type);
-
-        IBaseMeasure expected = new BaseMeasureChild(quantity, measureUnit);
-
-        // Act
-        var actual = baseMeasure.ExchangeTo(measureUnit);
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void ExchangeTo_SameMeasureUnitArg_ReturnsExpected()
-    {
-        // Arrange
-        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs();
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-
-        IBaseMeasure expected = new BaseMeasureChild(quantity, measureUnit);
-
-        // Act
-        var actual = baseMeasure.ExchangeTo(measureUnit);
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
-
-    #region ExchangeTo(decimal exchangeRate)
-    [TestMethod, TestCategory("UnitTest")]
-    public void ExchangeTo_ZeroExchangeRateArg_ReturnsExpected()
-    {
-        // Arrange
-        // Act
-        var result = _baseMeasure.ExchangeTo(SampleParams.DecimalZero);
-
-        // Assert
-        Assert.IsNull(result);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void ExchangeTo_NegativeExchangeRateArg_ReturnsExpected()
-    {
-        // Arrange
-        // Act
-        var result = _baseMeasure.ExchangeTo(SampleParams.DecimalNegative);
-
-        // Assert
-        Assert.IsNull(result);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void ExchangeTo_PositiveExchangeRateArg_ReturnsExpected()
-    {
-        // Arrange
-        var (quantity, measureUnit) = RandomParams.GetRandomBaseMeasureArgs(RandomParams.RandomMeasureUnitType.Constant);
-        Type expectedQuantityType = quantity.GetType();
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
-        decimal exchangeRate = (decimal)RandomParams.GetRandomPositiveValueTypeQuantity().ToQuantity(typeof(decimal));
-
-        decimal expectedValue = (decimal)quantity.ToQuantity(typeof(decimal));
-        expectedValue /= exchangeRate;
-        expectedValue *= measureUnit.GetExchangeRate();
-        expectedValue = TestSupport.GetQuantityDecimalValue(expectedValue, expectedQuantityType);
-
-        // Act
-        var actual = baseMeasure.ExchangeTo(exchangeRate);
-        var actualValue = (decimal)actual.ToQuantity(typeof(decimal));
-        var actualQuantityType = actual.GetType();
-
-        // Assert
-        Assert.AreEqual(expectedValue, actualValue);
-        Assert.AreEqual(expectedQuantityType, actualQuantityType);
-    }
-
-    #endregion
-    #endregion
-
     #region TryExchangeTo
     #region TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
     [DataTestMethod, TestCategory("UnitTest")]
+    [DataRow(null, null)]
     [DataRow(default(LimitType), null)]
     [DataRow(default(Currency), null)]
     [DataRow(default(VolumeUnit), null)]
     [DataRow((WeightUnit)3, null)]
-    public void TryExchangeTo_InvalidMeasureUnitArg_ReturnsExpected_OutNull(Enum measureUnit, IBaseMeasure expected)
+    public void TryExchangeTo_InvalidMeasureUnitArg_ReturnsFalse_OutNull(Enum measureUnit, IBaseMeasure expected)
     {
         // Arrange
         ValueType quantity = RandomParams.GetRandomValueTypeQuantity();

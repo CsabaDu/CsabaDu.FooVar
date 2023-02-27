@@ -137,7 +137,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Measures.Factories.MeasureFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="0.75" Width="1.5" />
+    <Position X="13.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\MeasureFactory.cs</FileName>
@@ -145,7 +145,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Measures.Factories.MeasurementFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.5" Y="0.75" Width="1.75" />
+    <Position X="11.5" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
       <FileName>Factories\MeasurementFactory.cs</FileName>
@@ -153,7 +153,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Measures.Factories.RateFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.75" Y="1.75" Width="1.25" />
+    <Position X="13.75" Y="1.5" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAABoAAAAgQAQAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Factories\RateFactory.cs</FileName>
@@ -189,7 +189,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.FooVar.Measures.Builders.RateBuilder" Collapsed="true">
-    <Position X="13.75" Y="3" Width="1.25" />
+    <Position X="13.75" Y="2.75" Width="1.25" />
     <TypeIdentifier>
       <HashCode>AAQgIACAAAAAAEIAAJABBAEIAAgAAQAACBAggAAABAA=</HashCode>
       <FileName>Builders\RateBuilder.cs</FileName>
@@ -197,7 +197,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Measures.Factories.LimitFactory" Collapsed="true">
-    <Position X="12" Y="1.75" Width="1.5" />
+    <Position X="12" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factories\LimitFactory.cs</FileName>

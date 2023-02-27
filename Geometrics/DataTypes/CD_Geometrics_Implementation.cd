@@ -75,7 +75,7 @@
   <Class Name="CsabaDu.FooVar.Geometrics.Factories.ShapeFactory" Collapsed="true">
     <Position X="12" Y="1.5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>oAAABgAAIAABBAAAAAAEAIAAAAQAAAAABAAAAAAAAAA=</HashCode>
+      <HashCode>oAAABgAAoACBBACAAAAEAIAAAAQAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Factories\ShapeFactory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -89,7 +89,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.CalculateGeometrics" Collapsed="true">
-    <Position X="11.5" Y="4.75" Width="1.75" />
+    <Position X="11.5" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>IEgHEAAAAEAAACAoAAUgACAAAJCACAABAACgFAEAAAA=</HashCode>
       <FileName>Statics\CalculateGeometrics.cs</FileName>
@@ -103,7 +103,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CsabaDu.FooVar.Geometrics.Statics.ValidateGeometrics" Collapsed="true">
-    <Position X="11.5" Y="5.5" Width="1.75" />
+    <Position X="11.5" Y="5.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAEEIAAAwAAIAAAgAAAAAIAAAQAAAAAAACYCA=</HashCode>
       <FileName>Statics\ValidateGeometrics.cs</FileName>

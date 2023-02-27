@@ -11,7 +11,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     #region Properties
     public object Quantity { get; init; }
-
     public IMeasurement Measurement { get; init; }
     #endregion
 
@@ -42,7 +41,46 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Public methods
+    public int CompareTo(IBaseMeasure? other)
+    {
+        if (other == null) return 1;
+
+        ValidateMeasureUnitConvertibility(other);
+
+        decimal exchangeRate = GetExchangeRate();
+        decimal otherExchangeRate = other.GetExchangeRate();
+
+        decimal quantity = DecimalQuantity;
+        decimal otherQuantity = other.GetDecimalQuantity();
+
+        if (otherExchangeRate == exchangeRate) return quantity.CompareTo(otherQuantity);
+
+        quantity *= exchangeRate;
+        otherQuantity *= otherExchangeRate;
+
+        return quantity.CompareTo(otherQuantity);
+    }
+
+    public bool Equals(IBaseMeasure? other)
+    {
+        return other is IBaseMeasure baseMeasure
+            && Measurement.IsExchangeableTo(baseMeasure.GetMeasureUnit())
+            && CompareTo(baseMeasure) == 0;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is IBaseMeasure other && Equals(other);
+    }
+
+    public decimal GetDecimalQuantity() => DecimalQuantity;
+
     public decimal GetExchangeRate() => Measurement.ExchangeRate;
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Quantity, Measurement);
+    }
 
     public override sealed IMeasurable GetMeasurable(Enum? measureUnit = null)
     {
@@ -69,10 +107,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return ConvertDecimalToType(DecimalQuantity, type) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
     }
 
-    public decimal GetDecimalQuantity() => DecimalQuantity;
-
     public IBaseMeasure? ExchangeTo(Enum measureUnit)
     {
+        if (measureUnit == null) return null;
+
         if (measureUnit == MeasureUnit) return this;
 
         if (!Measurement.IsExchangeableTo(measureUnit)) return null;
@@ -90,25 +128,17 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         if (exchangeRate <= decimal.Zero) return null;
 
-        decimal decimalQuantity = DecimalQuantity / exchangeRate;
+        decimal quantity = DecimalQuantity;
+        quantity /= exchangeRate;
+        quantity *= GetExchangeRate();
 
-        decimalQuantity *= GetExchangeRate();
-
-        return ConvertDecimalToQuantityType(decimalQuantity);
+        return ConvertDecimalToQuantityType(quantity);
     }
 
     public bool IsExchangeableTo(Enum measureUnit)
     {
-        return measureUnit.IsDefinedMeasureUnit() && HasSameMeasureUnitType(measureUnit);
-    }
-
-    public IBaseMeasure Round(RoundingMode roundingMode = default)
-    {
-        decimal roundedDecimalQuantity = RoundedDecimalQuantity(roundingMode);
-
-        ValueType roundedQuantity = ConvertDecimalToQuantityType(roundedDecimalQuantity)!;
-
-        return GetBaseMeasure(roundedQuantity);
+        return measureUnit?.IsDefinedMeasureUnit() == true
+            && HasSameMeasureUnitType(measureUnit);
     }
 
     public decimal ProportionalTo(IBaseMeasure other)
@@ -139,6 +169,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return ratio;
     }
 
+    public IBaseMeasure Round(RoundingMode roundingMode = default)
+    {
+        decimal roundedDecimalQuantity = RoundedDecimalQuantity(roundingMode);
+
+        ValueType roundedQuantity = ConvertDecimalToQuantityType(roundedDecimalQuantity)!;
+
+        return GetBaseMeasure(roundedQuantity);
+    }
+
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
     {
         exchanged = ExchangeTo(measureUnit);
@@ -151,43 +190,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         exchanged = ExchangeTo(exchangeRate);
 
         return exchanged != null;
-    }
-
-    public int CompareTo(IBaseMeasure? other)
-    {
-        if (other == null) return 1;
-
-        ValidateMeasureUnitConvertibility(other);
-
-        decimal exchangeRate = GetExchangeRate();
-
-        decimal otherExchangeRate = other.GetExchangeRate();
-
-        decimal quantity = DecimalQuantity;
-        decimal otherQuantity = other.GetDecimalQuantity();
-
-        if (otherExchangeRate == exchangeRate) return quantity.CompareTo(otherQuantity);
-
-        exchangeRate /= otherExchangeRate;
-
-        decimal otherExchangedQuantity = otherQuantity / exchangeRate;
-
-        return quantity.CompareTo(otherExchangedQuantity);
-    }
-
-    public bool Equals(IBaseMeasure? other)
-    {
-        return other != null && Measurement.IsExchangeableTo(other.GetMeasureUnit()) && CompareTo(other) == 0;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is IBaseMeasure other && Equals(other);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Quantity, Measurement);
     }
     #endregion
 
@@ -230,6 +232,20 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return (decimal)quantity.ToQuantity(typeof(decimal))!;
     }
 
+    private decimal HalfDecimalQuantity()
+    {
+        decimal quantity = DecimalQuantity;
+        decimal floorQuantity = decimal.Floor(quantity);
+
+        if (floorQuantity == quantity) return floorQuantity;
+
+        decimal halfQuantity = floorQuantity + 0.5m;
+
+        if (quantity <= halfQuantity) return halfQuantity;
+
+        return decimal.Ceiling(quantity);
+    }
+
     private decimal RoundedDecimalQuantity(RoundingMode roundingMode)
     {
         decimal quantity = DecimalQuantity;
@@ -245,27 +261,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         };
     }
 
-    private decimal HalfDecimalQuantity()
-    {
-        decimal quantity = DecimalQuantity;
-        decimal floorQuantity = decimal.Floor(quantity);
-
-        if (floorQuantity == quantity) return floorQuantity;
-
-        decimal halfQuantity = floorQuantity + 0.5m;
-
-        if (quantity <= halfQuantity) return halfQuantity;
-
-        return decimal.Ceiling(quantity);
-    }
-
     private void ValidateMeasureUnitConvertibility(IBaseMeasure other)
     {
         Enum otherMeasureUnit = other.GetMeasureUnit();
 
         if (!Measurement.IsExchangeableTo(otherMeasureUnit)) throw new ArgumentOutOfRangeException(nameof(other), otherMeasureUnit, null);
     }
-
     #endregion
 
     //#region Static operators
