@@ -117,17 +117,18 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         ValidateMeasureUnitConvertibility(other);
 
-        decimal otherQuantity = (decimal)other.GetQuantity(typeof(decimal));
+        decimal quantity = DecimalQuantity;
+        decimal otherQuantity = other.GetDecimalQuantity();
 
         if (otherQuantity == decimal.Zero) throw new ArgumentOutOfRangeException(nameof(other), otherQuantity, null);
 
-        if (DecimalQuantity == decimal.Zero) return decimal.Zero;
+        if (quantity == decimal.Zero) return decimal.Zero;
 
         decimal otherExchangeRate = other.GetExchangeRate();
 
         decimal exchangeRate = GetExchangeRate();
 
-        decimal ratio = Math.Abs(DecimalQuantity / otherQuantity);
+        decimal ratio = Math.Abs(quantity / otherQuantity);
 
         if (otherExchangeRate == exchangeRate) return ratio;
 
@@ -162,15 +163,16 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         decimal otherExchangeRate = other.GetExchangeRate();
 
-        decimal otherQuantity = (decimal)other.GetQuantity().ToQuantity(typeof(decimal))!;
+        decimal quantity = DecimalQuantity;
+        decimal otherQuantity = other.GetDecimalQuantity();
 
-        if (otherExchangeRate == exchangeRate) return DecimalQuantity.CompareTo(otherQuantity);
+        if (otherExchangeRate == exchangeRate) return quantity.CompareTo(otherQuantity);
 
         exchangeRate /= otherExchangeRate;
 
         decimal otherExchangedQuantity = otherQuantity / exchangeRate;
 
-        return DecimalQuantity.CompareTo(otherExchangedQuantity);
+        return quantity.CompareTo(otherExchangedQuantity);
     }
 
     public bool Equals(IBaseMeasure? other)
@@ -230,11 +232,13 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     private decimal RoundedDecimalQuantity(RoundingMode roundingMode)
     {
+        decimal quantity = DecimalQuantity;
+
         return roundingMode switch
         {
-            RoundingMode.General => decimal.Round(DecimalQuantity),
-            RoundingMode.Ceiling => decimal.Ceiling(DecimalQuantity),
-            RoundingMode.Floor => decimal.Floor(DecimalQuantity),
+            RoundingMode.General => decimal.Round(quantity),
+            RoundingMode.Ceiling => decimal.Ceiling(quantity),
+            RoundingMode.Floor => decimal.Floor(quantity),
             RoundingMode.Half => HalfDecimalQuantity(),
 
             _ => throw new ArgumentOutOfRangeException(nameof(roundingMode)),
@@ -243,15 +247,16 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     private decimal HalfDecimalQuantity()
     {
-        decimal floorDecimalQuantity = decimal.Floor(DecimalQuantity);
+        decimal quantity = DecimalQuantity;
+        decimal floorQuantity = decimal.Floor(quantity);
 
-        if (floorDecimalQuantity == DecimalQuantity) return floorDecimalQuantity;
+        if (floorQuantity == quantity) return floorQuantity;
 
-        decimal halfDecimalQuantity = floorDecimalQuantity + 0.5m;
+        decimal halfQuantity = floorQuantity + 0.5m;
 
-        if (DecimalQuantity <= halfDecimalQuantity) return halfDecimalQuantity;
+        if (quantity <= halfQuantity) return halfQuantity;
 
-        return decimal.Ceiling(DecimalQuantity);
+        return decimal.Ceiling(quantity);
     }
 
     private void ValidateMeasureUnitConvertibility(IBaseMeasure other)
