@@ -18,9 +18,9 @@ internal abstract class Mass : IMass
     {
         if (other == null) return 1;
 
-        var (weight, bodyComparison) = GetArgsToCompareMass(other);
+        var (weight, body) = GetWeightAndBodyToCompareMass(other);
 
-        return CompareTo(weight, bodyComparison) ?? throw new ArgumentOutOfRangeException(nameof(other), "");
+        return CompareTo(weight, body) ?? throw new ArgumentOutOfRangeException(nameof(other), "");
     }
 
     public virtual bool Equals(IMass? other)
@@ -33,10 +33,8 @@ internal abstract class Mass : IMass
         if (other == null) return null;
 
         limitType ??= LimitType.BeNotGreater;
-
-        var (weight, bodyComparison) = GetArgsToCompareMass(other);
-
-        int? nullableComparison = CompareTo(weight, bodyComparison);
+        var (weight, body) = GetWeightAndBodyToCompareMass(other);
+        int? nullableComparison = CompareTo(weight, body);
 
         if (nullableComparison is not int comparison) return null;
 
@@ -47,30 +45,30 @@ internal abstract class Mass : IMass
     {
         IFlatRateFactory factory = new RateFactory(Weight.MeasureFactory);
         IVolume volume = GetBody().Volume;
-        IDenominator denominator = factory.GetDenominator(volume);
+        IDenominator volumeDenominator = factory.GetDenominator(volume);
 
-        return factory.GetFlatRate(Weight, denominator);
+        return factory.GetFlatRate(Weight, volumeDenominator);
     }
 
-    protected int? CompareTo(IWeight weight, int bodyComparison)
+    private int? CompareTo(IWeight weight, IBody body)
     {
         int weightComparison = Weight.CompareTo(weight);
+        int bodyComparison = GetBody().CompareTo(body);
 
-        if (weightComparison == 0 && bodyComparison == 0) return 0;
-
-        if (weightComparison >= 0 && bodyComparison >= 0) return 1;
-
-        if (weightComparison <= 0 && bodyComparison <= 0) return -1;
-
-        return null;
+        return Compare(weightComparison, bodyComparison);
     }
 
-    protected (IWeight, int) GetArgsToCompareMass(IMass other)
+    protected static (IWeight, IBody) GetWeightAndBodyToCompareMass(IMass other)
     {
         IWeight weight = other.Weight;
-        int bodyComparison = GetBody().CompareTo(other.GetBody());
+        IBody body = other.GetBody();
 
-        return (weight, bodyComparison);
+        return (weight, body);
+    }
+
+    protected static int? Compare(int weightComparison, int bodyComparison)
+    {
+        return weightComparison == bodyComparison ? weightComparison : null;
     }
 
     private static IWeight GetValidWeight(IWeight? weight)
