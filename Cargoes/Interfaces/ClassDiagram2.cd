@@ -204,13 +204,6 @@
       <FileName>Interfaces\ICargoContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.ICargoDoor">
-    <Position X="13.25" Y="12.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Interfaces\ICargoContainer.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.IBoxContainer">
     <Position X="16.5" Y="14.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVar.Cargoes.Interfaces.IDryContainer&lt;T&gt;" FixedFromPoint="true">

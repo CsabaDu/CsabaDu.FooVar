@@ -11,12 +11,6 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         IDryContainer<T> GetDryContainer();
         IDryContainer<T> GetDryContainer(ICargoContainer<T> cargoContainer, ICargoDoor cargoDoor);
     }
-    public interface ICargoDoor
-    {
-        IRectangle CargoDoorShape { get; init; }
-        ShapeExtentType DoorHeightShapeExtentType { get; init; }
-        Comparison? ContainerSide { get; init; }
-    }
 
     public interface IBoxContainer : IDryContainer<ICuboid>
     {
