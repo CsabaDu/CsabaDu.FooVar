@@ -391,9 +391,14 @@ public class BaseMeasureTests
     public void Ctor_TwoNullArgs_ThrowsArgumentNullException()
     {
         // Arrange
+        ValueType nullQuantity = null;
+        IMeasurement nullMeasurement = null;
+
         // Act
+        void action() => _ = new BaseMeasureChild(nullQuantity, nullMeasurement);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(null, null));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.measurement, ex.ParamName);
     }
 
@@ -401,9 +406,14 @@ public class BaseMeasureTests
     public void Ctor_ValidQuantityAndNullMeasurementArg_ThrowsArgumentNullException()
     {
         // Arrange
+        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
+        IMeasurement nullMeasurement = null;
+
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, nullMeasurement);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(SampleParams.ZeroQuantity, null));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.measurement, ex.ParamName);
     }
 
@@ -411,11 +421,14 @@ public class BaseMeasureTests
     public void Ctor_NullQuantityAndValidMeasurementArg_ThrowsArgumentNullException()
     {
         // Arrange
+        ValueType nullQuantity = null;
         IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
 
         // Act
+        void action() => _ = new BaseMeasureChild(nullQuantity, measurement);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(null, measurement));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -460,8 +473,10 @@ public class BaseMeasureTests
         IBaseMeasure baseMeasure = null;
 
         // Act
+        void action() => _ = new BaseMeasureChild(baseMeasure);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(baseMeasure));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.other, ex.ParamName);
     }
 
