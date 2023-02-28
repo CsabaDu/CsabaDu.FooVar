@@ -494,9 +494,7 @@ public class BaseMeasureTests
         Assert.IsNotNull(actual);
         Assert.AreEqual(expected, actual);
     }
-
     #endregion
-
     #endregion
 
     #region CompareTo
@@ -642,7 +640,6 @@ public class BaseMeasureTests
     #endregion
 
     #region GetBaseMeasure
-
     #region GetBaseMeasure(IBaseMeasure? other = null)
     [TestMethod, TestCategory("UnitTest")]
     public void GetBaseMeasure_ReturnsExpected()
@@ -933,7 +930,6 @@ public class BaseMeasureTests
 
     #region GetQuantity
     #region GetQuantity()
-
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_ReturnsExpected()
     {
@@ -948,11 +944,9 @@ public class BaseMeasureTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
-
     #endregion
 
     #region GetQuantity(RoundingMode roundingMode)
-
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_InvalidRoundingModeArg_ThrowsArgumentOutOfRangeException()
     {
@@ -986,11 +980,9 @@ public class BaseMeasureTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
-
     #endregion
 
     #region GetQuantity(Type type)
-
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_NullArg_ThrowsArgumentNullException()
     {
@@ -1058,7 +1050,6 @@ public class BaseMeasureTests
         // Assert
         Assert.AreEqual(expected, actual);
     }
-
     #endregion
     #endregion
 
