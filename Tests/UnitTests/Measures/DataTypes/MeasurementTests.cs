@@ -316,60 +316,6 @@ public class MeasurementTests
     }
     #endregion
 
-    #region GetMeasureUnitType
-    [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(AreaUnit), 1, typeof(AreaUnit))]
-    [DataRow(default(Currency), 1, typeof(Currency))]
-    [DataRow(default(Pieces), 1, typeof(Pieces))]
-    [DataRow(default(DistanceUnit), null, typeof(DistanceUnit))]
-    [DataRow(default(ExtentUnit), null, typeof(ExtentUnit))]
-    [DataRow(default(TimeUnit), null, typeof(TimeUnit))]
-    [DataRow(default(VolumeUnit), null, typeof(VolumeUnit))]
-    [DataRow(default(WeightUnit), null, typeof(WeightUnit))]
-    public void GetMeasureUnitType_ReturnsExpected(Enum measureUnit, int? exchangeRate, Type expected)
-    {
-        // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(measureUnit, exchangeRate);
-
-        // Act
-        var actual = measurement.GetMeasureUnitType();
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-
-        // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
-    }
-    #endregion
-
-    #region GetMeasureUnit
-    [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(AreaUnit), 1)]
-    [DataRow(default(Currency), 1)]
-    [DataRow(default(Pieces), 1)]
-    [DataRow(default(DistanceUnit), null)]
-    [DataRow(default(ExtentUnit), null)]
-    [DataRow(default(TimeUnit), null)]
-    [DataRow(default(VolumeUnit), null)]
-    [DataRow(default(WeightUnit), null)]
-    [DataRow(WeightUnit.kg, null)]
-    [DataRow((WeightUnit)2, null)]
-    public void GetMeasureUnit_ReturnsExpected(Enum excpected, int? exchangeRate)
-    {
-        // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(excpected, exchangeRate);
-
-        // Act
-        var actual = measurement.GetMeasureUnit();
-
-        // Assert
-        Assert.AreEqual(excpected, actual);
-
-        // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(excpected);
-    }
-    #endregion
-
     #region CompareTo
     [TestMethod, TestCategory("UnitTest")]
     public void CompareTo_NullArg_ReturnsExpected()
@@ -445,7 +391,6 @@ public class MeasurementTests
     [DataRow(WeightUnit.kg, null, true)]
     [DataRow((WeightUnit)2, null, false)]
     [DataRow((Currency)1, 409.6885, false)]
-
     public void Equals_ValidArg_ReturnsExpected(Enum otherMeasureUnit, double? exchangeRate, bool expected)
     {
         // Arrange
@@ -492,6 +437,52 @@ public class MeasurementTests
 
         // Act
         var actual = measurement.GetHashCode();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+    #endregion
+
+    #region GetMeasurable
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurable_NullArg_ReturnsExpected()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
+
+        // Act
+        var actual = expected.GetMeasurable(null);
+
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurable_ReturnsExpected()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
+
+        // Act
+        var actual = expected.GetMeasurable();
+
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurable_ValidMeasureUnitArg_ReturnsExpected()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
+
+        // Act
+        var actual = _measurement.GetMeasurable(measureUnit);
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -587,36 +578,100 @@ public class MeasurementTests
     }
     #endregion
 
+    #region GetMeasureUnit
+    [DataTestMethod, TestCategory("UnitTest")]
+    [DataRow(default(AreaUnit), 1)]
+    [DataRow(default(Currency), 1)]
+    [DataRow(default(Pieces), 1)]
+    [DataRow(default(DistanceUnit), null)]
+    [DataRow(default(ExtentUnit), null)]
+    [DataRow(default(TimeUnit), null)]
+    [DataRow(default(VolumeUnit), null)]
+    [DataRow(default(WeightUnit), null)]
+    [DataRow(WeightUnit.kg, null)]
+    [DataRow((WeightUnit)2, null)]
+    public void GetMeasureUnit_ReturnsExpected(Enum excpected, int? exchangeRate)
+    {
+        // Arrange
+        IMeasurement measurement = _factory.GetMeasurement(excpected, exchangeRate);
+
+        // Act
+        var actual = measurement.GetMeasureUnit();
+
+        // Assert
+        Assert.AreEqual(excpected, actual);
+
+        // Restore
+        TestSupport.RemoveIfNotDefaultMeasureUnit(excpected);
+    }
+    #endregion
+
+    #region GetMeasureUnitType
+    [DataTestMethod, TestCategory("UnitTest")]
+    [DataRow(default(AreaUnit), 1, typeof(AreaUnit))]
+    [DataRow(default(Currency), 1, typeof(Currency))]
+    [DataRow(default(Pieces), 1, typeof(Pieces))]
+    [DataRow(default(DistanceUnit), null, typeof(DistanceUnit))]
+    [DataRow(default(ExtentUnit), null, typeof(ExtentUnit))]
+    [DataRow(default(TimeUnit), null, typeof(TimeUnit))]
+    [DataRow(default(VolumeUnit), null, typeof(VolumeUnit))]
+    [DataRow(default(WeightUnit), null, typeof(WeightUnit))]
+    public void GetMeasureUnitType_ReturnsExpected(Enum measureUnit, int? exchangeRate, Type expected)
+    {
+        // Arrange
+        IMeasurement measurement = _factory.GetMeasurement(measureUnit, exchangeRate);
+
+        // Act
+        var actual = measurement.GetMeasureUnitType();
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+
+        // Restore
+        TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
+    }
+    #endregion
+
     #region ProportionalTo
     [TestMethod, TestCategory("UnitTest")]
-    public void TM36_ProportionalTo_NullArg_ThrowsArgumentNullException()
+    public void ProportionalTo_NullArg_ThrowsArgumentNullException()
     {
         // Arrange
+        IMeasurement nullMeasurement = null;
+
         // Act
+        void action() => _ = _measurement.ProportionalTo(nullMeasurement);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => _measurement.ProportionalTo(null));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.other, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM37_ProportionalTo_InvalidArg_ThrowsArgumentOutOfRangeException()
+    public void ProportionalTo_DifferentMeasurementArg_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
-        IMeasurement differentTypeMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
+        Enum measureUnit = SampleParams.MediumValueSampleMeasureUnit;
+        IMeasurement measurement = _factory.GetMeasurement(measureUnit);
+        Enum differentTypeMeasureUnit = SampleParams.DifferentTypeSampleMeasureUnit;
+        IMeasurement differentMeasurement = _factory.GetMeasurement(differentTypeMeasureUnit);
 
         // Act
+        void action() => _ = measurement.ProportionalTo(differentMeasurement);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => measurement.ProportionalTo(differentTypeMeasurement));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.other, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM38_ProportionalTo_ValidArg_ReturnsExpectedValue()
+    public void ProportionalTo_ValidArg_ReturnsExpectedValue()
     {
         // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
-        IMeasurement sameTypeMeasurement = _factory.GetMeasurement(SampleParams.DefaultSampleMeasureUnit);
+        Enum measureUnit = SampleParams.MediumValueSampleMeasureUnit;
+        IMeasurement measurement = _factory.GetMeasurement(measureUnit);
+        Enum sameTypeMeasureUnit = SampleParams.DefaultSampleMeasureUnit;
+        IMeasurement sameTypeMeasurement = _factory.GetMeasurement(sameTypeMeasureUnit);
         decimal expected = measurement.ExchangeRate / sameTypeMeasurement.ExchangeRate;
 
         // Act
@@ -626,49 +681,8 @@ public class MeasurementTests
         Assert.AreEqual(expected, actual);
     }
     #endregion
-
-    #region GetMeasurable
-    [TestMethod, TestCategory("UnitTest")]
-    public void TM39_GetMeasurable_NullArg_ReturnsExpected()
-    {
-        // Arrange
-        IMeasurement expected = _factory.GetMeasurement(SampleParams.DefaultSampleMeasureUnit);
-
-        // Act
-        var actual = expected.GetMeasurable(null);
-
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void TM40_GetMeasurable_ReturnsExpected()
-    {
-        // Arrange
-        IMeasurement expected = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
-
-        // Act
-        var actual = expected.GetMeasurable();
-
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void TM41_GetMeasurable_ValidArg_ReturnsExpected()
-    {
-        // Arrange
-        IMeasurement expected = _factory.GetMeasurement(SampleParams.MaxValueSampleMeasureUnit);
-
-        // Act
-        var actual = _measurement.GetMeasurable(expected.GetMeasureUnit());
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-    }
-    #endregion
+}
+#nullable enable
 
     //#region Static operator Equal
     ////[TestMethod, TestCategory("UnitTest")]
@@ -1058,5 +1072,3 @@ public class MeasurementTests
     ////    Assert.AreEqual(expected, result);
     ////}
     //#endregion    
-}
-#nullable enable
