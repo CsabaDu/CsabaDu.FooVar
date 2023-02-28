@@ -1,5 +1,7 @@
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
+using CsabaDu.FooVar.Measures.Statics;
 using CsabaDu.FooVar.Tests.Fakes.Measures;
 
 namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
@@ -28,7 +30,7 @@ public class BaseMeasureTests
     #endregion
 
     #region Constructor
-    #region Quantity validation
+    #region Quantity type validation
     [TestMethod, TestCategory("UnitTest")]
     public void Ctor_NullQuantityArg_ThrowsArgumentNullException()
     {
@@ -37,8 +39,10 @@ public class BaseMeasureTests
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
         // Act
+        void action() => _ = new BaseMeasureChild(nullQuantity, measureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(nullQuantity, measureUnit));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -50,8 +54,10 @@ public class BaseMeasureTests
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
         // Act
+        void action() => _ = new BaseMeasureChild(enumQuantity, measureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(enumQuantity, measureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -63,8 +69,10 @@ public class BaseMeasureTests
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
         // Act
+        void action() => _ = new BaseMeasureChild(boolQuantity, measureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(boolQuantity, measureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -76,8 +84,10 @@ public class BaseMeasureTests
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
         // Act
+        void action() => _ = new BaseMeasureChild(charQuantity, measureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(charQuantity, measureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -89,8 +99,10 @@ public class BaseMeasureTests
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
         // Act
+        void action() => _ = new BaseMeasureChild(intPtrQuantity, measureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(intPtrQuantity, measureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -102,14 +114,30 @@ public class BaseMeasureTests
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 
         // Act
+        void action() => _ = new BaseMeasureChild(uIntPtrQuantity, measureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(uIntPtrQuantity, measureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
     #endregion
 
     #region BaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null)
     #region MeasureUnitType validation
+    [TestMethod, TestCategory("UnitTest")]
+    public void Ctor_NullMeasureUnitArg_ThrowsArgumentNullException()
+    {
+        // Arrange
+        ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
+        Enum nullMeasureUnit = null;
+
+        // Act
+        void action() => _ = new BaseMeasureChild(quantity, nullMeasureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
+        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    }
 
     [TestMethod, TestCategory("UnitTest")]
     public void Ctor_NotMeasureUnitTypeEnumArg_ThrowsArgumentOutOfRangeException()
@@ -119,8 +147,10 @@ public class BaseMeasureTests
         Enum notMeasureUnitTypeEnum = SampleParams.NotMeasureUnitTypeEnum;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, notMeasureUnitTypeEnum);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(quantity, notMeasureUnitTypeEnum));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -132,8 +162,10 @@ public class BaseMeasureTests
         Enum notDefinedMeasureUnit = SampleParams.NotDefinedSampleMeasureUnit;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, notDefinedMeasureUnit);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(quantity, notDefinedMeasureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
     #endregion
@@ -147,8 +179,10 @@ public class BaseMeasureTests
         Enum measureUnitNotHavingAdHocRate = SampleParams.MeasureUnitShouldHaveAdHocRate;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, measureUnitNotHavingAdHocRate);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(quantity, measureUnitNotHavingAdHocRate));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -158,11 +192,13 @@ public class BaseMeasureTests
         // Arrange
         ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
         Enum definedMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
-        decimal? wrongExchangeRate = SampleParams.DecimalOne;
+        decimal? differentExchangeRate = SampleParams.DecimalOne;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, definedMeasureUnit, differentExchangeRate);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(quantity, definedMeasureUnit, wrongExchangeRate));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
     }
 
@@ -175,8 +211,10 @@ public class BaseMeasureTests
         decimal? zeroExchangeRate = SampleParams.DecimalZero;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, measureUnit, zeroExchangeRate);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(quantity, measureUnit, zeroExchangeRate));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
     }
 
@@ -189,8 +227,10 @@ public class BaseMeasureTests
         decimal? negativeExchangeRate = SampleParams.DecimalMinusOne;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, measureUnit, negativeExchangeRate);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new BaseMeasureChild(quantity, measureUnit, negativeExchangeRate));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
     }
     #endregion
@@ -204,8 +244,10 @@ public class BaseMeasureTests
         decimal? nullExchangeRate = null;
 
         // Act
+        void action() => _ = new BaseMeasureChild(nullQuantity, nullMeasureUnit, nullExchangeRate);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(nullQuantity, nullMeasureUnit, nullExchangeRate));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -218,8 +260,10 @@ public class BaseMeasureTests
         decimal? nullExchangeRate = null;
 
         // Act
+        void action() => _ = new BaseMeasureChild(quantity, nullMeasureUnit, nullExchangeRate);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(quantity, nullMeasureUnit, nullExchangeRate));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -232,18 +276,10 @@ public class BaseMeasureTests
         decimal? nullExchangeRate = null;
 
         // Act
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(nullQuantity, measureUnit, nullExchangeRate));
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
+        void action() => _ = new BaseMeasureChild(nullQuantity, measureUnit, nullExchangeRate);
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_NullQuantityAndValidMeasureUnitArg_ThrowsArgumentNullException()
-    {
-        // Arrange
-        // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(() => new BaseMeasureChild(null, SampleParams.MediumValueSampleMeasureUnit, null));
+        var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
@@ -265,9 +301,10 @@ public class BaseMeasureTests
     {
         // Arrange
         _ = expectedMeasureUnit.TryAddExchangeRate(SampleParams.DecimalOne);
+        decimal? nullExchangeRate = null;
 
         // Act
-        var actual = new BaseMeasureChild(expectedQuantity, expectedMeasureUnit, null);
+        var actual = new BaseMeasureChild(expectedQuantity, expectedMeasureUnit, nullExchangeRate);
 
         // Assert
         Assert.IsNotNull(actual);
@@ -280,26 +317,26 @@ public class BaseMeasureTests
 
     [DataTestMethod, TestCategory("UnitTest")]
     [DataRow(0, default(AreaUnit), null)]
-    [DataRow(0, default(DistanceUnit), 1)]
+    [DataRow(0, default(DistanceUnit), 1.0)]
     [DataRow(0, default(ExtentUnit), null)]
-    [DataRow(0, default(ExtentUnit), 1)]
+    [DataRow(0, default(ExtentUnit), 1.0)]
     [DataRow(0, default(TimeUnit), null)]
-    [DataRow(0, default(VolumeUnit), 1)]
+    [DataRow(0, default(VolumeUnit), 1.0)]
     [DataRow(0, default(WeightUnit), null)]
-    [DataRow(15, WeightUnit.kg, 1000)]
+    [DataRow(15, WeightUnit.kg, 1000.0)]
     [DataRow(627.2, (WeightUnit)2, null)]
-    [DataRow(-4.5, VolumeUnit.meterCubic, 1000000000)]
+    [DataRow(-4.5, VolumeUnit.meterCubic, 1000000000.0)]
     [DataRow(12.4, default(Currency), null)]
-    [DataRow(124, default(Pieces), 1)]
-    [DataRow(657196259.4617, (Currency)1, 409)]
-    public void Ctor_ThreeValidArgs_CreatesInstance(ValueType expectedQuantity, Enum expectedMeasureUnit, int? exchangeRate)
+    [DataRow(124.0, default(Pieces), 1)]
+    [DataRow(657196259.4617, (Currency)1, 409.6885)]
+    public void Ctor_ThreeValidArgs_CreatesInstance(ValueType expectedQuantity, Enum expectedMeasureUnit, double? exchangeRate)
     {
         // Arrange
-        decimal notNullExchangeRate = exchangeRate ?? SampleParams.DecimalOne;
-        _ = expectedMeasureUnit.TryAddExchangeRate(notNullExchangeRate);
+        decimal? decimalExchangeRate = (decimal?)exchangeRate?.ToQuantity(typeof(decimal));
+        _ = expectedMeasureUnit.TryAddExchangeRate(decimalExchangeRate ?? SampleParams.DecimalOne);
 
         // Act
-        var actual = new BaseMeasureChild(expectedQuantity, expectedMeasureUnit, exchangeRate);
+        var actual = new BaseMeasureChild(expectedQuantity, expectedMeasureUnit, decimalExchangeRate);
 
         // Assert
         Assert.IsNotNull(actual);
@@ -338,7 +375,8 @@ public class BaseMeasureTests
     public void Ctor_ValidDecimalTypeQuantityArg_CreatesInstance()
     {
         // Arrange
-        ValueType expectedQuantity = SampleParams.DecimalPositive;
+        ValueType expectedQuantity = (decimal)RandomParams.GetRandomValueTypeQuantity().ToQuantity(typeof(decimal));
+
         // Act
         var actual = new BaseMeasureChild(expectedQuantity, SampleParams.MediumValueSampleMeasureUnit , null);
 
