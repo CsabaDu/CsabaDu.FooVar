@@ -55,5 +55,5 @@ internal sealed class BulkBody : Body, IBulkBody
         throw new ArgumentOutOfRangeException(nameof(volumeUnit), volumeUnit, null);
     }
 
-    public override ISpread<IVolume, VolumeUnit> GetSpread(VolumeUnit volumeUnit) => GetBody(volumeUnit);
+    //public override ISpread<IVolume, VolumeUnit> GetSpread(VolumeUnit volumeUnit) => GetBody(volumeUnit);
 }

@@ -1,11 +1,8 @@
 using CsabaDu.FooVar.Geometrics.Factories;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
-using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Spread.SpreadTypes;
-using CsabaDu.FooVar.Geometrics.Interfaces.Factories;
-using static CsabaDu.FooVar.Measures.Statics.MeasureUnit;
 
 namespace CsabaDu.FooVar.Geometrics.DataTypes.Spread.SpreadTypes;
 
@@ -57,35 +54,9 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 
         if (shape is IPlaneShape planeShape) return new BulkSurface(planeShape);
 
-        if (shape is IDryBody dryBody) return GetBulkSurface(dryBody);
+        if (shape is IDryBody dryBody) return SpreadFactory.GetBulkSurface(dryBody);
 
         throw new ArgumentOutOfRangeException(nameof(shape), shape.GetType(), null);
-    }
-
-    private static IBulkSurface GetBulkSurface(IDryBody dryBody)
-    {
-
-        
-        IArea baseArea = dryBody.GetBaseFace().Area;
-        IExtent height = dryBody.GetHeight();
-        IMeasure basePerimeter = height;
-
-        if (dryBody is ICuboid cuboid)
-        {
-            basePerimeter = cuboid.Length.SumWith(cuboid.Width).MultipliedBy(2);
-        }
-
-        if (dryBody is ICylinder cylinder)
-        {
-            basePerimeter = cylinder.BaseFace.GetDiagonal().MultipliedBy(Convert.ToDecimal(Math.PI));
-        }
-
-        IExtent mantleBaseExtent = height.GetExtent(basePerimeter);
-        IArea mantleArea = GetRectangleArea(mantleBaseExtent, height);
-
-        IArea fullSurfaceArea = baseArea.GetArea(baseArea.MultipliedBy(2).SumWith(mantleArea));
-
-        return new BulkSurface(fullSurfaceArea);
     }
 
     public IBulkSurface GetBulkSurface(ISpread<IArea, AreaUnit> spread)
@@ -111,9 +82,9 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
 
     public override ISpread<IArea, AreaUnit> GetSpread(IShape shape) => GetBulkSurface(shape);
 
-    public override sealed ISpread<IArea, AreaUnit> GetSpread(AreaUnit areaUnit) => GetBulkSurface(areaUnit);
+    //public override sealed ISpread<IArea, AreaUnit> GetSpread(AreaUnit areaUnit) => GetBulkSurface(areaUnit);
 
-    public override sealed IMeasure GetSpreadMeasure() => Area;
+    public override IMeasure GetSpreadMeasure() => Area;
 
     public override IArea GetSpreadMeasure(AreaUnit areaUnit)
     {

@@ -45,12 +45,11 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : class, IMeasure w
 
         return GetSpreadMeasure().FitsIn(other.GetSpreadMeasure(), limitType);
     }
+    public ISpread GetSpread() => this;
 
-    public ISpread<T, U> GetSpread(U? spreadMeasureUnit = null)
+    public ISpread<T, U> GetSpread(U spreadMeasureUnit)
     {
-        if (spreadMeasureUnit is not U measureUnit) return this;
-
-        return ExchangeTo(measureUnit) ?? throw new ArgumentOutOfRangeException(nameof(spreadMeasureUnit), spreadMeasureUnit, null);
+        return ExchangeTo(spreadMeasureUnit) ?? throw new ArgumentOutOfRangeException(nameof(spreadMeasureUnit), spreadMeasureUnit, null);
     }
 
     public T GetSpreadMeasure(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits, U? spreadMeasureUnit = null)
@@ -113,8 +112,6 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : class, IMeasure w
         return exchanged != null;
     }
 
-    public abstract T GetSpreadMeasure(U spreadMeasureUnit);
-
     public void ValidateSpreadMeasure(T spreadMeasure)
     {
         decimal quantity = spreadMeasure?.GetDecimalQuantity() ?? throw new ArgumentNullException(nameof(spreadMeasure));
@@ -126,7 +123,6 @@ internal abstract class Spread<T, U> : ISpread<T, U> where T : class, IMeasure w
     public abstract ISpread<T, U> GetSpread(ISpread<T, U> spread);
     public abstract ISpread<T, U> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits);
     public abstract ISpread<T, U> GetSpread(IShape shape);
+    public abstract T GetSpreadMeasure(U spreadMeasureUnit);
     public abstract IMeasure GetSpreadMeasure();
-    public ISpread GetSpread() => this;
-    public abstract ISpread<T, U> GetSpread(U spreadMeasureUnit);
 }

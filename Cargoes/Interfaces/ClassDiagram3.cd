@@ -3,7 +3,7 @@
   <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.IDryCargo" Collapsed="true">
     <Position X="12.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IBulky.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -70,17 +70,10 @@
       <FileName>Interfaces\IPallet.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.ICargoDoor" Collapsed="true">
-    <Position X="6.5" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIEAAAAAAQAAAA=</HashCode>
-      <FileName>Interfaces\ICargoContainer.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.IBoxContainer" Collapsed="true">
     <Position X="3.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ICargoContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -200,7 +200,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>EAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ICargoContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -215,9 +215,9 @@
     <Position X="16.5" Y="14.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVar.Cargoes.Interfaces.IDryContainer&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="16.786" Y="14.184" />
-        <Point X="16.786" Y="14.45" />
-        <Point X="17.375" Y="14.45" />
+        <Point X="16.786" Y="13.732" />
+        <Point X="16.786" Y="14.375" />
+        <Point X="17.375" Y="14.375" />
         <Point X="17.375" Y="14.75" />
       </Path>
     </InheritanceLine>
@@ -230,9 +230,9 @@
     <Position X="14.5" Y="14.75" Width="1.75" />
     <InheritanceLine Type="CsabaDu.FooVar.Cargoes.Interfaces.IDryContainer&lt;T&gt;" FixedFromPoint="true">
       <Path>
-        <Point X="16.214" Y="14.184" />
-        <Point X="16.214" Y="14.45" />
-        <Point X="15.375" Y="14.45" />
+        <Point X="16.214" Y="13.732" />
+        <Point X="16.214" Y="14.375" />
+        <Point X="15.375" Y="14.375" />
         <Point X="15.375" Y="14.75" />
       </Path>
     </InheritanceLine>
@@ -251,14 +251,6 @@
         <Point X="19.25" Y="10.25" />
       </Path>
     </InheritanceLine>
-    <InheritanceLine Type="CsabaDu.FooVar.Cargoes.Interfaces.ICargoContainer&lt;T&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="21.344" Y="9.569" />
-        <Point X="21.344" Y="9.875" />
-        <Point X="19.25" Y="9.875" />
-        <Point X="19.25" Y="10.25" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\ICargoContainer.cs</FileName>
@@ -266,31 +258,8 @@
   </Interface>
   <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.IContainerBody&lt;T&gt;">
     <Position X="23" Y="10.25" Width="1.75" />
-    <InheritanceLine Type="CsabaDu.FooVar.Cargoes.Interfaces.ICargoContainer&lt;T&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="21.875" Y="9.569" />
-        <Point X="21.875" Y="9.875" />
-        <Point X="23.875" Y="9.875" />
-        <Point X="23.875" Y="10.25" />
-      </Path>
-    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>Interfaces\ICargoContainer.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="CsabaDu.FooVar.Cargoes.Interfaces.ICargoContainer&lt;T&gt;">
-    <Position X="20.5" Y="7.5" Width="2.25" />
-    <InheritanceLine Type="CsabaDu.FooVar.Cargoes.Interfaces.IDryMass" FixedFromPoint="true">
-      <Path>
-        <Point X="19.875" Y="6.617" />
-        <Point X="19.875" Y="7.125" />
-        <Point X="21.625" Y="7.125" />
-        <Point X="21.625" Y="7.5" />
-      </Path>
-    </InheritanceLine>
-    <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAACAAAAAAAAAAAAAIAAAAAAAAAAAIAA=</HashCode>
       <FileName>Interfaces\ICargoContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>

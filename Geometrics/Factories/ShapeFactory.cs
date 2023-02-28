@@ -8,6 +8,46 @@ namespace CsabaDu.FooVar.Geometrics.Factories;
 
 public sealed class ShapeFactory : IShapeFactory
 {
+    public ICircle GetCircle(IExtent radius)
+    {
+        return new Circle(radius);
+    }
+
+    public ICircularShape GetCircularShape(params IExtent[] shapeExtents)
+    {
+        _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
+
+        int count = shapeExtents.Length;
+
+        return count switch
+        {
+            1 => GetCircle(shapeExtents[0]),
+            2 => GetCylinder(shapeExtents[0], shapeExtents[1]),
+
+            _ => throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null),
+        };
+    }
+
+    public IComplexDryBody GetComplexDryBody(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)
+    {
+        return new ComplexDryBody(innerTangentCuboidList, dimensions);
+    }
+
+    public IComplexDryBody GetComplexDryBody(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
+    {
+        return new ComplexDryBody(innerShapeExtentList, outerShapeExtentList);
+    }
+
+    public ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular)
+    {
+        return new CrossSection(planeSectionShape, cornerPadding, perpendicular);
+    }
+
+    public ICrossSection GetCrossSection(ISection section, ShapeExtentType perpendicular)
+    {
+        return new CrossSection(section, perpendicular);
+    }
+
     public ICuboid GetCuboid(IExtent length, IExtent width, IExtent height)
     {
         return new Cuboid(length, width, height);
@@ -26,16 +66,6 @@ public sealed class ShapeFactory : IShapeFactory
     public ICylinder GetCylinder(ICircle baseFace, IExtent height)
     {
         return new Cylinder(baseFace, height);
-    }
-
-    public ICircle GetCircle(IExtent radius)
-    {
-        return new Circle(radius);
-    }
-
-    public IRectangle GetRectangle(IExtent length, IExtent width)
-    {
-        return new Rectangle(length, width);
     }
 
     public IDryBody GetDryBody(params IExtent[] shapeExtents)
@@ -76,6 +106,16 @@ public sealed class ShapeFactory : IShapeFactory
             : GetCuboid((IRectangle)baseFace, height);
     }
 
+    public IPlaneSection GetPlaneSection(IPlaneShape planeSectionShape, IRectangle cornerPadding)
+    {
+        return new PlaneSection(planeSectionShape, cornerPadding);
+    }
+
+    public IPlaneSection GetPlaneSection(ISection section)
+    {
+        return new PlaneSection(section);
+    }
+
     public IPlaneShape GetPlaneShape(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
@@ -110,6 +150,11 @@ public sealed class ShapeFactory : IShapeFactory
         return GetSection(planeShape, cornerPadding, perpendicular);
     }
 
+    public IRectangle GetRectangle(IExtent length, IExtent width)
+    {
+        return new Rectangle(length, width);
+    }
+
     public IRectangularShape GetRectangularShape(params IExtent[] shapeExtents)
     {
         _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
@@ -123,64 +168,6 @@ public sealed class ShapeFactory : IShapeFactory
 
             _ => throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null),
         };
-    }
-
-    public ICircularShape GetCircularShape(params IExtent[] shapeExtents)
-    {
-        _ = shapeExtents ?? throw new ArgumentNullException(nameof(shapeExtents));
-
-        int count = shapeExtents.Length;
-
-        return count switch
-        {
-            1 => GetCircle(shapeExtents[0]),
-            2 => GetCylinder(shapeExtents[0], shapeExtents[1]),
-
-            _ => throw new ArgumentOutOfRangeException(nameof(shapeExtents), count, null),
-        };
-    }
-
-    public IShape GetShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
-    {
-        return CreateShape(shapeExtentList, shapeTraits);
-    }
-
-    private static IShape CreateShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
-    {
-        shapeTraits.ValidateShapeTraits();
-        shapeTraits.ValidateShapeExtentList(shapeExtentList);
-
-        if (!shapeTraits.Equals(ShapeTrait.None))
-        {
-            if (shapeTraits.HasFlag(ShapeTrait.Plane))
-            {
-                return new Rectangle(shapeExtentList);
-            }
-
-            if (shapeTraits.HasFlag(ShapeTrait.Circular))
-            {
-                return new Cylinder(shapeExtentList);
-            }
-
-            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
-            {
-                return new Circle(shapeExtentList);
-            }
-        }
-
-        if (shapeExtentList.Count() == shapeTraits.GetShapeExtentCount()) return new Cuboid(shapeExtentList);
-
-        return new ComplexDryBody(shapeExtentList, null);
-    }
-
-    public IComplexDryBody GetComplexDryBody(IEnumerable<ICuboid> innerTangentCuboidList, ICuboid? dimensions = null)
-    {
-        return new ComplexDryBody(innerTangentCuboidList, dimensions);
-    }
-
-    public IComplexDryBody GetComplexDryBody(IEnumerable<IExtent> innerShapeExtentList, IEnumerable<IExtent>? outerShapeExtentList = null)
-    {
-        return new ComplexDryBody(innerShapeExtentList, outerShapeExtentList);
     }
 
     public ISection GetSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType? perpendicular = null)
@@ -197,23 +184,31 @@ public sealed class ShapeFactory : IShapeFactory
             : GetCrossSection(section, notNullPerpendicular);
     }
 
-    public IPlaneSection GetPlaneSection(IPlaneShape planeSectionShape, IRectangle cornerPadding)
+    public IShape GetShape(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits)
     {
-        return new PlaneSection(planeSectionShape, cornerPadding);
-    }
+        shapeTraits.ValidateShapeTraits();
+        shapeTraits.ValidateShapeExtentList(shapeExtentList);
 
-    public IPlaneSection GetPlaneSection(ISection section)
-    {
-        return new PlaneSection(section);
-    }
+        if (!shapeTraits.Equals(ShapeTrait.None))
+        {
+            if (shapeTraits.HasFlag(ShapeTrait.Plane | ShapeTrait.Circular))
+            {
+                return new Circle(shapeExtentList);
+            }
 
-    public ICrossSection GetCrossSection(IPlaneShape planeSectionShape, IRectangle cornerPadding, ShapeExtentType perpendicular)
-    {
-        return new CrossSection(planeSectionShape, cornerPadding, perpendicular);
-    }
+            if (shapeTraits.HasFlag(ShapeTrait.Plane))
+            {
+                return new Rectangle(shapeExtentList);
+            }
 
-    public ICrossSection GetCrossSection(ISection section, ShapeExtentType perpendicular)
-    {
-        return new CrossSection(section, perpendicular);
+            if (shapeTraits.HasFlag(ShapeTrait.Circular))
+            {
+                return new Cylinder(shapeExtentList);
+            }
+        }
+
+        if (shapeExtentList.Count() == shapeTraits.GetShapeExtentCount()) return new Cuboid(shapeExtentList);
+
+        return new ComplexDryBody(shapeExtentList, null);
     }
 }

@@ -6,7 +6,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
     public interface IDryContainer<T> : IContainerCapacity<T>/*, IFit<ICargoDoor>*/ where T : class, IDryBody
     {
-        ICargoDoor CargoDoor { get; init; }
+        ICrossSection CargoDoor { get; init; }
 
         IDryContainer<T> GetDryContainer();
         IDryContainer<T> GetDryContainer(ICargoContainer<T> cargoContainer, ICargoDoor cargoDoor);
