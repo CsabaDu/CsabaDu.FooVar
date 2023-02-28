@@ -375,10 +375,10 @@ public class MeasurementTests
     public void CompareTo_NullArg_ReturnsExpected()
     {
         // Arrange
-        IMeasurement other = null;
+        IMeasurement nullMeasurement = null;
 
         // Act
-        var result = _measurement.CompareTo(other);
+        var result = _measurement.CompareTo(nullMeasurement);
 
         // Assert
         Assert.IsTrue(result > 0);
@@ -390,12 +390,11 @@ public class MeasurementTests
         // Arrange
         Enum sampleMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
         IMeasurement measurement = _factory.GetMeasurement(sampleMeasureUnit);
-
         Enum differentTypeMeasureUnit = SampleParams.DifferentTypeSampleMeasureUnit;
-        IMeasurement other = _factory.GetMeasurement(differentTypeMeasureUnit);
+        IMeasurement differentMeasurement = _factory.GetMeasurement(differentTypeMeasureUnit);
 
         // Act
-        void action() => _ = measurement.CompareTo(other);
+        void action() => _ = measurement.CompareTo(differentMeasurement);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
@@ -422,20 +421,22 @@ public class MeasurementTests
 
     #region Equals
     [TestMethod, TestCategory("UnitTest")]
-    public void TM23_Equals_NullArg_ReturnsFalse()
+    public void Equals_NullArg_ReturnsFalse()
     {
         // Arrange
+        IMeasurement nullMeasurement = null;
+
         // Act
-        var actual = _measurement.Equals(null);
+        var actual = _measurement.Equals(nullMeasurement);
 
         // Assert
         Assert.IsFalse(actual);
     }
 
     [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(AreaUnit), 1, false)]
-    [DataRow(default(Currency), 1, false)]
-    [DataRow(default(Pieces), 1, false)]
+    [DataRow(default(AreaUnit), 1.0, false)]
+    [DataRow(default(Currency), 1.0, false)]
+    [DataRow(default(Pieces), 1.0, false)]
     [DataRow(default(DistanceUnit), null, false)]
     [DataRow(default(ExtentUnit), null, false)]
     [DataRow(default(TimeUnit), null, false)]
@@ -443,13 +444,18 @@ public class MeasurementTests
     [DataRow(default(WeightUnit), null, false)]
     [DataRow(WeightUnit.kg, null, true)]
     [DataRow((WeightUnit)2, null, false)]
-    public void TM24_Equals_ValidArg_ReturnsExpectedValue(Enum otherMeasureUnit, int? exchangeRate, bool expected)
+    [DataRow((Currency)1, 409.6885, false)]
+
+    public void Equals_ValidArg_ReturnsExpected(Enum otherMeasureUnit, double? exchangeRate, bool expected)
     {
         // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
-        IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, exchangeRate);
+        Enum sampleMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
+        IMeasurement measurement = _factory.GetMeasurement(sampleMeasureUnit);
 
-        // Act.
+        decimal? decimalExchangeRate = (decimal?)exchangeRate?.ToQuantity(typeof(decimal));
+        IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, decimalExchangeRate);
+
+        // Act
         var actual = measurement.Equals((object)other);
 
         // Assert
@@ -460,41 +466,16 @@ public class MeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM25_Equals_ObjectArg_ReturnsFalse()
+    public void Equals_NotMeasurementObjectArg_ReturnsFalse()
     {
         // Arrange
+        object notMeasurementObject = new();
+
         // Act
-        var actual = _measurement.Equals(new object());
+        var actual = _measurement.Equals(notMeasurementObject);
 
         // Assert
         Assert.IsFalse(actual);
-    }
-
-    [DataTestMethod, TestCategory("UnitTest")]
-    [DataRow(default(AreaUnit), 1, false)]
-    [DataRow(default(Currency), 1, false)]
-    [DataRow(default(Pieces), 1, false)]
-    [DataRow(default(DistanceUnit), null, false)]
-    [DataRow(default(ExtentUnit), null, false)]
-    [DataRow(default(TimeUnit), null, false)]
-    [DataRow(default(VolumeUnit), null, false)]
-    [DataRow(default(WeightUnit), null, false)]
-    [DataRow(WeightUnit.kg, null, true)]
-    [DataRow((WeightUnit)2, null, false)]
-    public void TM26_Equals_ValidArg_ReturnsExpectedValue(Enum otherMeasureUnit, int? exchangeRate, bool expected)
-    {
-        // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
-        IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, exchangeRate);
-
-        // Act
-        var actual = measurement.Equals(other);
-
-        // Assert
-        Assert.AreEqual(expected, actual);
-
-        // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
     }
     #endregion
 
@@ -707,10 +688,10 @@ public class MeasurementTests
     //{
     //    // Arrange
     //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
-    //    IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, exchangerate);
+    //    IMeasurement nullMeasurement = _factory.GetMeasurement(otherMeasureUnit, exchangerate);
 
     //    // Act
-    //    var result = result == other;
+    //    var result = result == nullMeasurement;
 
     //    // Assert
     //    Assert.AreEqual(expected, result);
@@ -764,10 +745,10 @@ public class MeasurementTests
     //{
     //    // Arrange
     //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
-    //    IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, exchangerate);
+    //    IMeasurement nullMeasurement = _factory.GetMeasurement(otherMeasureUnit, exchangerate);
 
     //    // Act
-    //    var result = result != other;
+    //    var result = result != nullMeasurement;
 
     //    // Assert
     //    Assert.AreEqual(expected, result);
@@ -810,7 +791,7 @@ public class MeasurementTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result > differentTypeMeasurement);
-    //    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    //    Assert.AreEqual(ParamNames.nullMeasurement, ex.ParamName);
     //}
 
     //[DataTestMethod, TestCategory("UnitTest")]
@@ -863,7 +844,7 @@ public class MeasurementTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result < differentTypeMeasurement);
-    //    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    //    Assert.AreEqual(ParamNames.nullMeasurement, ex.ParamName);
     //}
 
     //[DataTestMethod, TestCategory("UnitTest")]
@@ -917,7 +898,7 @@ public class MeasurementTests
     ////    // Act
     ////    // Assert
     ////    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result >= differentTypeMeasurement);
-    ////    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    ////    Assert.AreEqual(ParamNames.nullMeasurement, ex.ParamName);
     ////}
 
     ////[DataTestMethod, TestCategory("UnitTest")]
@@ -971,7 +952,7 @@ public class MeasurementTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result <= differentTypeMeasurement);
-    //    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    //    Assert.AreEqual(ParamNames.nullMeasurement, ex.ParamName);
     //}
 
     //[DataTestMethod, TestCategory("UnitTest")]
@@ -1016,7 +997,7 @@ public class MeasurementTests
     ////    // Act
     ////    // Assert
     ////    var ex = Assert.ThrowsException<ArgumentNullException>(() => result / null);
-    ////    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    ////    Assert.AreEqual(ParamNames.nullMeasurement, ex.ParamName);
     ////}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -1029,7 +1010,7 @@ public class MeasurementTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result / otherMeasurement);
-    //    Assert.AreEqual(ParamNames.other, ex.ParamName);
+    //    Assert.AreEqual(ParamNames.nullMeasurement, ex.ParamName);
     //}
 
     ////[DataTestMethod, TestCategory("UnitTest")]
