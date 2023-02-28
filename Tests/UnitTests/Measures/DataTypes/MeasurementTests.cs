@@ -303,7 +303,7 @@ public class MeasurementTests
     [DataRow(WeightUnit.kg, true)]
     [DataRow((WeightUnit)2, true)]
     [DataRow((WeightUnit)3, false)]
-    public void TM16_CanExchangeTo_AnyArg_ReturnsExpected(Enum measureUnit, bool expected)
+    public void CanExchangeTo_AnyArg_ReturnsExpected(Enum measureUnit, bool expected)
     {
         // Arrange
         IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
@@ -326,7 +326,7 @@ public class MeasurementTests
     [DataRow(default(TimeUnit), null, typeof(TimeUnit))]
     [DataRow(default(VolumeUnit), null, typeof(VolumeUnit))]
     [DataRow(default(WeightUnit), null, typeof(WeightUnit))]
-    public void TM18_GetMeasureUnitType_ReturnsExpected(Enum measureUnit, int? exchangeRate, Type expected)
+    public void GetMeasureUnitType_ReturnsExpected(Enum measureUnit, int? exchangeRate, Type expected)
     {
         // Arrange
         IMeasurement measurement = _factory.GetMeasurement(measureUnit, exchangeRate);
@@ -354,7 +354,7 @@ public class MeasurementTests
     [DataRow(default(WeightUnit), null)]
     [DataRow(WeightUnit.kg, null)]
     [DataRow((WeightUnit)2, null)]
-    public void TM19_GetMeasureUnit_ReturnsExpected(Enum excpected, int? exchangeRate)
+    public void GetMeasureUnit_ReturnsExpected(Enum excpected, int? exchangeRate)
     {
         // Arrange
         IMeasurement measurement = _factory.GetMeasurement(excpected, exchangeRate);
@@ -372,28 +372,33 @@ public class MeasurementTests
 
     #region CompareTo
     [TestMethod, TestCategory("UnitTest")]
-    public void TM20_CompareTo_NullArg_ThrowsArgumentNullException()
+    public void CompareTo_NullArg_ThrowsArgumentNullException()
     {
         // Arrange
-        int expected = 1;
+        IMeasurement other = null;
 
         // Act
-        var actual = _measurement.CompareTo(null);
+        var result = _measurement.CompareTo(other);
 
         // Assert
-        Assert.AreEqual(expected, actual);
+        Assert.IsTrue(result > 0);
     }
 
     [TestMethod, TestCategory("UnitTest")]
     public void TM21_CompareTo_DifferentTypeMeasurementArg_ThrowsArgumentException()
     {
         // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
-        IMeasurement differentTypeSampleMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
+        Enum sampleMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
+        IMeasurement measurement = _factory.GetMeasurement(sampleMeasureUnit);
+
+        Enum differentTypeMeasureUnit = SampleParams.DifferentTypeSampleMeasureUnit;
+        IMeasurement other = _factory.GetMeasurement(differentTypeMeasureUnit);
 
         // Act
+        void action() => _ = measurement.CompareTo(other);
+
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => measurement.CompareTo(differentTypeSampleMeasurement));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.other, ex.ParamName);
     }
 
@@ -664,13 +669,13 @@ public class MeasurementTests
     ////{
     ////    // Arrange
 
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     ////    // Act
 
-    ////    var actual = actual == null;
+    ////    var result = result == null;
     ////    // Assert
 
-    ////    Assert.IsFalse(actual);
+    ////    Assert.IsFalse(result);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
@@ -678,13 +683,13 @@ public class MeasurementTests
     ////{
     ////    // Arrange
 
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     ////    // Act
 
-    ////    var actual = null == actual;
+    ////    var result = null == result;
     ////    // Assert
 
-    ////    Assert.IsFalse(actual);
+    ////    Assert.IsFalse(result);
     ////}
 
     //[DataTestMethod, TestCategory("UnitTest")]
@@ -701,14 +706,14 @@ public class MeasurementTests
     //public void TM44_StaticOperatorEqual_ValidArgs_ReturnsExpected(Enum otherMeasureUnit, int? exchangerate, bool expected)
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     //    IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, exchangerate);
 
     //    // Act
-    //    var actual = actual == other;
+    //    var result = result == other;
 
     //    // Assert
-    //    Assert.AreEqual(expected, actual);
+    //    Assert.AreEqual(expected, result);
 
     //    // Restore
     //    TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
@@ -721,13 +726,13 @@ public class MeasurementTests
     ////{
     ////    // Arrange
 
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     ////    // Act
 
-    ////    var actual = actual != null;
+    ////    var result = result != null;
     ////    // Assert
 
-    ////    Assert.IsTrue(actual);
+    ////    Assert.IsTrue(result);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
@@ -735,13 +740,13 @@ public class MeasurementTests
     ////{
     ////    // Arrange
 
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     ////    // Act
 
-    ////    var actual = null != actual;
+    ////    var result = null != result;
     ////    // Assert
 
-    ////    Assert.IsTrue(actual);
+    ////    Assert.IsTrue(result);
     ////}
 
     //[DataTestMethod, TestCategory("UnitTest")]
@@ -758,14 +763,14 @@ public class MeasurementTests
     //public void TM47_StaticOperatorNotEqual_ValidArgs_ReturnsExpected(Enum otherMeasureUnit, int? exchangerate, bool expected)
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     //    IMeasurement other = _factory.GetMeasurement(otherMeasureUnit, exchangerate);
 
     //    // Act
-    //    var actual = actual != other;
+    //    var result = result != other;
 
     //    // Assert
-    //    Assert.AreEqual(expected, actual);
+    //    Assert.AreEqual(expected, result);
 
     //    // Restore
     //    TestSupport.RemoveIfNotDefaultMeasureUnit(otherMeasureUnit);
@@ -777,34 +782,34 @@ public class MeasurementTests
     ////public void TM48_StaticOperatorGreaterThan_NullLeftArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsFalse(null > actual);
+    ////    Assert.IsFalse(null > result);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
     ////public void TM49_StaticOperatorGreaterThan_NullRightArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsTrue(actual > null);
+    ////    Assert.IsTrue(result > null);
     ////}
 
     //[TestMethod, TestCategory("UnitTest")]
     //public void TM50_StaticOperatorGreaterThan_DifferentTypeMeasurementArgs_ThrowsArgumentOutOfRangeException()
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     //    IMeasurement differentTypeMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
 
     //    // Act
     //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => actual > differentTypeMeasurement);
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result > differentTypeMeasurement);
     //    Assert.AreEqual(ParamNames.other, ex.ParamName);
     //}
 
@@ -814,14 +819,14 @@ public class MeasurementTests
     //[DataRow(WeightUnit.kg, WeightUnit.ton, false)]
     //public void TM51_StaticOperatorGreaterThan_ValidArgs_ReturnsExpected(Enum nullMeasureUnit, Enum otherMeasureUnit, bool expected)
     //{
-    //    Measurement actual = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
     //    IMeasurement otherMeasurement = _factory.GetMeasurement(otherMeasureUnit);
 
     //    // Act
-    //    var actual = actual > otherMeasurement;
+    //    var result = result > otherMeasurement;
 
     //    // Assert
-    //    Assert.AreEqual(expected, actual);
+    //    Assert.AreEqual(expected, result);
     //}
     //#endregion
 
@@ -830,34 +835,34 @@ public class MeasurementTests
     ////public void TM52_StaticOperatorSmallerThan_NullLeftArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsTrue(null < actual);
+    ////    Assert.IsTrue(null < result);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
     ////public void TM53_StaticOperator_SmallerThan_NullRightArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsFalse(actual < null);
+    ////    Assert.IsFalse(result < null);
     ////}
 
     //[TestMethod, TestCategory("UnitTest")]
     //public void TM54_StaticOperatorSmallerThan_DifferentTypeMeasurementArgs_ThrowsArgumentOutOfRangeException()
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     //    IMeasurement differentTypeMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
 
     //    // Act
     //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => actual < differentTypeMeasurement);
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result < differentTypeMeasurement);
     //    Assert.AreEqual(ParamNames.other, ex.ParamName);
     //}
 
@@ -868,14 +873,14 @@ public class MeasurementTests
     //public void TM55_StaticOperatorSmallerThan_ValidArgs_ReturnsExpected(Enum nullMeasureUnit, Enum otherMeasureUnit, bool expected)
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
     //    IMeasurement otherMeasurement = _factory.GetMeasurement(otherMeasureUnit);
 
     //    // Act
-    //    var actual = actual < otherMeasurement;
+    //    var result = result < otherMeasurement;
 
     //    // Assert
-    //    Assert.AreEqual(expected, actual);
+    //    Assert.AreEqual(expected, result);
     //}
     //#endregion
 
@@ -884,34 +889,34 @@ public class MeasurementTests
     ////public void TM56_StaticOperatorGreaterThanOrEqual_NullLeftArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsFalse(null >= actual);
+    ////    Assert.IsFalse(null >= result);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
     ////public void TM57_StaticOperatorGreaterThanOrEqual_NullRightArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsTrue(actual >= null);
+    ////    Assert.IsTrue(result >= null);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
     ////public void TM58_StaticOperatorGreaterThanOrEqual_DifferentTypeMeasurementArgs_ThrowsArgumentOutOfRangeException()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     ////    IMeasurement differentTypeMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
 
     ////    // Act
     ////    // Assert
-    ////    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => actual >= differentTypeMeasurement);
+    ////    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result >= differentTypeMeasurement);
     ////    Assert.AreEqual(ParamNames.other, ex.ParamName);
     ////}
 
@@ -922,14 +927,14 @@ public class MeasurementTests
     ////public void TM59_StaticOperatorGreaterThanOrEqual_ValidArgs_ReturnsExpected(Enum nullMeasureUnit, Enum otherMeasureUnit, bool expected)
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
     ////    IMeasurement otherMeasurement = _measurement.GetMeasurement(otherMeasureUnit);
 
     ////    // Act
-    ////    var actual = actual >= otherMeasurement;
+    ////    var result = result >= otherMeasurement;
 
     ////    // Assert
-    ////    Assert.AreEqual(expected, actual);
+    ////    Assert.AreEqual(expected, result);
     ////}
     //#endregion
 
@@ -938,34 +943,34 @@ public class MeasurementTests
     ////public void TM60_StaticOperatorSmallerThanOrEqual_NullLeftArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsFalse(actual <= null);
+    ////    Assert.IsFalse(result <= null);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
     ////public void TM61_StaticOperatorSmallerThanOrEqual_NullRightArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    Assert.IsTrue(null <= actual);
+    ////    Assert.IsTrue(null <= result);
     ////}
 
     //[TestMethod, TestCategory("UnitTest")]
     //public void TM62_StaticOperatorSmallerThanOrEqual_DifferentTypeMeasurementArgs_ThrowsArgumentOutOfRangeException()
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     //    IMeasurement differentTypeMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
 
     //    // Act
     //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => actual <= differentTypeMeasurement);
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result <= differentTypeMeasurement);
     //    Assert.AreEqual(ParamNames.other, ex.ParamName);
     //}
 
@@ -976,14 +981,14 @@ public class MeasurementTests
     //public void TM63_StaticOperatorSmallerOrEqual_ValidArgs_ReturnsExpected(Enum nullMeasureUnit, Enum otherMeasureUnit, bool expected)
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
     //    IMeasurement otherMeasurement = _measurement.GetMeasurement(otherMeasureUnit);
 
     //    // Act
-    //    var actual = actual <= otherMeasurement;
+    //    var result = result <= otherMeasurement;
 
     //    // Assert
-    //    Assert.AreEqual(expected, actual);
+    //    Assert.AreEqual(expected, result);
     //}
     //#endregion
 
@@ -992,25 +997,25 @@ public class MeasurementTests
     ////public void TM64_StaticOperatorDivide_NullLeftArg_ReturnsExpected()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     ////    decimal expected = SampleParams.DecimalZero;
 
     ////    // Act
-    ////    var actual = null / actual;
+    ////    var result = null / result;
 
     ////    // Assert
-    ////    Assert.AreEqual(expected, actual);
+    ////    Assert.AreEqual(expected, result);
     ////}
 
     ////[TestMethod, TestCategory("UnitTest")]
     ////public void TM65_StaticOperatorDivide_NullRightArg_ThrowsArgumentNullExceptions()
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
 
     ////    // Act
     ////    // Assert
-    ////    var ex = Assert.ThrowsException<ArgumentNullException>(() => actual / null);
+    ////    var ex = Assert.ThrowsException<ArgumentNullException>(() => result / null);
     ////    Assert.AreEqual(ParamNames.other, ex.ParamName);
     ////}
 
@@ -1018,12 +1023,12 @@ public class MeasurementTests
     //public void TM66_StaticOperatorDivide_DifferentTypeArgs_ThrowsArgumentOutOfRangeExceptions()
     //{
     //    // Arrange
-    //    Measurement actual = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
+    //    Measurement result = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit) as Measurement;
     //    IMeasurement otherMeasurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
 
     //    // Act
     //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => actual / otherMeasurement);
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => result / otherMeasurement);
     //    Assert.AreEqual(ParamNames.other, ex.ParamName);
     //}
 
@@ -1035,15 +1040,15 @@ public class MeasurementTests
     ////public void TM67_StaticOperatorDivide_ValidArgs_ReturnsExpectedValue(Enum nullMeasureUnit, Enum otherMeasureUnit, double nullExchangeRate)
     ////{
     ////    // Arrange
-    ////    Measurement actual = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
+    ////    Measurement result = _factory.GetMeasurement(nullMeasureUnit) as Measurement;
     ////    Measurement otherMeasurement = _factory.GetMeasurement(otherMeasureUnit) as Measurement;
     ////    decimal expected = (decimal)nullExchangeRate;
 
     ////    // Act
-    ////    var actual = actual / otherMeasurement;
+    ////    var result = result / otherMeasurement;
 
     ////    // Assert
-    ////    Assert.AreEqual(expected, actual);
+    ////    Assert.AreEqual(expected, result);
     ////}
     //#endregion    
 }
