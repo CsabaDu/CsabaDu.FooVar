@@ -179,6 +179,8 @@ public static class ValidateMeasures
     {
         if (exchangeRate is not decimal notNullExchangeRate) return;
 
+        if (notNullExchangeRate <= 0) throw new ArgumentOutOfRangeException(nameof(exchangeRate), exchangeRate, null);
+
         if (constantMeasureUnitsOnly && !ExchangeMeasures.ConstantMeasureUnits.Contains(measureUnit)) return;
 
         if (measureUnit.TryAddExchangeRate(notNullExchangeRate)) return;

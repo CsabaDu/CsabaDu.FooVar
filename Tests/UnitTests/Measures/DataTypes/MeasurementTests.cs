@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVar.Measures.Factories;
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
 
@@ -28,24 +29,28 @@ public class MeasurementTests
 
     #region Constructor
     [TestMethod, TestCategory("UnitTest")]
-    public void TM01_Ctor_NullArgs_ThrowsArgumentNullException()
+    public void Ctor_NullArgs_ThrowsArgumentNullException()
     {
         // Arrange
+        Enum measureUnit = null;
+        decimal? exchangeRate = null;
+
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(
-            () => new Measurement(null, null));
+        var ex = Assert.ThrowsException<ArgumentNullException>(() => new Measurement(measureUnit, exchangeRate));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM02_Ctor_NullMeasureUnitArg_ThrowsArgumentNullException()
+    public void Ctor_NullMeasureUnitArg_ThrowsArgumentNullException()
     {
         // Arrange
+        Enum measureUnit = null;
+        decimal? exchangeRate = SampleParams.DecimalOne;
+
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentNullException>(
-            () => new Measurement(null, SampleParams.DecimalOne));
+        var ex = Assert.ThrowsException<ArgumentNullException>(() => new Measurement(measureUnit, exchangeRate));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -54,10 +59,12 @@ public class MeasurementTests
     public void Ctor_NotMeasureUnitTypeEnumArg_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
+        Enum measureUnit = SampleParams.NotMeasureUnitTypeEnum;
+        decimal? exchangeRate = SampleParams.DecimalOne;
+
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(
-            () => new Measurement(SampleParams.NotMeasureUnitTypeEnum));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Measurement(measureUnit, exchangeRate));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
@@ -65,10 +72,12 @@ public class MeasurementTests
     public void Ctor_NotDefinedMeasureUnitArg_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
+        Enum measureUnit = SampleParams.NotDefinedSampleMeasureUnit;
+        decimal? exchangeRate = SampleParams.DecimalOne;
+
         // Act
         // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(
-            () => new Measurement(SampleParams.NotDefinedSampleMeasureUnit));
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Measurement(measureUnit, exchangeRate));
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
     #endregion
@@ -197,7 +206,7 @@ public class MeasurementTests
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(
             () => new Measurement(SampleParams.MeasureUnitShouldHaveAdHocRate, SampleParams.DecimalZero));
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+        Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -208,7 +217,7 @@ public class MeasurementTests
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(
             () => new Measurement(SampleParams.MeasureUnitShouldHaveAdHocRate, SampleParams.DecimalMinusOne));
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+        Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
     }
 
     [TestMethod, TestCategory("UnitTest")]

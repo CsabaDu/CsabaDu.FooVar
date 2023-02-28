@@ -107,17 +107,21 @@ internal static class RandomParams
         return quantity;
     }
 
-
     internal static ValueType GetRandomDenominatorQuantity()
     {
-        decimal randomDecimalQuantity = GetRandomDecimalQuantity();
+        decimal randomDecimalQuantity = GetRandomPositiveDecimal();
 
         Type quantityType = GetRandomQuantityType();
 
         return randomDecimalQuantity.ToQuantity(quantityType)!;
     }
 
-    internal static decimal GetRandomDecimalQuantity()
+    internal static decimal GetRandomExchangeRate()
+    {
+        return GetRandomPositiveDecimal();
+    }
+
+    private static decimal GetRandomPositiveDecimal()
     {
         if (DenominatorQuantitiesCount == default)
         {
