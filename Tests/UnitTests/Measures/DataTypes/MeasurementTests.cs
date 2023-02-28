@@ -372,7 +372,7 @@ public class MeasurementTests
 
     #region CompareTo
     [TestMethod, TestCategory("UnitTest")]
-    public void CompareTo_NullArg_ThrowsArgumentNullException()
+    public void CompareTo_NullArg_ReturnsExpected()
     {
         // Arrange
         IMeasurement other = null;
@@ -385,7 +385,7 @@ public class MeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM21_CompareTo_DifferentTypeMeasurementArg_ThrowsArgumentException()
+    public void CompareTo_DifferentTypeMeasurementArg_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
         Enum sampleMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
@@ -406,7 +406,7 @@ public class MeasurementTests
     [DataRow(WeightUnit.g, 1)]
     [DataRow(WeightUnit.kg, 0)]
     [DataRow(WeightUnit.ton, -1)]
-    public void TM22_CompareTo_ValidArg_ReturnsExpectedValue(Enum otherMeasureUnit, int expected)
+    public void CompareTo_ValidArg_ReturnsExpectedValue(Enum otherMeasureUnit, int expected)
     {
         // Arrange
         IMeasurement measurement = _factory.GetMeasurement(SampleParams.MediumValueSampleMeasureUnit);
