@@ -481,10 +481,11 @@ public class MeasurementTests
 
     #region GetHashCode
     [TestMethod, TestCategory("UnitTest")]
-    public void TM27_GetHashCode_ReturnsExpectedValue()
+    public void GetHashCode_ReturnsExpectedValue()
     {
         // Arrange
-        IMeasurement measurement = _factory.GetMeasurement(SampleParams.DifferentTypeSampleMeasureUnit);
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement measurement = _factory.GetMeasurement(measureUnit);
         Type measureUnitType = measurement.MeasureUnitType;
         decimal exchangeRate = measurement.ExchangeRate;
         int expected = HashCode.Combine(measureUnitType, exchangeRate);
@@ -499,25 +500,39 @@ public class MeasurementTests
 
     #region GetMeasurement
     [TestMethod, TestCategory("UnitTest")]
-    public void TM28_GetMeasurement_NullArg_ReturnsExpected()
+    public void GetMeasurement_ReturnsExpected()
     {
         // Arrange
-        IMeasurement expected = _factory.GetMeasurement(SampleParams.DefaultSampleMeasureUnit);
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
 
         // Act
-        var actual1 = expected.GetMeasurement();
-        var actual2 = expected.GetMeasurement(null);
+        var actual = expected.GetMeasurement();
 
         // Assert
-        Assert.AreEqual(expected, actual1);
-        Assert.AreEqual(actual1, actual2);
+        Assert.AreEqual(expected, actual);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM29_GetMeasurement_NotNullArg_ReturnsExpected()
+    public void GetMeasurement_NullArg_ReturnsExpected()
     {
         // Arrange
-        IMeasurement expected = _factory.GetMeasurement(SampleParams.DefaultSampleMeasureUnit);
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
+
+        // Act
+        var actual = expected.GetMeasurement(null);
+
+        // Assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurement_ValidMeasurementArg_ReturnsExpected()
+    {
+        // Arrange
+        Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
 
         // Act
         var actual = _measurement.GetMeasurement(expected);
@@ -527,37 +542,48 @@ public class MeasurementTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM30_GetMeasurement_ValidConstantMeasurementArg_ReturnsExpected()
+    public void GetMeasurement_ValidConstantMeasureUnitArg_ReturnsExpected()
     {
         // Arrange
-        IMeasurement expected = _factory.GetMeasurement(SampleParams.MaxValueSampleMeasureUnit);
+        Enum measureUnit = RandomParams.GetRandomConstantMeasureUnit();
+        IMeasurement expected = _factory.GetMeasurement(measureUnit);
 
         // Act
-        var actual = _measurement.GetMeasurement(expected.GetMeasureUnit());
+        var actual = _measurement.GetMeasurement(measureUnit);
 
         // Assert
         Assert.AreEqual(expected, actual);
     }
 
     [TestMethod, TestCategory("UnitTest")]
-    public void TM31_GetMeasurement_ValidNonConstantMeasurementArg_ReturnsExpected()
+    public void GetMeasurement_ValidConstantMeasureUnitAndSameExchangeRateArg_ReturnsExpected()
     {
         // Arrange
-        Enum expectedMeasureUnit = SampleParams.DefaultPieces;
-        decimal expectedExchangeRate = SampleParams.DecimalOne;
+        Enum expectedMeasureUnit = RandomParams.GetRandomConstantMeasureUnit();
+        decimal expectedExchangeRate = expectedMeasureUnit.GetExchangeRate();
 
         // Act
-        var actual1 = _measurement.GetMeasurement(expectedMeasureUnit, expectedExchangeRate);
-        var actual2 = _measurement.GetMeasurement(expectedMeasureUnit);
+        var actual = _measurement.GetMeasurement(expectedMeasureUnit, expectedExchangeRate);
 
         // Assert
-        Assert.IsNotNull(actual1);
-        Assert.AreEqual(expectedMeasureUnit, actual1.GetMeasureUnit());
-        Assert.AreEqual(expectedExchangeRate, actual1.ExchangeRate);
-        Assert.AreEqual(actual1, actual2);
+        Assert.IsNotNull(actual);
+        Assert.AreEqual(expectedMeasureUnit, actual.GetMeasureUnit());
+        Assert.AreEqual(expectedExchangeRate, actual.ExchangeRate);
+    }
 
-        // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
+    [TestMethod, TestCategory("UnitTest")]
+    public void GetMeasurement_ValidMeasurementAndDifferentExchangeRateArg_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        Enum measureUnit = SampleParams.DefaultPieces;
+        decimal differentExchangeRate = SampleParams.DecimalPositive;
+
+        // Act
+        void action() => _ = _measurement.GetMeasurement(measureUnit, differentExchangeRate);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
+        Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
     }
     #endregion
 
