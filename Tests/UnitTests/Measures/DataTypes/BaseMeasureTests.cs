@@ -327,7 +327,7 @@ public class BaseMeasureTests
     [DataRow(627.2, (WeightUnit)2, null)]
     [DataRow(-4.5, VolumeUnit.meterCubic, 1000000000.0)]
     [DataRow(12.4, default(Currency), null)]
-    [DataRow(124.0, default(Pieces), 1)]
+    [DataRow(124, default(Pieces), 1.0)]
     [DataRow(657196259.4617, (Currency)1, 409.6885)]
     public void Ctor_ThreeValidArgs_CreatesInstance(ValueType expectedQuantity, Enum expectedMeasureUnit, double? exchangeRate)
     {
