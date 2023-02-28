@@ -187,15 +187,15 @@ public class BaseMeasureTests
 
     #region ExchangeRate validation
     [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_DefaultMeasureUnitAndDifferentExchangeRateArg_ThrowsArgumentOutOfRangeException()
+    public void Ctor_ConstantMeasureUnitAndDifferentExchangeRateArg_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
         ValueType quantity = RandomParams.GetRandomValueTypeQuantity();
-        Enum definedMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
+        Enum constantMeasureUnit = SampleParams.MediumValueSampleMeasureUnit;
         decimal? differentExchangeRate = SampleParams.DecimalOne;
 
         // Act
-        void action() => _ = new BaseMeasureChild(quantity, definedMeasureUnit, differentExchangeRate);
+        void action() => _ = new BaseMeasureChild(quantity, constantMeasureUnit, differentExchangeRate);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
