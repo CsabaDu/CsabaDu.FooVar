@@ -13,7 +13,7 @@ internal sealed class Measurement : Measurable, IMeasurement
     #endregion
 
     #region Constructors
-    internal Measurement(Enum measureUnit, decimal? exchangeRate = null) : base(new MeasurementFactory(), measureUnit)
+    internal Measurement(Enum measureUnit, decimal? exchangeRate) : base(new MeasurementFactory(), measureUnit)
     {
         measureUnit.ValidateExchangeRate(exchangeRate, false);
 

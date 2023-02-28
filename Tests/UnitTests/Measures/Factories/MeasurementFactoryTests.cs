@@ -201,7 +201,7 @@ public class MeasurementFactoryTests
     {
         // Arrange
         decimal expectedExchangeRate = measureUnit.GetExchangeRate();
-        IMeasurement expected = new Measurement(measureUnit);
+        IMeasurement expected = new Measurement(measureUnit, null);
 
         // Act
         var actual = _factory.GetMeasurement(measureUnit, exchangeRate);

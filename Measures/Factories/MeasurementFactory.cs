@@ -9,7 +9,7 @@ public sealed class MeasurementFactory : IMeasurementFactory
     #region Properties
     private static IDictionary<Enum, IMeasurement> ValidMeasurements
     {
-        get => ValidateMeasures.ValidMeasureUnits.ToDictionary(x => x, x => new Measurement(x) as IMeasurement);
+        get => ValidateMeasures.ValidMeasureUnits.ToDictionary(x => x, x => new Measurement(x, null) as IMeasurement);
     }
     #endregion
 

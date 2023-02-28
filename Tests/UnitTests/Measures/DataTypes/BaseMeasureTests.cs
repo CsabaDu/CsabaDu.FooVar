@@ -168,9 +168,7 @@ public class BaseMeasureTests
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
-    #endregion
 
-    #region ExchangeRate validation
     [TestMethod, TestCategory("UnitTest")]
     public void Ctor_MeasureUnitDoesNotHaveExchangeRateArg_ThrowsArgumentOutOfRangeException()
     {
@@ -185,7 +183,9 @@ public class BaseMeasureTests
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
+    #endregion
 
+    #region ExchangeRate validation
     [TestMethod, TestCategory("UnitTest")]
     public void Ctor_DefaultMeasureUnitAndDifferentExchangeRateArg_ThrowsArgumentOutOfRangeException()
     {
