@@ -1,6 +1,5 @@
 ﻿using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeAspects;
 using CsabaDu.FooVar.Geometrics.Interfaces.DataTypes.Shape.ShapeTypes;
-using static CsabaDu.FooVar.Geometrics.Statics.ShapeTraits;
 
 namespace CsabaDu.FooVar.Cargoes.Interfaces
 {
@@ -9,7 +8,7 @@ namespace CsabaDu.FooVar.Cargoes.Interfaces
         ICrossSection CargoDoor { get; init; }
 
         IDryContainer<T> GetDryContainer();
-        IDryContainer<T> GetDryContainer(ICargoContainer<T> cargoContainer, ICargoDoor cargoDoor);
+        IDryContainer<T> GetDryContainer(ICargoContainer<T> cargoContainer, ICrossSection cargoDoor);
     }
 
     public interface IBoxContainer : IDryContainer<ICuboid>
