@@ -9,7 +9,6 @@ namespace CsabaDu.FooVar.Tests.UnitTests.Measures.Factories;
 [TestClass]
 public class MeasurementFactoryTests
 {
-
     #region Private fields
     private IMeasurementFactory _factory;
     #endregion

@@ -66,13 +66,15 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     public IPlaneShape GetPlaneShape(ExtentUnit extentUnit)
     {
         if (TryExchangeTo(extentUnit, out IShape? exchanged) && exchanged is IPlaneShape planeShape) return planeShape;
-        
+
         throw new ArgumentOutOfRangeException(nameof(extentUnit), extentUnit, null);
     }
 
+    public ISpread GetSpread() => GetSurface();
+
     public override IShape GetShape(params IExtent[] shapeExtents) => GetPlaneShape(shapeExtents);
 
-    public ISpread<IArea, AreaUnit> GetSpread(AreaUnit? areaUnit = null) => GetSurface(areaUnit);
+    public ISpread<IArea, AreaUnit> GetSpread(AreaUnit areaUnit) => GetSurface(areaUnit);
 
     public ISpread<IArea, AreaUnit> GetSpread(IShape shape) => GetSurface(shape);
 
@@ -81,6 +83,8 @@ internal abstract class PlaneShape : Shape, IPlaneShape
     public ISpread<IArea, AreaUnit> GetSpread(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetSurface(shapeExtentList, shapeTraits);
 
     public ISpread<IArea, AreaUnit> GetSpread(IArea spreadMeasure) => GetSurface(spreadMeasure);
+
+    public IMeasure GetSpreadMeasure() => _surface.GetSpreadMeasure();
 
     public IArea GetSpreadMeasure(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits, AreaUnit? spreadMeasureUnit = null)
     {
@@ -103,12 +107,9 @@ internal abstract class PlaneShape : Shape, IPlaneShape
 
     public bool IsExchangeableTo(AreaUnit areaUnit) => _surface.IsExchangeableTo(areaUnit);
 
-    public decimal ProportionalTo(ISpread<IArea, AreaUnit>? other) => _surface.ProportionalTo(other);
+    public decimal ProportionalTo(ISpread<IArea, AreaUnit> other) => _surface.ProportionalTo(other);
 
     public bool TryExchangeTo(AreaUnit areaUnit, [NotNullWhen(true)] out ISpread<IArea, AreaUnit>? exchanged) => _surface.TryExchangeTo(areaUnit, out exchanged);
 
     public void ValidateSpreadMeasure(IArea spreadMeasure) => _surface.ValidateSpreadMeasure(spreadMeasure);
-    public ISpread<IArea, AreaUnit> GetSpread(AreaUnit spreadMeasureUnit) => GetSurface(spreadMeasureUnit);
-    public IMeasure GetSpreadMeasure() => _surface.GetSpreadMeasure();
-    public ISpread GetSpread() => GetSurface();
 }

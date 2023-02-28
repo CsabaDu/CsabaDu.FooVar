@@ -17,7 +17,6 @@ internal sealed class BulkBody : Body, IBulkBody
 
     public override IBody GetBody(VolumeUnit? volumeUnit = null) => GetBulkBody(volumeUnit);
 
-
     public override IBody GetBody(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBulkBody(shapeExtentList, shapeTraits);
 
     public override IBody GetBody(IShape shape) => GetBulkBody(shape);

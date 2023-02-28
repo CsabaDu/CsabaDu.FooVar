@@ -451,7 +451,6 @@ public class MeasurementTests
         // Act
         var actual = expected.GetMeasurable(null);
 
-
         // Assert
         Assert.AreEqual(expected, actual);
     }
@@ -465,7 +464,6 @@ public class MeasurementTests
 
         // Act
         var actual = expected.GetMeasurable();
-
 
         // Assert
         Assert.AreEqual(expected, actual);

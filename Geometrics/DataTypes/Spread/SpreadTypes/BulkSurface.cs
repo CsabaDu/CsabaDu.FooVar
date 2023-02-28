@@ -102,5 +102,4 @@ internal sealed class BulkSurface : Spread<IArea, AreaUnit>, IBulkSurface
     public ISurface GetSurface(IEnumerable<IExtent> shapeExtentList, ShapeTrait shapeTraits) => GetBulkSurface(shapeExtentList, shapeTraits);
 
     public ISurface GetSurface(AreaUnit? areaUnit = null) => GetBulkSurface(areaUnit);
-
 }
