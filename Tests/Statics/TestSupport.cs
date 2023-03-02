@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
-using CsabaDu.FooVar.Measures.Statics;
-
-namespace CsabaDu.FooVar.Tests.Statics;
+﻿namespace CsabaDu.FooVar.Tests.Statics;
 
 #nullable disable
 internal static class TestSupport
