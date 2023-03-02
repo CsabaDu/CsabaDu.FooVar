@@ -3,6 +3,7 @@ using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes.MeasureTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
+using System;
 
 namespace CsabaDu.FooVar.Measures.Statics;
 
@@ -12,28 +13,26 @@ public static class ConvertMeasures
 
     private const decimal DistancePerExtent = 1000m;
 
-    public static ValueType? ToQuantity(this ValueType quantity, Type type)
+    public static ValueType? ToQuantity(this ValueType quantity, TypeCode conversionTypeCode)
     {
-        Type quantityType = quantity.GetType();
+        quantity = quantity.GetRoundedQuantity();
 
-        quantity = quantity.GetRoundedQuantity(quantityType);
+        TypeCode quantityTypeCode = Type.GetTypeCode(quantity.GetType());
 
-        if (type == quantityType) return quantity;
+        if (conversionTypeCode == quantityTypeCode) return quantity;
 
-        if (type == null) return quantityType.IsValidQuantityType() ? quantity : null;
-
-        if (!ValidateMeasures.IsValidQuantityParamType(quantityType)) return null;
+        int roundingDecimals = quantityTypeCode == TypeCode.Single ? 4 : 8;
 
         try
         {
-            return type.FullName switch
+            return conversionTypeCode switch
             {
-                "System.Int32" => Convert.ToInt32(quantity),
-                "System.UInt32" => Convert.ToUInt32(quantity),
-                "System.Int64" => Convert.ToInt64(quantity),
-                "System.UInt64" => Convert.ToUInt64(quantity),
-                "System.Double" => Math.Round(Convert.ToDouble(quantity), 8),
-                "System.Decimal" => decimal.Round(Convert.ToDecimal(quantity), 8),
+                TypeCode.Int32 => Convert.ToInt32(quantity),
+                TypeCode.UInt32 => Convert.ToDouble(quantity) < 0 ? null : Convert.ToUInt32(quantity),
+                TypeCode.Int64 => Convert.ToInt64(quantity),
+                TypeCode.UInt64 => Convert.ToDouble(quantity) < 0 ? null : Convert.ToUInt64(quantity),
+                TypeCode.Double => Math.Round(Convert.ToDouble(quantity), roundingDecimals),
+                TypeCode.Decimal => decimal.Round(Convert.ToDecimal(quantity), roundingDecimals),
 
                 _ => null,
             };
@@ -44,13 +43,23 @@ public static class ConvertMeasures
         }
     }
 
-    private static ValueType GetRoundedQuantity(this ValueType quantity, Type quantityType)
+    public static ValueType? ToQuantity(this ValueType quantity, Type conversionType)
     {
-        if (quantityType == typeof(decimal)) return decimal.Round(Convert.ToDecimal(quantity), 8);
+        TypeCode conversionTypeCode = Type.GetTypeCode(conversionType);
 
-        if (quantityType == typeof(double)) return Math.Round(Convert.ToDouble(quantity), 8);
+        return quantity.ToQuantity(conversionTypeCode);
+    }
 
-        return quantity;
+    private static ValueType GetRoundedQuantity(this ValueType quantity)
+    {
+        return Type.GetTypeCode(quantity.GetType()) switch
+        {
+            TypeCode.Single => MathF.Round((float)quantity, 4),
+            TypeCode.Double => Math.Round((double)quantity, 8),
+            TypeCode.Decimal => decimal.Round((decimal)quantity, 8),
+
+            _ => quantity,
+        };
     }
 
     public static IFlatRate ToFlatRate(this IRate rate)

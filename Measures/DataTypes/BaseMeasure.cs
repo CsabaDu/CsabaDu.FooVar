@@ -73,6 +73,40 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return obj is IBaseMeasure other && Equals(other);
     }
 
+    public IBaseMeasure? ExchangeTo(Enum measureUnit)
+    {
+        if (measureUnit == null) return null;
+
+        if (measureUnit == MeasureUnit) return this;
+
+        if (!Measurement.IsExchangeableTo(measureUnit)) return null;
+
+        IMeasurement measurement = Measurement.GetMeasurement(measureUnit);
+
+        decimal exchangeRate = measurement.ExchangeRate;
+
+        ValueType quantity = ExchangeTo(exchangeRate)!;
+
+        return GetBaseMeasure(quantity, measurement);
+    }
+
+    public ValueType? ExchangeTo(decimal exchangeRate)
+    {
+        if (exchangeRate <= decimal.Zero) return null;
+
+        decimal quantity = DecimalQuantity;
+        quantity *= GetExchangeRate();
+        quantity /= exchangeRate;
+
+        return ConvertDecimalToQuantityType(quantity);
+    }
+
+    public bool IsExchangeableTo(Enum measureUnit)
+    {
+        return measureUnit?.IsDefinedMeasureUnit() == true
+            && HasSameMeasureUnitType(measureUnit);
+    }
+
     public decimal GetDecimalQuantity() => DecimalQuantity;
 
     public decimal GetExchangeRate() => Measurement.ExchangeRate;
@@ -105,40 +139,6 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         _ = type ?? throw new ArgumentNullException(nameof(type));
 
         return ConvertDecimalToType(DecimalQuantity, type) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
-    }
-
-    public IBaseMeasure? ExchangeTo(Enum measureUnit)
-    {
-        if (measureUnit == null) return null;
-
-        if (measureUnit == MeasureUnit) return this;
-
-        if (!Measurement.IsExchangeableTo(measureUnit)) return null;
-
-        IMeasurement measurement = Measurement.GetMeasurement(measureUnit);
-
-        decimal exchangeRate = measurement.ExchangeRate;
-
-        ValueType quantity = ExchangeTo(exchangeRate)!;
-
-        return GetBaseMeasure(quantity, measurement);
-    }
-
-    public ValueType? ExchangeTo(decimal exchangeRate)
-    {
-        if (exchangeRate <= decimal.Zero) return null;
-
-        decimal quantity = DecimalQuantity;
-        quantity /= exchangeRate;
-        quantity *= GetExchangeRate();
-
-        return ConvertDecimalToQuantityType(quantity);
-    }
-
-    public bool IsExchangeableTo(Enum measureUnit)
-    {
-        return measureUnit?.IsDefinedMeasureUnit() == true
-            && HasSameMeasureUnitType(measureUnit);
     }
 
     public decimal ProportionalTo(IBaseMeasure other)
@@ -209,22 +209,22 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return ConvertDecimalToType(quantity, type);
     }
 
-    private static ValueType? ConvertDecimalToType(decimal quantity, Type type)
+    private static ValueType? ConvertDecimalToType(decimal quantity, Type conversionType)
     {
-        if (type == typeof(decimal)) return quantity;
+        //if (conversionType == typeof(decimal)) return quantity;
 
-        if (type == typeof(uint) || type == typeof(ulong))
-        {
-            if (quantity < 0) return null;
+        if (quantity < 0 && (conversionType == typeof(uint) || conversionType == typeof(ulong))) return null;
 
-            quantity = decimal.Round(quantity);
-        }
-        else
+        if (conversionType == typeof(double) || conversionType == typeof(decimal))
         {
             quantity = decimal.Round(quantity, 8);
         }
+        else if (conversionType == typeof(float))
+        {
+            quantity = decimal.Round(quantity, 4);
+        }
 
-        return quantity.ToQuantity(type);
+        return quantity.ToQuantity(conversionType);
     }
 
     private static decimal GetDecimalQuantity(ValueType quantity)
