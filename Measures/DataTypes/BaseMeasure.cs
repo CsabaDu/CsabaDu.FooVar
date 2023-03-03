@@ -47,16 +47,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         ValidateMeasureUnitConvertibility(other);
 
-        decimal exchangeRate = GetExchangeRate();
-        decimal otherExchangeRate = other.GetExchangeRate();
-
-        decimal quantity = DecimalQuantity;
-        decimal otherQuantity = other.GetDecimalQuantity();
-
-        if (otherExchangeRate == exchangeRate) return quantity.CompareTo(otherQuantity);
-
-        quantity *= exchangeRate;
-        otherQuantity *= otherExchangeRate;
+        var (quantity, otherQuantity) = TryGetValidQuantityArgsToCompareRatio(other);
 
         return quantity.CompareTo(otherQuantity);
     }
@@ -95,8 +86,29 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         if (exchangeRate <= decimal.Zero) return null;
 
         decimal quantity = DecimalQuantity;
-        quantity *= GetExchangeRate();
-        quantity /= exchangeRate;
+        decimal thisExchangeRate = GetExchangeRate();
+
+        try
+        {
+            quantity *= thisExchangeRate;
+            quantity /= exchangeRate;
+        }
+        catch (OverflowException)
+        {
+            try
+            {
+                quantity /= exchangeRate;
+                quantity *= thisExchangeRate;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        catch (Exception)
+        {
+            return null;
+        }
 
         return ConvertDecimalToQuantityType(quantity);
     }
@@ -136,37 +148,24 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public ValueType GetQuantity(Type type)
     {
-        _ = type ?? throw new ArgumentNullException(nameof(type));
+        TypeCode typeCode =  Type.GetTypeCode(type ?? throw new ArgumentNullException(nameof(type)));
 
-        return ConvertDecimalToType(DecimalQuantity, type) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        return ConvertDecimalToTypeCode(DecimalQuantity, typeCode) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
     }
 
     public decimal ProportionalTo(IBaseMeasure other)
     {
         _ = other ?? throw new ArgumentNullException(nameof(other));
 
+        if (DecimalQuantity == decimal.Zero) return decimal.Zero;
+
+        if (other.GetDecimalQuantity() == decimal.Zero) throw new ArgumentOutOfRangeException(nameof(other), decimal.Zero, null);
+
         ValidateMeasureUnitConvertibility(other);
 
-        decimal quantity = DecimalQuantity;
-        decimal otherQuantity = other.GetDecimalQuantity();
+        var (quantity, otherQuantity) = TryGetValidQuantityArgsToCompareRatio(other);
 
-        if (otherQuantity == decimal.Zero) throw new ArgumentOutOfRangeException(nameof(other), otherQuantity, null);
-
-        if (quantity == decimal.Zero) return decimal.Zero;
-
-        decimal otherExchangeRate = other.GetExchangeRate();
-
-        decimal exchangeRate = GetExchangeRate();
-
-        decimal ratio = Math.Abs(quantity / otherQuantity);
-
-        if (otherExchangeRate == exchangeRate) return ratio;
-
-        exchangeRate /= otherExchangeRate;
-
-        ratio /= exchangeRate;
-
-        return ratio;
+        return Math.Abs(quantity) / Math.Abs(otherQuantity);
     }
 
     public IBaseMeasure Round(RoundingMode roundingMode = default)
@@ -204,32 +203,36 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #region Private methods
     private ValueType? ConvertDecimalToQuantityType(decimal quantity)
     {
-        Type type = Quantity.GetType();
+        TypeCode conversionTypeCode = Type.GetTypeCode(Quantity.GetType());
 
-        return ConvertDecimalToType(quantity, type);
+        return ConvertDecimalToTypeCode(quantity, conversionTypeCode);
     }
 
-    private static ValueType? ConvertDecimalToType(decimal quantity, Type conversionType)
+    private static ValueType? ConvertDecimalToTypeCode(decimal quantity, TypeCode conversionTypeCode)
     {
-        //if (conversionType == typeof(decimal)) return quantity;
+        decimal maxValue = ConvertMeasures.GetMaxValue(conversionTypeCode);
+        decimal absQuantity = Math.Abs(quantity);
 
-        if (quantity < 0 && (conversionType == typeof(uint) || conversionType == typeof(ulong))) return null;
+        if (absQuantity > maxValue) return null;
 
-        if (conversionType == typeof(double) || conversionType == typeof(decimal))
+        switch (conversionTypeCode)
         {
-            quantity = decimal.Round(quantity, 8);
-        }
-        else if (conversionType == typeof(float))
-        {
-            quantity = decimal.Round(quantity, 4);
+            case TypeCode.UInt32:
+            case TypeCode.UInt64:
+                if (quantity < 0) return null;
+                break;
+            case TypeCode.Double:
+            case TypeCode.Decimal:
+                quantity = decimal.Round(quantity, 8);
+                break;
         }
 
-        return quantity.ToQuantity(conversionType);
+        return quantity.ToQuantity(conversionTypeCode);
     }
 
     private static decimal GetDecimalQuantity(ValueType quantity)
     {
-        return (decimal)quantity.ToQuantity(typeof(decimal))!;
+        return (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
     private decimal HalfDecimalQuantity()
@@ -259,6 +262,52 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
             _ => throw new ArgumentOutOfRangeException(nameof(roundingMode)),
         };
+    }
+
+    private (decimal, decimal) TryGetValidQuantityArgsToCompareRatio(IBaseMeasure other)
+    {
+        decimal otherQuantity = other.GetDecimalQuantity();
+        decimal otherExchangeRate = other.GetExchangeRate();
+
+        return TryGetValidQuantityArgsToCompareRatio(otherQuantity, otherExchangeRate);
+    }
+
+    private (decimal, decimal) TryGetValidQuantityArgsToCompareRatio(decimal other, decimal otherExchangeRate)
+    {
+        decimal quantity = DecimalQuantity;
+        decimal exchangeRate = GetExchangeRate();
+
+        if (otherExchangeRate == exchangeRate) return (quantity, other);
+
+        if (other == quantity) return (exchangeRate, otherExchangeRate);
+
+        try
+        {
+            quantity *= exchangeRate;
+            other *= otherExchangeRate;
+        }
+        catch (OverflowException)
+        {
+            try
+            {
+                quantity /= otherExchangeRate;
+                other /= exchangeRate;
+            }
+            catch (OverflowException)
+            {
+                throw new ArgumentOutOfRangeException(nameof(other), "");
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.ToString());
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.ToString());
+        }
+
+        return (quantity, other);
     }
 
     private void ValidateMeasureUnitConvertibility(IBaseMeasure other)

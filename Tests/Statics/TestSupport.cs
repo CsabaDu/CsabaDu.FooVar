@@ -63,11 +63,8 @@ internal static class TestSupport
         {
             quantity = RandomParams.GetRandomValueTypeQuantity();
             decimalQuantity = GetExchangedDecimalQuantity(measureUnit, quantity, targetExchangeRate);
-
-            Type quantityType = quantity.GetType();
-            quantityTypeCode = Type.GetTypeCode(quantityType);
-
-            maxValue = GetMaxValue(quantityTypeCode);
+            quantityTypeCode = Type.GetTypeCode(quantity.GetType());
+            maxValue = ConvertMeasures.GetMaxValue(quantityTypeCode);
         }
         while (Math.Abs(decimalQuantity) > maxValue);
 
@@ -102,19 +99,6 @@ internal static class TestSupport
         {
             return false;
         }
-    }
-
-    private static decimal GetMaxValue(TypeCode quantityTypeCode)
-    {
-        return quantityTypeCode switch
-        {
-            TypeCode.Int32 => int.MaxValue,
-            TypeCode.UInt32 => uint.MaxValue,
-            TypeCode.Int64 => long.MaxValue,
-            TypeCode.UInt64 => ulong.MaxValue,
-
-            _ => decimal.MaxValue,
-        };
     }
 }
 #nullable enable

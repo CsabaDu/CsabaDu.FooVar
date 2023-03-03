@@ -17,11 +17,10 @@ public static class ConvertMeasures
     {
         quantity = quantity.GetRoundedQuantity();
 
-        TypeCode quantityTypeCode = Type.GetTypeCode(quantity.GetType());
+        Type quantityType = quantity.GetType();
+        TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
 
         if (conversionTypeCode == quantityTypeCode) return quantity;
-
-        int roundingDecimals = quantityTypeCode == TypeCode.Single ? 4 : 8;
 
         try
         {
@@ -31,23 +30,41 @@ public static class ConvertMeasures
                 TypeCode.UInt32 => Convert.ToDouble(quantity) < 0 ? null : Convert.ToUInt32(quantity),
                 TypeCode.Int64 => Convert.ToInt64(quantity),
                 TypeCode.UInt64 => Convert.ToDouble(quantity) < 0 ? null : Convert.ToUInt64(quantity),
-                TypeCode.Double => Math.Round(Convert.ToDouble(quantity), roundingDecimals),
-                TypeCode.Decimal => decimal.Round(Convert.ToDecimal(quantity), roundingDecimals),
+                TypeCode.Double => Math.Round(Convert.ToDouble(quantity), 8),
+                TypeCode.Decimal => decimal.Round(Convert.ToDecimal(quantity), 8),
 
                 _ => null,
             };
         }
-        catch (Exception)
+        catch (OverflowException)
         {
             return null;
         }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(ex.Message, ex.InnerException);
+        }
     }
+
 
     public static ValueType? ToQuantity(this ValueType quantity, Type conversionType)
     {
         TypeCode conversionTypeCode = Type.GetTypeCode(conversionType);
 
         return quantity.ToQuantity(conversionTypeCode);
+    }
+
+    internal static decimal GetMaxValue(TypeCode quantityTypeCode)
+    {
+        return quantityTypeCode switch
+        {
+            TypeCode.Int32 => int.MaxValue,
+            TypeCode.UInt32 => uint.MaxValue,
+            TypeCode.Int64 => long.MaxValue,
+            TypeCode.UInt64 => ulong.MaxValue,
+
+            _ => decimal.MaxValue,
+        };
     }
 
     private static ValueType GetRoundedQuantity(this ValueType quantity)
