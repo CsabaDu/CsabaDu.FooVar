@@ -299,12 +299,12 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(ex.ToString());
+                throw new InvalidOperationException(ex.Message, ex.InnerException);
             }
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException(ex.ToString());
+            throw new InvalidOperationException(ex.Message, ex.InnerException);
         }
 
         return (quantity, other);
