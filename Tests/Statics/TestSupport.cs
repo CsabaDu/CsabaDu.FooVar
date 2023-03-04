@@ -88,12 +88,26 @@ internal static class TestSupport
     private static bool TryExchange(Enum measureUnit, ValueType quantity, decimal targetExchangeRate, out decimal decimalQuantity)
     {
         decimalQuantity = (decimal)quantity.ToQuantity(TypeCode.Decimal);
+        decimal exchangeRate = measureUnit.GetExchangeRate();
 
         try
         {
-            decimalQuantity *= measureUnit.GetExchangeRate();
+            decimalQuantity *= exchangeRate;
             decimalQuantity /= targetExchangeRate;
             return true;
+        }
+        catch (OverflowException)
+        {
+            try
+            {
+                decimalQuantity /= targetExchangeRate;
+                decimalQuantity *= exchangeRate;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         catch (Exception)
         {

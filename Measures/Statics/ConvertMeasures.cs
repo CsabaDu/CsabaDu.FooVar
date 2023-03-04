@@ -36,13 +36,9 @@ public static class ConvertMeasures
                 _ => null,
             };
         }
-        catch (OverflowException)
+        catch (Exception)
         {
             return null;
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException(ex.Message, ex.InnerException);
         }
     }
 
