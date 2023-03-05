@@ -1,10 +1,12 @@
-﻿namespace CsabaDu.FooVar.Tests.Statics;
+﻿using static CsabaDu.FooVar.Tests.Statics.RandomParams;
+
+namespace CsabaDu.FooVar.Tests.Statics;
 
 #nullable disable
 internal static class TestSupport
 {
 
-    internal static void RemoveIfNotDefaultMeasureUnit(Enum measureUnit)
+    internal static void RemoveIfNonDefaultMeasureUnit(Enum measureUnit)
     {
         if (measureUnit.ShouldHaveAdHocExchangeRate())
         {
@@ -16,7 +18,7 @@ internal static class TestSupport
     {
         foreach (Enum measureUnit in ValidateMeasures.ValidMeasureUnits)
         {
-            RemoveIfNotDefaultMeasureUnit(measureUnit);
+            RemoveIfNonDefaultMeasureUnit(measureUnit);
         }
     }
 
@@ -61,7 +63,7 @@ internal static class TestSupport
 
         do
         {
-            quantity = RandomParams.GetRandomValueTypeQuantity();
+            quantity = GetRandomValueTypeQuantity();
             decimalQuantity = GetExchangedDecimalQuantity(measureUnit, quantity, targetExchangeRate);
             quantityTypeCode = Type.GetTypeCode(quantity.GetType());
             maxValue = ConvertMeasures.GetMaxValue(quantityTypeCode);
@@ -92,16 +94,16 @@ internal static class TestSupport
 
         try
         {
-            decimalQuantity *= exchangeRate;
             decimalQuantity /= targetExchangeRate;
+            decimalQuantity *= exchangeRate;
             return true;
         }
         catch (OverflowException)
         {
             try
             {
-                decimalQuantity /= targetExchangeRate;
                 decimalQuantity *= exchangeRate;
+                decimalQuantity /= targetExchangeRate;
                 return true;
             }
             catch (Exception)
@@ -112,6 +114,46 @@ internal static class TestSupport
         catch (Exception)
         {
             return false;
+        }
+    }
+
+    internal static IEnumerable<object[]> GetThreeBaseMeasureArgsWithEachDefaultMeasureUnit()
+    {
+        foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
+        {
+            yield return new ThreeBaseMeasureArgsToType
+            {
+                Quantity = GetRandomValueTypeQuantity(),
+                MeasureUnit = item,
+                ExchangeRate = null,
+            }.ToObjectArray();
+        }
+
+        foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
+        {
+            yield return new ThreeBaseMeasureArgsToType
+            {
+                Quantity = GetRandomValueTypeQuantity(),
+                MeasureUnit = item.Key,
+                ExchangeRate = item.Value,
+            }.ToObjectArray();
+        }
+    }
+
+    private struct ThreeBaseMeasureArgsToType
+    {
+        public ValueType Quantity { get; set; }
+        public Enum MeasureUnit { get; set; }
+        public decimal? ExchangeRate { get; set; }
+
+        public object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                Quantity,
+                MeasureUnit,
+                ExchangeRate,
+            };
         }
     }
 }

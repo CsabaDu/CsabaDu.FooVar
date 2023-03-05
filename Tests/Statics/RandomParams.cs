@@ -3,6 +3,7 @@
 internal static class RandomParams
 {
     internal enum RandomMeasureUnitType { Default, Constant, }
+    private static Type[] NonDefaultMeasureUnitTypes => new[] { typeof(Currency), typeof(Pieces), };
 
     private const uint MaxCountOfRandom = 100;
 
@@ -53,6 +54,23 @@ internal static class RandomParams
         int randomIndex = R.Next(DefaultMeasureUnitsCount);
 
         return ExchangeMeasures.DefaultMeasureUnits.ElementAt(randomIndex);
+    }
+
+    internal static Enum GetRandomNonDefaultMeasureUnit()
+    {
+        int randomIndex = R.Next(2);
+
+        Type nonDefaultMeasureUnitType = NonDefaultMeasureUnitTypes[randomIndex];
+
+        string[] names = Enum.GetNames(nonDefaultMeasureUnitType);
+
+        int count = names.Length;
+
+        randomIndex = R.Next(1, count);
+
+        string name = names[randomIndex];
+
+        return (Enum)Enum.Parse(nonDefaultMeasureUnitType, name);
     }
 
     internal static Enum GetRandomConstantMeasureUnit()

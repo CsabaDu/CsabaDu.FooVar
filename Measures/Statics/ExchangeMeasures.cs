@@ -10,7 +10,7 @@ public static class ExchangeMeasures
 
     internal static ICollection<Enum> DefaultMeasureUnits => DefaultRates.Keys;
 
-    private static IDictionary<Enum, decimal> DefaultRates
+    internal static IDictionary<Enum, decimal> DefaultRates
     {
         get
         {
@@ -26,7 +26,7 @@ public static class ExchangeMeasures
 
     internal static ICollection<Enum> ConstantMeasureUnits => ConstantRates.Keys;
 
-    private static IDictionary<Enum, decimal> ConstantRates => new Dictionary<Enum, decimal>()
+    internal static IDictionary<Enum, decimal> ConstantRates => new Dictionary<Enum, decimal>()
     {
         // AreaMeasures
         { AreaUnit.mmSquare, 1m },

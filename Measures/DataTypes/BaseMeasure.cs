@@ -90,15 +90,15 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
         try
         {
-            quantity *= thisExchangeRate;
             quantity /= exchangeRate;
+            quantity *= thisExchangeRate;
         }
         catch (OverflowException)
         {
             try
             {
-                quantity /= exchangeRate;
                 quantity *= thisExchangeRate;
+                quantity /= exchangeRate;
             }
             catch (Exception)
             {

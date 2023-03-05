@@ -115,7 +115,7 @@ public class MeasurementFactoryTests
         Assert.AreEqual(ParamNames.exchangeRate, ex.ParamName);
 
         // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(measureUnit);
+        TestSupport.RemoveIfNonDefaultMeasureUnit(measureUnit);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -137,7 +137,7 @@ public class MeasurementFactoryTests
         Assert.AreEqual(expected, actual);
 
         // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
+        TestSupport.RemoveIfNonDefaultMeasureUnit(expectedMeasureUnit);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -159,7 +159,7 @@ public class MeasurementFactoryTests
         Assert.AreEqual(expected, actual);
 
         // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
+        TestSupport.RemoveIfNonDefaultMeasureUnit(expectedMeasureUnit);
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -178,7 +178,7 @@ public class MeasurementFactoryTests
         Assert.AreEqual(expectedExchangeRate, actual.ExchangeRate);
 
         // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(expectedMeasureUnit);
+        TestSupport.RemoveIfNonDefaultMeasureUnit(expectedMeasureUnit);
     }
 
     [DataTestMethod, TestCategory("UnitTest")]
@@ -236,7 +236,7 @@ public class MeasurementFactoryTests
         Assert.AreEqual(expected, actual);
 
         // Restore
-        TestSupport.RemoveIfNotDefaultMeasureUnit(Currency.HUF);
+        TestSupport.RemoveIfNonDefaultMeasureUnit(Currency.HUF);
     }
     #endregion
 }

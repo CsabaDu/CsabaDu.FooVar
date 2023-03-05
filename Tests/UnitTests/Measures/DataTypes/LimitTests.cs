@@ -27,7 +27,7 @@ public class LimitTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentNullException>(() => new Limit(null));
-    //    Assert.AreEqual(Names.measureUnit, ex.ParamName);
+    //    Assert.AreEqual(Names.MeasureUnit, ex.ParamName);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -37,7 +37,7 @@ public class LimitTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new Limit(SampleParams.NotMeasureUnitTypeEnum));
-    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    //    Assert.AreEqual(ParamNames.MeasureUnit, ex.ParamName);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -89,40 +89,40 @@ public class LimitTests
     //    // Act
     //    // Assert
     //    //var ex1 = Assert.ThrowsException<ArgumentNullException>(() => _limit.GetBaseMeasure(null, null));
-    //    //Assert.AreEqual(Names.measureUnit, ex1.ParamName);
+    //    //Assert.AreEqual(Names.MeasureUnit, ex1.ParamName);
 
     //    var ex2 = Assert.ThrowsException<ArgumentNullException>(() => _limit.GetBaseMeasure(Values.SampleMeasureUnit, null!));
-    //    Assert.AreEqual(Names.quantity, ex2.ParamName);
+    //    Assert.AreEqual(Names.Quantity, ex2.ParamName);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
     //public void TM07_GetBaseMeasure_InvalidQuantityArg_ThrowsArgumentOutOfRangeException()
     //{
     //    // Arrange
-    //    var quantity = SampleParams.NegativeQuantity;
+    //    var Quantity = SampleParams.NegativeQuantity;
 
     //    // Act
     //    // Assert
-    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _limit.GetBaseMeasure(quantity, SampleParams.MediumValueSampleMeasureUnit));
-    //    Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _limit.GetBaseMeasure(Quantity, SampleParams.MediumValueSampleMeasureUnit));
+    //    Assert.AreEqual(ParamNames.Quantity, ex.ParamName);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
     //public void TM08_GetBaseMeasure_ValidArgs_CreatesExpectedInstance()
     //{
     //    // Arrange
-    //    var measureUnit = Values.DifferentTypeSampleMeasureUnit;
+    //    var MeasureUnit = Values.DifferentTypeSampleMeasureUnit;
 
-    //    var quantity = Values.PositiveQuantity;
-    //    var measurement = _stubs.GetMeasurementStub(measureUnit);
+    //    var Quantity = Values.PositiveQuantity;
+    //    var measurement = _stubs.GetMeasurementStub(MeasureUnit);
 
     //    // Act
-    //    var result = _limit.GetBaseMeasure(quantity, measureUnit);
+    //    var result = _limit.GetBaseMeasure(Quantity, MeasureUnit);
 
     //    // Assert
     //    Assert.IsInstanceOfType(result, typeof(IBaseMeasure));
     //    Assert.AreEqual(result.Measurement, measurement);
-    //    Assert.AreEqual(result.Quantity, quantity);
+    //    Assert.AreEqual(result.Quantity, Quantity);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -142,11 +142,11 @@ public class LimitTests
     //[DataRow(WeightUnit.kg, (uint)2, default, false)]
     //[DataRow(WeightUnit.kg, default, LimitType.BeEqual, false)]
     //[DataRow(WeightUnit.kg, default, default, true)]
-    //public void TM10_Equals_ValidArgs_ReturnsExpectedValue(Enum measureUnit, uint quantity, LimitType limitType, bool expectedValue)
+    //public void TM10_Equals_ValidArgs_ReturnsExpectedValue(Enum MeasureUnit, uint Quantity, LimitType limitType, bool expectedValue)
     //{
     //    // Arrange
-    //    var otherLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var otherLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
     //    // Act
@@ -171,16 +171,16 @@ public class LimitTests
     //public void TM12_GetLimit_ValidElementaryArgs_ReturnsExpectedInstance()
     //{
     //    // Arrange
-    //    var measureUnit = Values.DefaultSameTypeMeasureUnit;
-    //    var quantity = (uint)Values.PositiveQuantity;
+    //    var MeasureUnit = Values.DefaultSameTypeMeasureUnit;
+    //    var Quantity = (uint)Values.PositiveQuantity;
     //    var limitType = Values.NonDefaultLimitType;
 
-    //    var controlLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var controlLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
     //    // Act
-    //    var result = _limit.GetLimit(measureUnit, quantity, limitType);
+    //    var result = _limit.GetLimit(MeasureUnit, Quantity, limitType);
 
     //    // Assert
     //    Assert.AreEqual(result, controlLimitMock.Object);
@@ -200,15 +200,15 @@ public class LimitTests
     //public void TM14_GetLimit_ValidIBaseMeasureArg_ReturnsExpectedInstance()
     //{
     //    // Arrange
-    //    var measureUnit = ExtentUnit.cm;
-    //    var quantity = (uint)2;
+    //    var MeasureUnit = ExtentUnit.cm;
+    //    var Quantity = (uint)2;
     //    var limitType = default(LimitType);
 
-    //    var controlLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var controlLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
-    //    IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit);
+    //    IBaseMeasure baseMeasure = new BaseMeasureChild(Quantity, MeasureUnit);
 
     //    // Act
     //    var result = _limit.GetLimit(baseMeasure);
@@ -221,15 +221,15 @@ public class LimitTests
     //public void TM15_GetLimit_ValidIBaseMeasureAndValidLimitTypeArgs_ReturnsExpectedInstance()
     //{
     //    // Arrange
-    //    var measureUnit = Values.SampleMeasureUnit;
-    //    var quantity = Values.PositiveQuantity;
+    //    var MeasureUnit = Values.SampleMeasureUnit;
+    //    var Quantity = Values.PositiveQuantity;
     //    var limitType = Values.NonDefaultLimitType;
 
     //    var controlLimitMock = _mocks.GetLimitMock()
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
-    //    var baseMeasure = _limit.GetBaseMeasure(quantity, measureUnit);
+    //    var baseMeasure = _limit.GetBaseMeasure(Quantity, MeasureUnit);
 
     //    // Act
     //    var result = _limit.GetLimit(baseMeasure, limitType);
@@ -242,14 +242,14 @@ public class LimitTests
     //public void TM16_GetLimit_InvalidIBaseMeasureQuantityProperty_ThrowsArgumentOutOfRangeException()
     //{
     //    // Arrange
-    //    var quantity = Values.NegativeQuantity;
-    //    IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, Values.SampleMeasureUnit);
+    //    var Quantity = Values.NegativeQuantity;
+    //    IBaseMeasure baseMeasure = new BaseMeasureChild(Quantity, Values.SampleMeasureUnit);
 
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => _limit.GetLimit(baseMeasure, default));
     //    Assert.AreEqual(Names.baseMeasure, ex.ParamName);
-    //    Assert.AreEqual(quantity, ex.ActualValue);
+    //    Assert.AreEqual(Quantity, ex.ActualValue);
     //}
 
     //[TestMethod, TestCategory("UnitTest")]
@@ -294,11 +294,11 @@ public class LimitTests
     //[DataRow(WeightUnit.kg, (uint)2, default, false)]
     //[DataRow(WeightUnit.kg, default, LimitType.BeEqual, false)]
     //[DataRow(WeightUnit.kg, default, default, true)]
-    //public void TM20_Equals_ValidArgs_ReturnsExpectedValue(Enum measureUnit, uint quantity, LimitType limitType, bool expectedValue)
+    //public void TM20_Equals_ValidArgs_ReturnsExpectedValue(Enum MeasureUnit, uint Quantity, LimitType limitType, bool expectedValue)
     //{
     //    // Arrange
-    //    var otherLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var otherLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
     //    // Act
@@ -325,11 +325,11 @@ public class LimitTests
     //[DataRow(WeightUnit.kg, (uint)2, default, false)]
     //[DataRow(WeightUnit.kg, default, LimitType.BeEqual, false)]
     //[DataRow(WeightUnit.kg, default, default, true)]
-    //public void TM22_Equals_ValidArgs_ReturnsExpectedValue(Enum measureUnit, uint quantity, LimitType limitType, bool expectedValue)
+    //public void TM22_Equals_ValidArgs_ReturnsExpectedValue(Enum MeasureUnit, uint Quantity, LimitType limitType, bool expectedValue)
     //{
     //    // Arrange
-    //    var otherLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var otherLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
     //    // Act
@@ -388,11 +388,11 @@ public class LimitTests
     //[DataRow(WeightUnit.kg, (uint)2, default, false)]
     //[DataRow(WeightUnit.kg, default, LimitType.BeEqual, false)]
     //[DataRow(WeightUnit.kg, default, default, true)]
-    //public void TM26_StaticOperatorEqual_ValidArgs_ReturnsExpectedValue(Enum measureUnit, uint quantity, LimitType limitType, bool expectedValue)
+    //public void TM26_StaticOperatorEqual_ValidArgs_ReturnsExpectedValue(Enum MeasureUnit, uint Quantity, LimitType limitType, bool expectedValue)
     //{
     //    // Arrange
-    //    var otherLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var otherLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
     //    // Act
@@ -419,11 +419,11 @@ public class LimitTests
     //[DataRow(WeightUnit.kg, (uint)2, default, true)]
     //[DataRow(WeightUnit.kg, default, LimitType.BeEqual, true)]
     //[DataRow(WeightUnit.kg, default, default, false)]
-    //public void TM28_StaticOperatorEqual_ValidArgs_ReturnsExpectedValue(Enum measureUnit, uint quantity, LimitType limitType, bool expectedValue)
+    //public void TM28_StaticOperatorEqual_ValidArgs_ReturnsExpectedValue(Enum MeasureUnit, uint Quantity, LimitType limitType, bool expectedValue)
     //{
     //    // Arrange
-    //    var otherLimitMock = _mocks.GetLimitMock(measureUnit)
-    //        .SetupProperty(l => l.Quantity, quantity)
+    //    var otherLimitMock = _mocks.GetLimitMock(MeasureUnit)
+    //        .SetupProperty(l => l.Quantity, Quantity)
     //        .SetupProperty(l => l.LimitType, limitType);
 
     //    // Act
