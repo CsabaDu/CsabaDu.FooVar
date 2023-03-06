@@ -1,7 +1,4 @@
-﻿using CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
-using System.Diagnostics.CodeAnalysis;
-
-namespace CsabaDu.FooVar.Measures.Statics;
+﻿namespace CsabaDu.FooVar.Measures.Statics;
 
 public static class ExchangeMeasures
 {

@@ -16,14 +16,25 @@ public static class ValidateMeasures
         typeof(decimal),
     };
 
-    private static HashSet<Type> ValidQuantityParamTypes => new(ValidQuantityTypes)
+    private static IEnumerable<TypeCode> ValidQuantityTypeCodes
     {
-        typeof(byte),
-        typeof(sbyte),
-        typeof(short),
-        typeof(ushort),
-        typeof(float),
-    };
+        get
+        {
+            foreach (Type item in ValidQuantityTypes)
+            {
+                yield return Type.GetTypeCode(item);
+            }
+        }
+    }
+
+    //private static HashSet<TypeCode> ValidQuantityTypeCodes => new()
+    //{
+    //    TypeCode.Int32,
+    //    TypeCode.UInt32,
+    //    TypeCode.UInt64,
+    //    TypeCode.Double,
+    //    TypeCode.Decimal,
+    //};
 
     internal static ICollection<Enum> ValidMeasureUnits => ExchangeMeasures.Rates.Keys;
 
@@ -40,7 +51,7 @@ public static class ValidateMeasures
     {
         if (type == null) return false;
 
-        return ValidQuantityParamTypes.Contains(type);
+        return ValidQuantityTypes.Contains(type);
     }
 
     internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType = default)
@@ -102,7 +113,7 @@ public static class ValidateMeasures
     private static void ValidateMeasureQuantity(ValueType? quantity, BaseMeasureType baseMeasureType)
     {
         if (quantity != null) return;
-        else if (baseMeasureType != default) return;
+        else if (baseMeasureType != BaseMeasureType.Measure) return;
 
         throw new ArgumentNullException(nameof(quantity));
     }
@@ -150,6 +161,8 @@ public static class ValidateMeasures
             _ => false,
         };
     }
+
+    internal static HashSet<TypeCode> GetValidQuantityTypeCodes() => ValidQuantityTypeCodes.ToHashSet();
 
     internal static HashSet<Type> GetValidQuantityTypes() => ValidQuantityTypes;
     #endregion
@@ -200,6 +213,24 @@ public static class ValidateMeasures
     {
         if (other is ILimitedRate limitedRate) return GetOrCreateLimit(limitedRate.Limit, limit);
 
-        return GetOrCreateLimit(other.Denominator, limit);
+        return GetOrCreateLimit((IBaseMeasure)other, limit);
     }
+
+    internal static (decimal minValue, decimal maxValue) GetQuantityValueLimits(TypeCode typeCode)
+    {
+        switch (typeCode)
+        {
+            case TypeCode.Int32:
+                return new(int.MinValue, int.MaxValue);
+            case TypeCode.UInt32:
+                return new(uint.MinValue, uint.MaxValue);
+            case TypeCode.Int64:
+                return new(long.MinValue, long.MaxValue);
+            case TypeCode.UInt64:
+                return new(ulong.MinValue, ulong.MaxValue);
+            default:
+                return new(decimal.MinValue, decimal.MaxValue);
+        }
+    }
+
 }

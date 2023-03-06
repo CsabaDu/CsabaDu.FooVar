@@ -3,7 +3,6 @@ using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes.MeasureTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
-using System;
 
 namespace CsabaDu.FooVar.Measures.Statics;
 

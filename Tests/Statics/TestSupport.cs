@@ -1,4 +1,8 @@
-﻿using static CsabaDu.FooVar.Tests.Statics.RandomParams;
+﻿using CsabaDu.FooVar.Measures.Factories;
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
+using CsabaDu.FooVar.Measures.Interfaces.Factories;
+using static CsabaDu.FooVar.Tests.Statics.RandomParams;
 
 namespace CsabaDu.FooVar.Tests.Statics;
 
@@ -31,7 +35,7 @@ internal static class TestSupport
     {
         if (quantityType == typeof(decimal) || quantityType == typeof(double)) return decimal.Round(decimalQuantity, 8);
 
-        if (quantityType == typeof(float)) return decimal.Round(decimalQuantity, 4);
+        //if (quantityType == typeof(float)) return decimal.Round(decimalQuantity, 4);
 
         return decimal.Round(decimalQuantity);
     }
@@ -40,7 +44,7 @@ internal static class TestSupport
     {
         return quantityTypeCode switch
         {
-            TypeCode.Single => decimal.Round(decimalQuantity, 4),
+            //TypeCode.Single => decimal.Round(decimalQuantity, 4),
             TypeCode.Double => decimal.Round(decimalQuantity, 8),
             TypeCode.Decimal => decimal.Round(decimalQuantity, 8),
 
@@ -48,7 +52,7 @@ internal static class TestSupport
         };
     }
 
-    internal static (ValueType, ValueType) GetAndExchangeRandomQuantity(Enum measureUnit, decimal targetExchangeRate)
+    internal static (ValueType quantity, ValueType exchangedQuantity) GetAndExchangeRandomQuantity(Enum measureUnit, decimal targetExchangeRate)
     {
         decimal decimalQuantity = GetExchangedRandomQuantity(measureUnit, targetExchangeRate, out ValueType quantity, out TypeCode quantityTypeCode);
 
@@ -153,6 +157,44 @@ internal static class TestSupport
                 Quantity,
                 MeasureUnit,
                 ExchangeRate,
+            };
+        }
+    }
+
+    internal static IEnumerable<object[]> GetTwoBaseMeasureArgsWithEachDefaultMeasurement()
+    {
+        IMeasurementFactory factory = new MeasurementFactory();
+
+        foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
+        {
+            yield return new TwoBaseMeasureArgsToType
+            {
+                Quantity = GetRandomValueTypeQuantity(),
+                Measurement = factory.GetMeasurement(item),
+            }.ToObjectArray();
+        }
+
+        foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
+        {
+            yield return new TwoBaseMeasureArgsToType
+            {
+                Quantity = GetRandomValueTypeQuantity(),
+                Measurement = factory.GetMeasurement(item.Key, item.Value),
+            }.ToObjectArray();
+        }
+    }
+
+    private struct TwoBaseMeasureArgsToType
+    {
+        public ValueType Quantity { get; set; }
+        public IMeasurement Measurement { get; set; }
+
+        public object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                Quantity,
+                Measurement,
             };
         }
     }
