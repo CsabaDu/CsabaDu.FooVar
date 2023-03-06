@@ -525,19 +525,6 @@ public class BaseMeasureTests
 
     [DataTestMethod, TestCategory("UnitTest")]
     [DynamicData(nameof(GetTwoBaseMeasureArgsWithEachDefaultMeasurement), DynamicDataSourceType.Method)]
-    //[DataRow(0, default(AreaUnit), null)]
-    //[DataRow(0, default(DistanceUnit), 1.0)]
-    //[DataRow(0, default(ExtentUnit), null)]
-    //[DataRow(0, default(ExtentUnit), 1.0)]
-    //[DataRow(0, default(TimeUnit), null)]
-    //[DataRow(0, default(VolumeUnit), 1.0)]
-    //[DataRow(0, default(WeightUnit), null)]
-    //[DataRow(15, WeightUnit.kg, 1000.0)]
-    //[DataRow(627.2, (WeightUnit)2, null)]
-    //[DataRow(-4.5, VolumeUnit.meterCubic, 1000000000.0)]
-    //[DataRow(12.4, default(Currency), null)]
-    //[DataRow(124, default(Pieces), 1.0)]
-    //[DataRow(657196259.4617, (Currency)1, 409.2561)]
     public void Ctor_ValidQuantityAndValidMeasurementArgs_CreatesInstance(ValueType expectedQuantity, IMeasurement expectedMeasurement)
     {
         // Arrange
@@ -548,9 +535,6 @@ public class BaseMeasureTests
         Assert.IsNotNull(actual);
         Assert.AreEqual(expectedQuantity, actual.Quantity);
         Assert.AreEqual(expectedMeasurement, actual.Measurement);
-
-        //// Restore
-        //RemoveIfNonDefaultMeasureUnit(measureUnit);
     }
 
     [TestMethod, TestCategory("UnitTest")]
