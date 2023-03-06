@@ -27,15 +27,6 @@ public static class ValidateMeasures
         }
     }
 
-    //private static HashSet<TypeCode> ValidQuantityTypeCodes => new()
-    //{
-    //    TypeCode.Int32,
-    //    TypeCode.UInt32,
-    //    TypeCode.UInt64,
-    //    TypeCode.Double,
-    //    TypeCode.Decimal,
-    //};
-
     internal static ICollection<Enum> ValidMeasureUnits => ExchangeMeasures.Rates.Keys;
 
     private static IEnumerable<Type> ValidMeasureUnitTypes => ValidMeasureUnits.Select(x => x.GetType());
@@ -54,37 +45,37 @@ public static class ValidateMeasures
         return ValidQuantityTypes.Contains(type);
     }
 
-    internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType = default)
+    internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType = BaseMeasureType.Measure)
     {
         if (!TryGetNotNullQuantityParam(quantityParam, out quantity, baseMeasureType)) return false;
 
-        if (baseMeasureType == default)
+        //if (baseMeasureType == BaseMeasureType.Measure)
+        //{
+        //    quantity = GetMeasureQuantity(quantity);
+        //}
+        //else
+        //{
+        if (quantity.ToQuantity(TypeCode.Decimal) is not decimal decimalQuantity) return false;
+
+        if (!decimalQuantity.IsValidQuantity(baseMeasureType)) return false;
+
+        switch (baseMeasureType)
         {
-            quantity = GetNumeratorQuantity(quantity);
+            case BaseMeasureType.Measure:
+                return true;
+            case BaseMeasureType.Denominator:
+                quantity = GetDenominatorQuantity(decimalQuantity);
+                return quantity != null;
+            case BaseMeasureType.Limit:
+                quantity = GetLimitQuantity(decimalQuantity);
+                return quantity != null;
+
+            default:
+                return false;
         }
-        else
-        {
-            if (quantity.ToQuantity(typeof(decimal)) is not decimal decimalQuantity) return false;
+        //}
 
-            if (!decimalQuantity.IsValidQuantity(baseMeasureType)) return false;
-
-            switch (baseMeasureType)
-            {
-                case BaseMeasureType.Measure:
-                    break;
-                case BaseMeasureType.Denominator:
-                    quantity = GetDenominatorQuantity(decimalQuantity);
-                    break;
-                case BaseMeasureType.Limit:
-                    quantity = GetLimitQuantity(decimalQuantity);
-                    break;
-
-                default:
-                    return false;
-            }
-        }
-
-        return quantity != null;
+        //return quantity != null;
     }
 
     private static bool TryGetNotNullQuantityParam(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType)
@@ -112,7 +103,18 @@ public static class ValidateMeasures
 
     private static void ValidateMeasureQuantity(ValueType? quantity, BaseMeasureType baseMeasureType)
     {
-        if (quantity != null) return;
+        if (quantity != null)
+        {
+            TypeCode typeCode = Type.GetTypeCode(quantity.GetType());
+            var (minValue, maxValue) = GetQuantityValueLimits(typeCode);
+            decimal? nullableDecimalQuantity = (decimal?)quantity.ToQuantity(TypeCode.Decimal);
+
+            if (nullableDecimalQuantity is decimal decimalQuantity
+                && decimalQuantity >= minValue
+                && decimalQuantity <= maxValue) return;
+
+            throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
+        }
         else if (baseMeasureType != BaseMeasureType.Measure) return;
 
         throw new ArgumentNullException(nameof(quantity));
@@ -127,13 +129,13 @@ public static class ValidateMeasures
         throw new ArgumentOutOfRangeException(nameof(quantity));
     }
 
-    private static ValueType? GetNumeratorQuantity(ValueType? quantity)
+    private static ValueType? GetMeasureQuantity(ValueType? quantity)
     {
-        if (quantity is sbyte || quantity is short) return quantity.ToQuantity(typeof(int));
+        if (quantity is not ValueType notNullQuantity) return null;
 
-        if (quantity is byte || quantity is ushort) return quantity.ToQuantity(typeof(uint));
+        Type quantityType = notNullQuantity.GetType();
 
-        return quantity;
+        return notNullQuantity.ToQuantity(quantityType);
     }
 
     private static decimal? GetDenominatorQuantity(decimal quantity)
@@ -146,7 +148,7 @@ public static class ValidateMeasures
     private static ulong? GetLimitQuantity(decimal quantity)
     {
         return quantity.IsValidQuantity(BaseMeasureType.Limit) ?
-            (ulong)quantity.ToQuantity(typeof(ulong))!
+            (ulong?)quantity.ToQuantity(TypeCode.UInt64)
             : null;
     }
 

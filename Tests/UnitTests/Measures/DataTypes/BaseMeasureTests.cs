@@ -210,6 +210,36 @@ public class BaseMeasureTests
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Ctor_MaxValueExceedingInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        ValueType quantityExceedsMaxValue = Convert.ToDouble(decimal.MaxValue) + double.Epsilon;
+        Enum measureUnit = GetRandomDefaultMeasureUnit();
+
+        // Act
+        void attempt() => _ = new BaseMeasureChild(quantityExceedsMaxValue, measureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+    }
+
+    [TestMethod, TestCategory("UnitTest")]
+    public void Ctor_MinValueExceedingInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
+    {
+        // Arrange
+        ValueType quantityExceedsMinValue = Convert.ToDouble(decimal.MinValue) - double.Epsilon;
+        Enum measureUnit = GetRandomDefaultMeasureUnit();
+
+        // Act
+        void attempt() => _ = new BaseMeasureChild(quantityExceedsMinValue, measureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+    }
     #endregion
 
     #region BaseMeasure(ValueType quantity, Enum measureUnit, decimal? exchangeRate = null)

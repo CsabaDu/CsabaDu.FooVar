@@ -14,12 +14,10 @@ public static class ConvertMeasures
 
     public static ValueType? ToQuantity(this ValueType quantity, TypeCode conversionTypeCode)
     {
-        quantity = quantity.GetRoundedQuantity();
-
         Type quantityType = quantity.GetType();
         TypeCode quantityTypeCode = Type.GetTypeCode(quantityType);
 
-        if (conversionTypeCode == quantityTypeCode) return quantity;
+        if (conversionTypeCode == quantityTypeCode) return quantity.GetRoundedQuantity();
 
         try
         {
@@ -35,12 +33,15 @@ public static class ConvertMeasures
                 _ => null,
             };
         }
-        catch (Exception)
+        catch (OverflowException)
         {
             return null;
         }
+        catch (Exception)
+        {
+            return null; // Log?
+        }
     }
-
 
     public static ValueType? ToQuantity(this ValueType quantity, Type conversionType)
     {
@@ -66,7 +67,6 @@ public static class ConvertMeasures
     {
         return Type.GetTypeCode(quantity.GetType()) switch
         {
-            TypeCode.Single => MathF.Round((float)quantity, 4),
             TypeCode.Double => Math.Round((double)quantity, 8),
             TypeCode.Decimal => decimal.Round((decimal)quantity, 8),
 
