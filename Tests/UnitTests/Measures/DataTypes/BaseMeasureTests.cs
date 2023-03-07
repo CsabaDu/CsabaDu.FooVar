@@ -36,6 +36,21 @@ public class BaseMeasureTests
     {
         return TestSupport.GetAllDefaultMeasureUnitExchangeRatePairs();
     }
+
+    private void TestNegativeQuantityIfUnsignedIntegerTypeArgThrowsOutOfRangeException(Type type)
+    {
+        // Arrange
+        Enum measureUnit = GetRandomDefaultMeasureUnit();
+        ValueType quantity = NegativeQuantity;
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
+
+        // Act
+        void attempt() => baseMeasure.GetQuantity(type);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.type, ex.ParamName);
+    }
     #endregion
 
     #region Constructor
@@ -1083,29 +1098,13 @@ public class BaseMeasureTests
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_UIntTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
     {
-        // Arrange
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-        ValueType quantity = NegativeQuantity;
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
-
-        // Act
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => baseMeasure.GetQuantity(typeof(uint)));
-        Assert.AreEqual(ParamNames.type, ex.ParamName);
+        TestNegativeQuantityIfUnsignedIntegerTypeArgThrowsOutOfRangeException(typeof(uint));
     }
 
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_ULongTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
     {
-        // Arrange
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-        ValueType quantity = NegativeQuantity;
-        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
-
-        // Act
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => baseMeasure.GetQuantity(typeof(ulong)));
-        Assert.AreEqual(ParamNames.type, ex.ParamName);
+        TestNegativeQuantityIfUnsignedIntegerTypeArgThrowsOutOfRangeException(typeof(ulong));
     }
 
     [TestMethod, TestCategory("UnitTest")]
@@ -1115,8 +1114,8 @@ public class BaseMeasureTests
         ValueType quantity =  GetRandomNotNegativeValueTypeQuantity();
         Enum measureUnit =  GetRandomDefaultMeasureUnit();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
-        Type type =  GetRandomQuantityType();
 
+        Type type =  GetRandomQuantityType();
         var expected = quantity.ToQuantity(type);
 
         // Act
