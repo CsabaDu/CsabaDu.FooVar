@@ -210,10 +210,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     private static ValueType? ConvertDecimalToTypeCode(decimal quantity, TypeCode conversionTypeCode)
     {
-        decimal maxValue = ConvertMeasures.GetMaxValue(conversionTypeCode);
-        decimal absQuantity = Math.Abs(quantity);
+        var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(conversionTypeCode);
 
-        if (absQuantity > maxValue) return null;
+        if (quantity < minValue || quantity > maxValue) return null;
 
         switch (conversionTypeCode)
         {

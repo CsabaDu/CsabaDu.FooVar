@@ -1218,7 +1218,6 @@ public class BaseMeasureTests
     }
 
     [TestMethod, TestCategory("UnitTest")]
-
     public void TryExchangeTo_PositiveExchangeRateArg_ReturnsExpected()
     {
         // Arrange

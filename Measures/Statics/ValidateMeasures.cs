@@ -38,31 +38,23 @@ public static class ValidateMeasures
         return ValidQuantityTypes.Contains(type);
     }
 
-    internal static bool IsValidQuantityParam(ValueType? quantity)
+    internal static bool IsValidTypeQuantityParam(ValueType? quantity)
     {
         if (quantity == null) return false;
 
-        return ValidQuantityTypes.Contains(quantity.GetType());
+        return IsValidQuantityType(quantity.GetType());
     }
 
     internal static bool TryGetValidQuantity(ValueType? quantityParam, [NotNullWhen(true)] out ValueType? quantity, BaseMeasureType baseMeasureType = BaseMeasureType.Measure)
     {
         if (!TryGetNotNullQuantityParam(quantityParam, baseMeasureType, out quantity)) return false;
 
-        //if (baseMeasureType == BaseMeasureType.Measure)
-        //{
-        //    quantity = GetMeasureQuantity(quantity);
-        //}
-        //else
-        //{
         if (quantity.ToQuantity(TypeCode.Decimal) is not decimal decimalQuantity) return false;
-
-        if (!decimalQuantity.IsValidDecimalQuantity(baseMeasureType)) return false;
 
         switch (baseMeasureType)
         {
             case BaseMeasureType.Measure:
-                return true;
+                return decimalQuantity.IsValidDecimalQuantity(baseMeasureType);
             case BaseMeasureType.Denominator:
                 quantity = GetDenominatorQuantity(decimalQuantity);
                 return quantity != null;
@@ -73,9 +65,6 @@ public static class ValidateMeasures
             default:
                 return false;
         }
-        //}
-
-        //return quantity != null;
     }
 
     private static bool TryGetNotNullQuantityParam(ValueType? quantityParam, BaseMeasureType baseMeasureType, [NotNullWhen(true)] out ValueType? quantity)
@@ -98,7 +87,7 @@ public static class ValidateMeasures
                 return false;
         }
 
-        return IsValidQuantityParam(quantity);
+        return IsValidTypeQuantityParam(quantity);
     }
 
     private static void ValidateMeasureQuantity(ValueType? quantity, BaseMeasureType baseMeasureType)

@@ -50,19 +50,6 @@ public static class ConvertMeasures
         return quantity.ToQuantity(conversionTypeCode);
     }
 
-    internal static decimal GetMaxValue(TypeCode quantityTypeCode)
-    {
-        return quantityTypeCode switch
-        {
-            TypeCode.Int32 => int.MaxValue,
-            TypeCode.UInt32 => uint.MaxValue,
-            TypeCode.Int64 => long.MaxValue,
-            TypeCode.UInt64 => ulong.MaxValue,
-
-            _ => decimal.MaxValue,
-        };
-    }
-
     private static ValueType GetRoundedQuantity(this ValueType quantity)
     {
         return Type.GetTypeCode(quantity.GetType()) switch
