@@ -170,6 +170,15 @@ public static class ValidateMeasures
         return ValidMeasureUnitTypes.Contains(type);
     }
 
+    internal static void ValidateConstantMeasureUnitType(Type measureUnitType)
+    {
+        _ = measureUnitType ?? throw new ArgumentNullException(nameof(measureUnitType));
+
+        if (ExchangeMeasures.ConstantMeasureUnitTypes.Contains(measureUnitType)) return;
+
+        throw new ArgumentOutOfRangeException(nameof(measureUnitType), measureUnitType, null);
+    }
+
     internal static void ValidateExchangeRate(this Enum measureUnit, decimal? exchangeRate, bool constantMeasureUnitsOnly)
     {
         if (exchangeRate is not decimal notNullExchangeRate) return;
@@ -198,21 +207,16 @@ public static class ValidateMeasures
         return GetOrCreateLimit((IBaseMeasure)other, limit);
     }
 
-    internal static (decimal minValue, decimal maxValue) GetQuantityValueLimits(TypeCode typeCode)
+    internal static (decimal minValue, decimal maxValue) GetQuantityValueLimits(TypeCode? typeCode = null)
     {
-        switch (typeCode)
+        return typeCode switch
         {
-            case TypeCode.Int32:
-                return new(int.MinValue, int.MaxValue);
-            case TypeCode.UInt32:
-                return new(uint.MinValue, uint.MaxValue);
-            case TypeCode.Int64:
-                return new(long.MinValue, long.MaxValue);
-            case TypeCode.UInt64:
-                return new(ulong.MinValue, ulong.MaxValue);
-            default:
-                return new(decimal.MinValue, decimal.MaxValue);
-        }
-    }
+            TypeCode.Int32 => (int.MinValue, int.MaxValue),
+            TypeCode.UInt32 => (uint.MinValue, uint.MaxValue),
+            TypeCode.Int64 => (long.MinValue, long.MaxValue),
+            TypeCode.UInt64 => (ulong.MinValue, ulong.MaxValue),
 
+            _ => (decimal.MinValue, decimal.MaxValue),
+        };
+    }
 }

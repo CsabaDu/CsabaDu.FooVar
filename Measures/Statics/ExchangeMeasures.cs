@@ -23,6 +23,8 @@ public static class ExchangeMeasures
 
     internal static ICollection<Enum> ConstantMeasureUnits => ConstantRates.Keys;
 
+    internal static ICollection<Type> ConstantMeasureUnitTypes => ConstantMeasureUnits.Select(x => x.GetType()).ToHashSet();
+
     internal static IDictionary<Enum, decimal> ConstantRates => new Dictionary<Enum, decimal>()
     {
         // AreaMeasures
@@ -30,7 +32,6 @@ public static class ExchangeMeasures
         { AreaUnit.cmSquare, 100m },
         { AreaUnit.dmSquare, 10000m },
         { AreaUnit.meterSquare, 1000000m },
-        { AreaUnit.kmSquare, 1000000000000m },
 
         // DistanceMeasures
         { DistanceUnit.meter, 1m },
