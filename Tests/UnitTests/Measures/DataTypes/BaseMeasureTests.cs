@@ -32,16 +32,10 @@ public class BaseMeasureTests
     #endregion
 
     #region Private methods
-    private static IEnumerable<object[]> GetThreeBaseMeasureArgsWithEachDefaultMeasureUnit()
+    private static IEnumerable<object[]> GetAllDefaultMeasureUnitExchangeRatePairs()
     {
-        return TestSupport.GetThreeBaseMeasureArgsWithEachDefaultMeasureUnit();
+        return TestSupport.GetAllDefaultMeasureUnitExchangeRatePairs();
     }
-
-    private static IEnumerable<object[]> GetTwoBaseMeasureArgsWithEachDefaultMeasurement()
-    {
-        return TestSupport.GetTwoBaseMeasureArgsWithEachDefaultMeasurement();
-    }
-
     #endregion
 
     #region Constructor
@@ -403,43 +397,12 @@ public class BaseMeasureTests
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
-    //[DataTestMethod, TestCategory("UnitTest")]
-    //[DataRow(0, default(AreaUnit))]
-    //[DataRow(0, default(Currency))]
-    //[DataRow(0, default(Pieces))]
-    //[DataRow(0, default(DistanceUnit))]
-    //[DataRow(0, default(ExtentUnit))]
-    //[DataRow(0, default(TimeUnit))]
-    //[DataRow(0, default(VolumeUnit))]
-    //[DataRow(0, default(WeightUnit))]
-    //[DataRow(15, WeightUnit.kg)]
-    //[DataRow(627.2, (WeightUnit)2)]
-    //[DataRow(-4.5, VolumeUnit.meterCubic)]
-    //[DataRow(12.4, default(Currency))]
-    //[DataRow(124, default(Pieces))]
-    //public void Ctor_ValidQuantityAndMeasureUnitArgs_CreatesInstance(ValueType expectedQuantity, Enum expectedMeasureUnit)
-    //{
-    //    // Arrange
-    //    _ = expectedMeasureUnit.TryAddExchangeRate(DecimalOne);
-    //    decimal? nullExchangeRate = null;
-
-    //    // Act
-    //    var actual = new BaseMeasureChild(expectedQuantity, expectedMeasureUnit, nullExchangeRate);
-
-    //    // Assert
-    //    Assert.IsNotNull(actual);
-    //    Assert.AreEqual(expectedQuantity, actual.Quantity);
-    //    Assert.AreEqual(expectedMeasureUnit, actual.MeasureUnit);
-
-    //    // Restore
-    //    RemoveIfNonDefaultMeasureUnit(expectedMeasureUnit);
-    //}
-
     [DataTestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetThreeBaseMeasureArgsWithEachDefaultMeasureUnit), DynamicDataSourceType.Method)]
-    public void Ctor_ValidQuantityAndDefaultMeasureUnitAndValidExchangeRateArgs_CreatesInstance(ValueType expectedQuantity, Enum expectedMeasureUnit, decimal? exchangeRate)
+    [DynamicData(nameof(GetAllDefaultMeasureUnitExchangeRatePairs), DynamicDataSourceType.Method)]
+    public void Ctor_ValidQuantityAndDefaultMeasureUnitAndValidExchangeRateArgs_CreatesInstance(Enum expectedMeasureUnit, decimal? exchangeRate)
     {
         // Arrange
+        ValueType expectedQuantity = GetRandomValueTypeQuantity();
         decimal? expectedExchangeRate = expectedMeasureUnit.GetExchangeRate();
 
         // Act
@@ -554,10 +517,13 @@ public class BaseMeasureTests
     }
 
     [DataTestMethod, TestCategory("UnitTest")]
-    [DynamicData(nameof(GetTwoBaseMeasureArgsWithEachDefaultMeasurement), DynamicDataSourceType.Method)]
-    public void Ctor_ValidQuantityAndValidMeasurementArgs_CreatesInstance(ValueType expectedQuantity, IMeasurement expectedMeasurement)
+    [DynamicData(nameof(GetAllDefaultMeasureUnitExchangeRatePairs), DynamicDataSourceType.Method)]
+    public void Ctor_ValidQuantityAndValidMeasurementArgs_CreatesInstance(Enum measureUnit, decimal? exchangeRate)
     {
         // Arrange
+        ValueType expectedQuantity = GetRandomValueTypeQuantity();
+        IMeasurement expectedMeasurement = _factory.GetMeasurement(measureUnit, exchangeRate);
+
         // Act
         var actual = new BaseMeasureChild(expectedQuantity, expectedMeasurement);
 
@@ -658,7 +624,7 @@ public class BaseMeasureTests
         Enum targetMeasureUnit = MaxValueSampleMeasureUnit;
         decimal targetExchangeRate = targetMeasureUnit.GetExchangeRate();
 
-        var (quantity, exchangedQuantity) = GetAndExchangeRandomQuantity(measureUnit, targetExchangeRate);
+        var (quantity, exchangedQuantity) = GetRandomExchangedQuantityPair(measureUnit, targetExchangeRate);
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
         IBaseMeasure expected = new BaseMeasureChild(exchangedQuantity, targetMeasureUnit, null);
 
@@ -715,7 +681,7 @@ public class BaseMeasureTests
         Enum measureUnit =  GetRandomDefaultMeasureUnit();
         decimal exchangeRate =  GetRandomExchangeRate();
 
-        var (quantity, expected) = GetAndExchangeRandomQuantity(measureUnit, exchangeRate);
+        var (quantity, expected) = GetRandomExchangedQuantityPair(measureUnit, exchangeRate);
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
 
         // Act
@@ -1192,7 +1158,7 @@ public class BaseMeasureTests
         Enum targetMeasureUnit = MediumValueSampleMeasureUnit;
         decimal targetExchangeRate = targetMeasureUnit.GetExchangeRate();
 
-        var (quantity, exchangedQuantity) = GetAndExchangeRandomQuantity(measureUnit, targetExchangeRate);
+        var (quantity, exchangedQuantity) = GetRandomExchangedQuantityPair(measureUnit, targetExchangeRate);
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
         IBaseMeasure expected = new BaseMeasureChild(exchangedQuantity, targetMeasureUnit, null);
 
@@ -1259,7 +1225,7 @@ public class BaseMeasureTests
         Enum measureUnit =  GetRandomDefaultMeasureUnit();
         decimal exchangeRate =  GetRandomExchangeRate();
 
-        var (quantity, expected) = GetAndExchangeRandomQuantity(measureUnit, exchangeRate);
+        var (quantity, expected) = GetRandomExchangedQuantityPair(measureUnit, exchangeRate);
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
 
         // Act

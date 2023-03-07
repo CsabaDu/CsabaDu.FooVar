@@ -1,8 +1,4 @@
-﻿using CsabaDu.FooVar.Measures.Factories;
-using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
-using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
-using CsabaDu.FooVar.Measures.Interfaces.Factories;
-using static CsabaDu.FooVar.Tests.Statics.RandomParams;
+﻿using static CsabaDu.FooVar.Tests.Statics.RandomParams;
 
 namespace CsabaDu.FooVar.Tests.Statics;
 
@@ -26,55 +22,24 @@ internal static class TestSupport
         }
     }
 
-    internal static bool IsIntegerType(Type type)
+    internal static (ValueType quantity, ValueType exchangedQuantity) GetRandomExchangedQuantityPair(Enum measureUnit, decimal targetExchangeRate)
     {
-        return type == typeof(int) || type == typeof(uint) || type == typeof(long) || type == typeof(ulong);
-    }
-
-    internal static decimal GetQuantityDecimalValue(decimal decimalQuantity, Type quantityType)
-    {
-        if (quantityType == typeof(decimal) || quantityType == typeof(double)) return decimal.Round(decimalQuantity, 8);
-
-        //if (quantityType == typeof(float)) return decimal.Round(decimalQuantity, 4);
-
-        return decimal.Round(decimalQuantity);
-    }
-
-    internal static decimal GetQuantityDecimalValue(decimal decimalQuantity, TypeCode quantityTypeCode)
-    {
-        return quantityTypeCode switch
-        {
-            //TypeCode.Single => decimal.Round(decimalQuantity, 4),
-            TypeCode.Double => decimal.Round(decimalQuantity, 8),
-            TypeCode.Decimal => decimal.Round(decimalQuantity, 8),
-
-            _ => decimal.Round(decimalQuantity),
-        };
-    }
-
-    internal static (ValueType quantity, ValueType exchangedQuantity) GetAndExchangeRandomQuantity(Enum measureUnit, decimal targetExchangeRate)
-    {
-        decimal decimalQuantity = GetExchangedRandomQuantity(measureUnit, targetExchangeRate, out ValueType quantity, out TypeCode quantityTypeCode);
-
-        ValueType exchangedQuantity = decimalQuantity.ToQuantity(quantityTypeCode);
-
-        return (quantity, exchangedQuantity);
-    }
-
-    private static decimal GetExchangedRandomQuantity(Enum measureUnit, decimal targetExchangeRate, out ValueType quantity, out TypeCode quantityTypeCode)
-    {
-        decimal decimalQuantity, maxValue;
+        ValueType quantity;
+        TypeCode typeCode;
+        decimal exchangedDecimalQuantity, minValue, maxValue;
 
         do
         {
             quantity = GetRandomValueTypeQuantity();
-            decimalQuantity = GetExchangedDecimalQuantity(measureUnit, quantity, targetExchangeRate);
-            quantityTypeCode = Type.GetTypeCode(quantity.GetType());
-            maxValue = ConvertMeasures.GetMaxValue(quantityTypeCode);
+            exchangedDecimalQuantity = GetExchangedDecimalQuantity(measureUnit, quantity, targetExchangeRate);
+            typeCode = Type.GetTypeCode(quantity.GetType());
+            (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
         }
-        while (Math.Abs(decimalQuantity) > maxValue);
+        while (exchangedDecimalQuantity < minValue || exchangedDecimalQuantity > maxValue);
 
-        return decimalQuantity;
+        ValueType exchangedQuantity = exchangedDecimalQuantity.ToQuantity(typeCode);
+
+        return (quantity, exchangedQuantity);
     }
 
     private static decimal GetExchangedDecimalQuantity(Enum measureUnit, ValueType quantity, decimal targetExchangeRate)
@@ -121,80 +86,40 @@ internal static class TestSupport
         }
     }
 
-    internal static IEnumerable<object[]> GetThreeBaseMeasureArgsWithEachDefaultMeasureUnit()
+    internal static IEnumerable<object[]> GetAllDefaultMeasureUnitExchangeRatePairs()
     {
         foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
         {
-            yield return new ThreeBaseMeasureArgsToType
+            yield return new MeasureUnitExchangeRatePair
             {
-                Quantity = GetRandomValueTypeQuantity(),
                 MeasureUnit = item,
                 ExchangeRate = null,
-            }.ToObjectArray();
+            }
+            .ToObjectArray();
         }
 
         foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
         {
-            yield return new ThreeBaseMeasureArgsToType
+            yield return new MeasureUnitExchangeRatePair
             {
-                Quantity = GetRandomValueTypeQuantity(),
                 MeasureUnit = item.Key,
                 ExchangeRate = item.Value,
-            }.ToObjectArray();
+            }
+            .ToObjectArray();
         }
     }
 
-    private struct ThreeBaseMeasureArgsToType
+    private struct MeasureUnitExchangeRatePair
     {
-        public ValueType Quantity { get; set; }
-        public Enum MeasureUnit { get; set; }
-        public decimal? ExchangeRate { get; set; }
+        internal Enum MeasureUnit { get; set; }
+        internal decimal? ExchangeRate { get; set; }
 
-        public object[] ToObjectArray()
+        internal object[] ToObjectArray()
         {
             return new object[]
             {
-                Quantity,
                 MeasureUnit,
                 ExchangeRate,
-            };
-        }
-    }
-
-    internal static IEnumerable<object[]> GetTwoBaseMeasureArgsWithEachDefaultMeasurement()
-    {
-        IMeasurementFactory factory = new MeasurementFactory();
-
-        foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
-        {
-            yield return new TwoBaseMeasureArgsToType
-            {
-                Quantity = GetRandomValueTypeQuantity(),
-                Measurement = factory.GetMeasurement(item),
-            }.ToObjectArray();
-        }
-
-        foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
-        {
-            yield return new TwoBaseMeasureArgsToType
-            {
-                Quantity = GetRandomValueTypeQuantity(),
-                Measurement = factory.GetMeasurement(item.Key, item.Value),
-            }.ToObjectArray();
-        }
-    }
-
-    private struct TwoBaseMeasureArgsToType
-    {
-        public ValueType Quantity { get; set; }
-        public IMeasurement Measurement { get; set; }
-
-        public object[] ToObjectArray()
-        {
-            return new object[]
-            {
-                Quantity,
-                Measurement,
             };
         }
     }
