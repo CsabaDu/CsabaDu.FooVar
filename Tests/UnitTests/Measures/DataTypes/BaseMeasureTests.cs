@@ -1,3 +1,4 @@
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
 using CsabaDu.FooVar.Tests.Fakes.Measures;
@@ -19,7 +20,7 @@ public class BaseMeasureTests
 
     #region TestInitialize
     [TestInitialize]
-    public void IniitializeMaseMeasureTests()
+    public void InitializeMaseMeasureTests()
     {
         RestoreDefaultMeasureUnits();
 
@@ -32,12 +33,17 @@ public class BaseMeasureTests
     #endregion
 
     #region Private methods
+    private static IEnumerable<object[]> GetInvalidTypeQuantityArgs()
+    {
+        return TestSupport.GetInvalidTypeQuantityArgs();
+    }
+
     private static IEnumerable<object[]> GetAllDefaultMeasureUnitExchangeRatePairs()
     {
         return TestSupport.GetAllDefaultMeasureUnitExchangeRatePairs();
     }
 
-    private void TestNegativeQuantityIfUnsignedIntegerTypeArgThrowsOutOfRangeException(TypeCode typeCode)
+    private void Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode typeCode)
     {
         // Arrange
         Enum measureUnit = GetRandomDefaultMeasureUnit();
@@ -50,6 +56,19 @@ public class BaseMeasureTests
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
         Assert.AreEqual(ParamNames.typeCode, ex.ParamName);
+    }
+
+    private void Test_Ctor_InvalidValueTypeQuantityArg_ThrowsOutOfRangeException(ValueType quantity)
+    {
+        // Arrange
+        Enum measureUnit = GetRandomDefaultMeasureUnit();
+
+        // Act
+        void attempt() => _ = new BaseMeasureChild(quantity, measureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
     #endregion
 
@@ -70,184 +89,11 @@ public class BaseMeasureTests
         Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_EnumTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
+    [DataTestMethod]
+    [DynamicData(nameof(GetInvalidTypeQuantityArgs), DynamicDataSourceType.Method)]
+    public void Ctor_InvalidValueTypeQuantityArg_ThrowsOutOfRangeException(ValueType quantity)
     {
-        // Arrange
-        ValueType enumQuantity =  GetRandomDefaultMeasureUnit();
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(enumQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_BoolTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType boolQuantity = true;
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(boolQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_CharTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType charQuantity = char.MaxValue;
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(charQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_IntPtrTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType intPtrQuantity = IntPtr.Zero;
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(intPtrQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_UIntPtrTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType uIntPtrQuantity = UIntPtr.Zero;
-        Enum measureUnit =  GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(uIntPtrQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_ByteTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType byteQuantity = byte.MaxValue;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(byteQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_SbyteTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType sbyteQuantity = sbyte.MinValue;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(sbyteQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_ShortTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType shortQuantity = short.MinValue;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(shortQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_UshortTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType ushortQuantity = ushort.MaxValue;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(ushortQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_FloatTypeInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType floatQuantity = float.MinValue;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(floatQuantity, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_MaxValueExceedingInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType quantityExceedsMaxValue = Convert.ToDouble(decimal.MaxValue) + double.Epsilon;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(quantityExceedsMaxValue, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
-    }
-
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_MinValueExceedingInvalidQuantityArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        ValueType quantityExceedsMinValue = Convert.ToDouble(decimal.MinValue) - double.Epsilon;
-        Enum measureUnit = GetRandomDefaultMeasureUnit();
-
-        // Act
-        void attempt() => _ = new BaseMeasureChild(quantityExceedsMinValue, measureUnit);
-
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
-        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
+        Test_Ctor_InvalidValueTypeQuantityArg_ThrowsOutOfRangeException(quantity);
     }
     #endregion
 
@@ -1098,13 +944,13 @@ public class BaseMeasureTests
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_UIntTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
     {
-        TestNegativeQuantityIfUnsignedIntegerTypeArgThrowsOutOfRangeException(TypeCode.UInt32);
+        Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode.UInt32);
     }
 
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_ULongTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
     {
-        TestNegativeQuantityIfUnsignedIntegerTypeArgThrowsOutOfRangeException(TypeCode.UInt64);
+        Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode.UInt64);
     }
 
     [TestMethod, TestCategory("UnitTest")]

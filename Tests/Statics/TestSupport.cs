@@ -1,4 +1,5 @@
-﻿using static CsabaDu.FooVar.Tests.Statics.RandomParams;
+﻿using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
+using static CsabaDu.FooVar.Tests.Statics.RandomParams;
 
 namespace CsabaDu.FooVar.Tests.Statics;
 
@@ -90,23 +91,23 @@ internal static class TestSupport
     {
         foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
         {
-            yield return new MeasureUnitExchangeRatePair
-            {
-                MeasureUnit = item,
-                ExchangeRate = null,
-            }
-            .ToObjectArray();
+            yield return MeasureUnitExchangeRatePair_ToObjectArray(item, null);
         }
 
         foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
         {
-            yield return new MeasureUnitExchangeRatePair
-            {
-                MeasureUnit = item.Key,
-                ExchangeRate = item.Value,
-            }
-            .ToObjectArray();
+            yield return MeasureUnitExchangeRatePair_ToObjectArray(item.Key, item.Value);
         }
+    }
+
+    private static object[] MeasureUnitExchangeRatePair_ToObjectArray(Enum measureUnit, decimal? exchangeRate)
+    {
+        return new MeasureUnitExchangeRatePair
+        {
+            MeasureUnit = measureUnit,
+            ExchangeRate = exchangeRate,
+        }
+        .ToObjectArray();
     }
 
     private struct MeasureUnitExchangeRatePair
@@ -123,5 +124,66 @@ internal static class TestSupport
             };
         }
     }
+
+    internal static IEnumerable<object[]> GetInvalidTypeQuantityArgs()
+    {
+        ValueType quantity = default(bool); // bool
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(TypeCode); // Enum
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(char); // char
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(IntPtr); // IntPtr
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(UIntPtr); // UIntPtr
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(DateTime); // DateTime
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(byte); // byte
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(sbyte); // sbyte
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(short); // short
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(ushort); // ushort
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = default(float); // float
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = Convert.ToDouble(decimal.MaxValue) + double.Epsilon; // exceeding max value
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+
+        quantity = Convert.ToDouble(decimal.MinValue) - double.Epsilon; // exceeding min value
+        yield return ValueTypeQuantity_ToObjectArray(quantity);
+    }
+
+    private static object[] ValueTypeQuantity_ToObjectArray(ValueType quantity)
+    {
+        return new ValueTypeQuantity { Quantity = quantity }.ToObjectArray();
+    }
+
+    private struct ValueTypeQuantity
+    {
+        internal ValueType Quantity { get; init; }
+
+        internal object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                Quantity,
+            };
+        }
+    }
+
 }
 #nullable enable
