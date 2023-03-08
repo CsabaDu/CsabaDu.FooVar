@@ -1,5 +1,4 @@
-﻿using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
-using static CsabaDu.FooVar.Tests.Statics.RandomParams;
+﻿using static CsabaDu.FooVar.Tests.Statics.RandomParams;
 
 namespace CsabaDu.FooVar.Tests.Statics;
 
@@ -91,12 +90,18 @@ internal static class TestSupport
     {
         foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
         {
-            yield return MeasureUnitExchangeRatePair_ToObjectArray(item, null);
+            Enum measureUnit = item;
+            decimal? exchangeRate = null;
+
+            yield return MeasureUnitExchangeRatePair_ToObjectArray(measureUnit, exchangeRate);
         }
 
         foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
         {
-            yield return MeasureUnitExchangeRatePair_ToObjectArray(item.Key, item.Value);
+            Enum measureUnit = item.Key;
+            decimal? exchangeRate = item.Value;
+
+            yield return MeasureUnitExchangeRatePair_ToObjectArray(measureUnit, exchangeRate);
         }
     }
 
