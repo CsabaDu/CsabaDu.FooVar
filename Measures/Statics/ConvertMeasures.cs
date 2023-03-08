@@ -75,7 +75,7 @@ public static class ConvertMeasures
 
     public static TimeSpan ToTimeSpan(this ITime time)
     {
-        decimal quantity = (decimal)time.GetQuantity(typeof(decimal));
+        decimal quantity = (decimal)time.GetQuantity(TypeCode.Decimal);
 
         if ((TimeUnit)time.GetMeasureUnit() != TimeUnit.minute)
         {
@@ -104,7 +104,7 @@ public static class ConvertMeasures
 
     public static IExtent ToExtent(this IDistance distance, ExtentUnit extentUnit = default)
     {
-        decimal quantity = (decimal)distance.GetQuantity(typeof(decimal));
+        decimal quantity = (decimal)distance.GetQuantity(TypeCode.Decimal);
 
         decimal exchangeRate = distance.GetExchangeRate() * DistancePerExtent;
 
@@ -120,7 +120,7 @@ public static class ConvertMeasures
 
     public static IDistance ToDistance(this IExtent extent, DistanceUnit distanceUnit)
     {
-        decimal quantity = (decimal)extent.GetQuantity(typeof(decimal));
+        decimal quantity = (decimal)extent.GetQuantity(TypeCode.Decimal);
 
         decimal exchangeRate = extent.GetExchangeRate() / DistancePerExtent;
 

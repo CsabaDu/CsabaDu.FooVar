@@ -8,7 +8,7 @@ public interface IQuantity<out T> : IRound<T>, IExchange<ValueType, decimal> whe
 
     ValueType GetQuantity(RoundingMode roundingMode);
 
-    ValueType GetQuantity(Type type);
+    ValueType GetQuantity(TypeCode typeCode);
 
     decimal GetDecimalQuantity();
 }

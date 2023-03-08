@@ -146,11 +146,9 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return ConvertDecimalToQuantityType(roundedQuantity)!;
     }
 
-    public ValueType GetQuantity(Type type)
+    public ValueType GetQuantity(TypeCode typeCode)
     {
-        TypeCode typeCode =  Type.GetTypeCode(type ?? throw new ArgumentNullException(nameof(type)));
-
-        return ConvertDecimalToTypeCode(DecimalQuantity, typeCode) ?? throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        return ConvertDecimalToTypeCode(DecimalQuantity, typeCode) ?? throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null);
     }
 
     public decimal ProportionalTo(IBaseMeasure other)

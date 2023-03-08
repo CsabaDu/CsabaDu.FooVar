@@ -67,7 +67,7 @@ internal sealed class FlatRate : Rate, IFlatRate
             return GetFlatRate(numerator);
         }
 
-        decimal quantity = (decimal)other.GetQuantity(typeof(decimal));
+        decimal quantity = (decimal)other.GetQuantity(TypeCode.Decimal);
 
         quantity = GetSumQuantity(DecimalQuantity, quantity, summingMode);
 
@@ -82,7 +82,7 @@ internal sealed class FlatRate : Rate, IFlatRate
     {
         ValidateBaseMeasureOperand(multiplier);
 
-        decimal quantity = (decimal)multiplier.GetQuantity(typeof(decimal));
+        decimal quantity = (decimal)multiplier.GetQuantity(TypeCode.Decimal);
 
         quantity *= DecimalQuantity;
 

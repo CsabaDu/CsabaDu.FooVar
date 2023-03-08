@@ -18,4 +18,5 @@ internal static class ParamNames
     internal static string numerator => "numerator";
     internal static string denominator => "denominator";
     internal static string type => "type";
+    internal static string typeCode => "typeCode";
 }

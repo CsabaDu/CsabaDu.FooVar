@@ -85,7 +85,7 @@ internal abstract class Measure : BaseMeasure, IMeasure
 
         ValidateBaseMeasureOperand(other);
 
-        decimal quantity = (decimal)GetQuantity(typeof(decimal));
+        decimal quantity = (decimal)GetQuantity(TypeCode.Decimal);
 
         decimal exchangedOtherQuantity = GetExchangedQuantity(other);
 
@@ -141,11 +141,11 @@ internal abstract class Measure : BaseMeasure, IMeasure
     #region Private methods
     private decimal GetExchangedQuantity(IMeasure other)
     {
-        if (other.Measurement == Measurement) return (decimal)other.GetQuantity(typeof(decimal));
+        if (other.Measurement == Measurement) return (decimal)other.GetQuantity(TypeCode.Decimal);
 
         Enum measureUnit = GetMeasureUnit();
 
-        if (other.TryExchangeTo(measureUnit, out IBaseMeasure? exchanged)) return (decimal)exchanged!.GetQuantity(typeof(decimal));
+        if (other.TryExchangeTo(measureUnit, out IBaseMeasure? exchanged)) return (decimal)exchanged!.GetQuantity(TypeCode.Decimal);
 
         throw new ArgumentOutOfRangeException(nameof(other), other.GetMeasureUnitType(), null);
     }
