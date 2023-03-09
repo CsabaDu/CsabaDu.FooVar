@@ -26,6 +26,13 @@ public class MeasurementTests
     }
     #endregion
 
+    #region Private methods
+    private static IEnumerable<object[]> GetInvalidMeasureUnitArg()
+    {
+        return TestSupport.GetInvalidMeasureUnitArg();
+    }
+    #endregion
+
     #region Constructor
     #region Null args
     [TestMethod, TestCategory("UnitTest")]
@@ -49,61 +56,76 @@ public class MeasurementTests
     public void Ctor_NullMeasureUnitArg_ThrowsArgumentNullException()
     {
         // Arrange
-        Enum nullMeasureUnit = null;
+        Enum measureUnit = null;
         decimal? exchangeRate = RandomParams.GetRandomExchangeRate();
 
         // Act
-        void action() => _ = new Measurement(nullMeasureUnit, exchangeRate);
+        void action() => _ = new Measurement(measureUnit, exchangeRate);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentNullException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_NotMeasureUnitTypeEnumArg_ThrowsArgumentOutOfRangeException()
+    [DataTestMethod]
+    [DynamicData(nameof(GetInvalidMeasureUnitArg), DynamicDataSourceType.Method)]
+    public void Ctor_InvalidMeasureUnitArg_ThrowsArgumentOutOfRangeException(Enum measureUnit)
     {
         // Arrange
-        Enum notMeasureUnitTypeEnum = SampleParams.NotMeasureUnitTypeEnum;
-        decimal? exchangeRate = RandomParams.GetRandomExchangeRate();
+        decimal? exchangeRate = null;
 
         // Act
-        void action() => _ = new Measurement(notMeasureUnitTypeEnum, exchangeRate);
+        void action() => _ = new Measurement(measureUnit, exchangeRate);
 
         // Assert
         var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
         Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
     }
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_NotDefinedMeasureUnitArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        Enum notDefinedMeasureUnit = SampleParams.NotDefinedSampleMeasureUnit;
-        decimal? exchangeRate = RandomParams.GetRandomExchangeRate();
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void Ctor_NotMeasureUnitTypeEnumArg_ThrowsArgumentOutOfRangeException()
+    //{
+    //    // Arrange
+    //    Enum notMeasureUnitTypeEnum = SampleParams.NotMeasureUnitTypeEnum;
+    //    decimal? exchangeRate = RandomParams.GetRandomExchangeRate();
 
-        // Act
-        void action() => _ = new Measurement(notDefinedMeasureUnit, exchangeRate);
+    //    // Act
+    //    void action() => _ = new Measurement(notMeasureUnitTypeEnum, exchangeRate);
 
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    }
+    //    // Assert
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
+    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    //}
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void Ctor_MeasureUnitDoesNotHaveExchangeRateArg_ThrowsArgumentOutOfRangeException()
-    {
-        // Arrange
-        Enum measureUnitNotHavingAdHocRate = SampleParams.MeasureUnitShouldHaveAdHocRate;
-        decimal? nullExchangeRate = null;
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void Ctor_NotDefinedMeasureUnitArg_ThrowsArgumentOutOfRangeException()
+    //{
+    //    // Arrange
+    //    Enum notDefinedMeasureUnit = SampleParams.NotDefinedSampleMeasureUnit;
+    //    decimal? exchangeRate = RandomParams.GetRandomExchangeRate();
 
-        // Act
-        void action() => _ = new Measurement(measureUnitNotHavingAdHocRate, nullExchangeRate);
+    //    // Act
+    //    void action() => _ = new Measurement(notDefinedMeasureUnit, exchangeRate);
 
-        // Assert
-        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
-        Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
-    }
+    //    // Assert
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
+    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    //}
+
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void Ctor_MeasureUnitDoesNotHaveExchangeRateArg_ThrowsArgumentOutOfRangeException()
+    //{
+    //    // Arrange
+    //    Enum measureUnitNotHavingAdHocRate = SampleParams.MeasureUnitShouldHaveAdHocRate;
+    //    decimal? nullExchangeRate = null;
+
+    //    // Act
+    //    void action() => _ = new Measurement(measureUnitNotHavingAdHocRate, nullExchangeRate);
+
+    //    // Assert
+    //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(action);
+    //    Assert.AreEqual(ParamNames.measureUnit, ex.ParamName);
+    //}
     #endregion
 
     #region ExchangeRate validation

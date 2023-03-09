@@ -1,11 +1,6 @@
-using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
 using CsabaDu.FooVar.Tests.Fakes.Measures;
-using static CsabaDu.FooVar.Tests.Statics.RandomParams;
-using static CsabaDu.FooVar.Tests.Statics.SampleParams;
-using static CsabaDu.FooVar.Tests.Statics.TestSupport;
-
 
 namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
 
@@ -33,6 +28,7 @@ public class BaseMeasureTests
     #endregion
 
     #region Private methods
+    #region DynamicData
     private static IEnumerable<object[]> GetInvalidTypeQuantityArgs()
     {
         return TestSupport.GetInvalidTypeQuantityArgs();
@@ -42,6 +38,12 @@ public class BaseMeasureTests
     {
         return TestSupport.GetAllDefaultMeasureUnitExchangeRatePairs();
     }
+
+    private static IEnumerable<object[]> GetUnsignedIntegerTypeCodeArg()
+    {
+        return TestSupport.GetUnsignedIntegerTypeCodeArg();
+    }
+    #endregion
 
     private void Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode typeCode)
     {
@@ -93,7 +95,15 @@ public class BaseMeasureTests
     [DynamicData(nameof(GetInvalidTypeQuantityArgs), DynamicDataSourceType.Method)]
     public void Ctor_InvalidValueTypeQuantityArg_ThrowsOutOfRangeException(ValueType quantity)
     {
-        Test_Ctor_InvalidValueTypeQuantityArg_ThrowsOutOfRangeException(quantity);
+        // Arrange
+        Enum measureUnit = GetRandomDefaultMeasureUnit();
+
+        // Act
+        void attempt() => _ = new BaseMeasureChild(quantity, measureUnit);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.quantity, ex.ParamName);
     }
     #endregion
 
@@ -134,7 +144,7 @@ public class BaseMeasureTests
     {
         // Arrange
         ValueType quantity =  GetRandomValueTypeQuantity();
-        Enum notDefinedMeasureUnit = NotDefinedSampleMeasureUnit;
+        Enum notDefinedMeasureUnit = GetRandomNotDefinedMeasureUnit();
 
         // Act
         void attempt() => _ = new BaseMeasureChild(quantity, notDefinedMeasureUnit);
@@ -941,17 +951,28 @@ public class BaseMeasureTests
         Assert.AreEqual(ParamNames.typeCode, ex.ParamName);
     }
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetQuantity_UIntTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
+    [DataTestMethod, TestCategory("UnitTest")]
+    [DynamicData(nameof(GetUnsignedIntegerTypeCodeArg), DynamicDataSourceType.Method)]
+    public void GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException(TypeCode typeCode)
     {
-        Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode.UInt32);
+        // Arrange
+        Enum measureUnit = GetRandomDefaultMeasureUnit();
+        ValueType quantity = GetRandomNegativeQuantity();
+        IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
+
+        // Act
+        void attempt() => baseMeasure.GetQuantity(typeCode);
+
+        // Assert
+        var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(attempt);
+        Assert.AreEqual(ParamNames.typeCode, ex.ParamName);
     }
 
-    [TestMethod, TestCategory("UnitTest")]
-    public void GetQuantity_ULongTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
-    {
-        Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode.UInt64);
-    }
+    //[TestMethod, TestCategory("UnitTest")]
+    //public void GetQuantity_ULongTypeArgWhenNegativeQuantity_ThrowsArgumentOutOfRangeException()
+    //{
+    //    Test_GetQuantity_UnsignedIntegerTypeCodeArgWhenNegativeQuantity_ThrowsOutOfRangeException(TypeCode.UInt64);
+    //}
 
     [TestMethod, TestCategory("UnitTest")]
     public void GetQuantity_ValidTypeArg_ReturnsExpected()

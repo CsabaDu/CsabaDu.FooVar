@@ -342,12 +342,117 @@ internal static class RandomParams
 
     private static double CreateRandomDoubleQuantityWithinTypeLimits(TypeCode typeCode)
     {
-        var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
+        TypeCode randomLimitsTypeCode = TypeCode.Int64;
+        var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(randomLimitsTypeCode);
 
-        double min = (double)minValue.ToQuantity(TypeCode.Double)!;
-        double max = (double)maxValue.ToQuantity(TypeCode.Double)!;
-        double quantity = R.NextDouble();
+        long minRandom = (long)minValue.ToQuantity(randomLimitsTypeCode)!;
+        long maxRandom = (long)maxValue.ToQuantity(randomLimitsTypeCode)!;
 
-        return (quantity >= min && quantity <= max) ? quantity : 0;
+        decimal quantity = R.NextInt64(minRandom, maxRandom) + (decimal)R.NextDouble().ToQuantity(TypeCode.Decimal)!;
+        (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
+        quantity = (quantity >= minValue && quantity <= maxValue) ? quantity : 0;
+
+        return (double)quantity.ToQuantity(TypeCode.Double)!;
+    }
+
+    internal static Enum GetRandomNotDefinedMeasureUnit()
+    {
+        ICollection<Type> measureUnitTypes = ExchangeMeasures.ConstantMeasureUnitTypes;
+        int count = measureUnitTypes.Count;
+
+        switch (R.Next(count))
+        {
+            case 0:
+                count = Enum.GetNames(typeof(AreaUnit)).Length;
+                return (AreaUnit)count;
+            case 1:
+                count = Enum.GetNames(typeof(DistanceUnit)).Length;
+                return (DistanceUnit)count;
+            case 2:
+                count = Enum.GetNames(typeof(ExtentUnit)).Length;
+                return (ExtentUnit)count;
+            case 3:
+                count = Enum.GetNames(typeof(TimeUnit)).Length;
+                return (TimeUnit)count;
+            case 4:
+                count = Enum.GetNames(typeof(VolumeUnit)).Length;
+                return (VolumeUnit)count;
+            default:
+                count = Enum.GetNames(typeof(WeightUnit)).Length;
+                return (WeightUnit)count;
+        }
+    }
+
+    internal static ValueType GetRandomNegativeQuantity()
+    {
+        long quantity = R.NextInt64(long.MinValue, 0);
+
+        TypeCode typeCode = GetRandomQuantityTypeCode();
+
+        return quantity.ToQuantity(typeCode) ?? -1;
+    }
+
+    internal static (ValueType quantity, ValueType exchangedQuantity) GetRandomExchangedQuantityPair(Enum measureUnit, decimal targetExchangeRate)
+    {
+        ValueType quantity;
+        TypeCode typeCode;
+        decimal exchangedDecimalQuantity, minValue, maxValue;
+
+        do
+        {
+            quantity = GetRandomValueTypeQuantity();
+            exchangedDecimalQuantity = GetExchangedDecimalQuantity(measureUnit, quantity, targetExchangeRate);
+            typeCode = Type.GetTypeCode(quantity.GetType());
+            (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
+        }
+        while (exchangedDecimalQuantity < minValue || exchangedDecimalQuantity > maxValue);
+
+        ValueType exchangedQuantity = exchangedDecimalQuantity.ToQuantity(typeCode)!;
+
+        return (quantity, exchangedQuantity);
+    }
+
+    private static decimal GetExchangedDecimalQuantity(Enum measureUnit, ValueType quantity, decimal targetExchangeRate)
+    {
+        decimal decimalQuantity;
+        bool canExchangeDecimal;
+
+        do
+        {
+            canExchangeDecimal = TryExchange(measureUnit, quantity, targetExchangeRate, out decimalQuantity);
+        }
+        while (!canExchangeDecimal);
+
+        return decimalQuantity;
+    }
+
+    private static bool TryExchange(Enum measureUnit, ValueType quantity, decimal targetExchangeRate, out decimal decimalQuantity)
+    {
+        decimalQuantity = (decimal)quantity.ToQuantity(TypeCode.Decimal)!;
+        decimal exchangeRate = measureUnit.GetExchangeRate();
+
+        try
+        {
+            decimalQuantity /= targetExchangeRate;
+            decimalQuantity *= exchangeRate;
+            return true;
+        }
+        catch (OverflowException)
+        {
+            try
+            {
+                decimalQuantity *= exchangeRate;
+                decimalQuantity /= targetExchangeRate;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

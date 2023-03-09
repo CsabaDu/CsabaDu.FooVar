@@ -1,124 +1,28 @@
-﻿using static CsabaDu.FooVar.Tests.Statics.RandomParams;
-
-namespace CsabaDu.FooVar.Tests.Statics;
+﻿namespace CsabaDu.FooVar.Tests.Statics;
 
 #nullable disable
 internal static class TestSupport
 {
-
-    internal static void RemoveIfNonDefaultMeasureUnit(Enum measureUnit)
+    #region DynamicDataSource
+    #region Structs
+    private readonly struct EnumMeasureUnit
     {
-        if (measureUnit.ShouldHaveAdHocExchangeRate())
+        internal Enum MeasureUnit { get; init;}
+
+        internal object[] ToObjectArray()
         {
-            ExchangeMeasures.Rates.Remove(measureUnit);
-        }
-    }
-
-    internal static void RestoreDefaultMeasureUnits()
-    {
-        foreach (Enum measureUnit in ValidateMeasures.ValidMeasureUnits)
-        {
-            RemoveIfNonDefaultMeasureUnit(measureUnit);
-        }
-    }
-
-    internal static (ValueType quantity, ValueType exchangedQuantity) GetRandomExchangedQuantityPair(Enum measureUnit, decimal targetExchangeRate)
-    {
-        ValueType quantity;
-        TypeCode typeCode;
-        decimal exchangedDecimalQuantity, minValue, maxValue;
-
-        do
-        {
-            quantity = GetRandomValueTypeQuantity();
-            exchangedDecimalQuantity = GetExchangedDecimalQuantity(measureUnit, quantity, targetExchangeRate);
-            typeCode = Type.GetTypeCode(quantity.GetType());
-            (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
-        }
-        while (exchangedDecimalQuantity < minValue || exchangedDecimalQuantity > maxValue);
-
-        ValueType exchangedQuantity = exchangedDecimalQuantity.ToQuantity(typeCode);
-
-        return (quantity, exchangedQuantity);
-    }
-
-    private static decimal GetExchangedDecimalQuantity(Enum measureUnit, ValueType quantity, decimal targetExchangeRate)
-    {
-        decimal decimalQuantity;
-        bool canExchangeDecimal;
-
-        do
-        {
-            canExchangeDecimal = TryExchange(measureUnit, quantity, targetExchangeRate, out decimalQuantity);
-        }
-        while (!canExchangeDecimal);
-
-        return decimalQuantity;
-    }
-
-    private static bool TryExchange(Enum measureUnit, ValueType quantity, decimal targetExchangeRate, out decimal decimalQuantity)
-    {
-        decimalQuantity = (decimal)quantity.ToQuantity(TypeCode.Decimal);
-        decimal exchangeRate = measureUnit.GetExchangeRate();
-
-        try
-        {
-            decimalQuantity /= targetExchangeRate;
-            decimalQuantity *= exchangeRate;
-            return true;
-        }
-        catch (OverflowException)
-        {
-            try
+            return new object[]
             {
-                decimalQuantity *= exchangeRate;
-                decimalQuantity /= targetExchangeRate;
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+                MeasureUnit,
+            };
         }
-        catch (Exception)
-        {
-            return false;
-        }
+
     }
 
-    internal static IEnumerable<object[]> GetAllDefaultMeasureUnitExchangeRatePairs()
+    private readonly struct MeasureUnitExchangeRatePair
     {
-        foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
-        {
-            Enum measureUnit = item;
-            decimal? exchangeRate = null;
-
-            yield return MeasureUnitExchangeRatePair_ToObjectArray(measureUnit, exchangeRate);
-        }
-
-        foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
-        {
-            Enum measureUnit = item.Key;
-            decimal? exchangeRate = item.Value;
-
-            yield return MeasureUnitExchangeRatePair_ToObjectArray(measureUnit, exchangeRate);
-        }
-    }
-
-    private static object[] MeasureUnitExchangeRatePair_ToObjectArray(Enum measureUnit, decimal? exchangeRate)
-    {
-        return new MeasureUnitExchangeRatePair
-        {
-            MeasureUnit = measureUnit,
-            ExchangeRate = exchangeRate,
-        }
-        .ToObjectArray();
-    }
-
-    private struct MeasureUnitExchangeRatePair
-    {
-        internal Enum MeasureUnit { get; set; }
-        internal decimal? ExchangeRate { get; set; }
+        internal Enum MeasureUnit { get; init; }
+        internal decimal? ExchangeRate { get; init; }
 
         internal object[] ToObjectArray()
         {
@@ -128,6 +32,43 @@ internal static class TestSupport
                 ExchangeRate,
             };
         }
+    }
+
+    private readonly struct QuantityTypeCode
+    {
+        internal TypeCode TypeCode { get; init; }
+
+        internal object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                TypeCode,
+            };
+        }
+    }
+
+    private readonly struct ValueTypeQuantity
+    {
+        internal ValueType Quantity { get; init; }
+
+        internal object[] ToObjectArray()
+        {
+            return new object[]
+            {
+                Quantity,
+            };
+        }
+    }
+    #endregion
+
+    #region DynamicData methods
+    internal static IEnumerable<object[]> GetUnsignedIntegerTypeCodeArg()
+    {
+        TypeCode typeCode = TypeCode.UInt32; // uint
+        yield return ValueTypeQuantity_ToObjectArray(typeCode);
+
+        typeCode = TypeCode.UInt64; // ulong
+        yield return ValueTypeQuantity_ToObjectArray(typeCode);
     }
 
     internal static IEnumerable<object[]> GetInvalidTypeQuantityArgs()
@@ -172,23 +113,83 @@ internal static class TestSupport
         yield return ValueTypeQuantity_ToObjectArray(quantity);
     }
 
+    internal static IEnumerable<object[]> GetInvalidMeasureUnitArg()
+    {
+        Enum measureUnit = GetRandomLimitType(); // Not MeasureUnit-type Enum
+        yield return EnumMeasureUnit_ToObjectArray(measureUnit);
+
+        measureUnit = GetRandomNotDefinedMeasureUnit(); // Not defined MeasureUnit
+        yield return EnumMeasureUnit_ToObjectArray(measureUnit);
+
+        measureUnit = GetRandomNonDefaultMeasureUnit(); // MeasureUnit does not have ExchangeRate
+        yield return EnumMeasureUnit_ToObjectArray(measureUnit);
+    }
+
+    internal static IEnumerable<object[]> GetAllDefaultMeasureUnitExchangeRatePairs()
+    {
+        foreach (Enum item in ExchangeMeasures.DefaultMeasureUnits)
+        {
+            Enum measureUnit = item;
+            decimal? exchangeRate = null;
+
+            yield return MeasureUnitExchangeRatePair_ToObjectArray(measureUnit, exchangeRate);
+        }
+
+        foreach (KeyValuePair<Enum, decimal> item in ExchangeMeasures.DefaultRates)
+        {
+            Enum measureUnit = item.Key;
+            decimal? exchangeRate = item.Value;
+
+            yield return MeasureUnitExchangeRatePair_ToObjectArray(measureUnit, exchangeRate);
+        }
+    }
+    #endregion
+
+    #region ToBojectArray
+    private static object[] MeasureUnitExchangeRatePair_ToObjectArray(Enum measureUnit, decimal? exchangeRate)
+    {
+        return new MeasureUnitExchangeRatePair
+        {
+            MeasureUnit = measureUnit,
+            ExchangeRate = exchangeRate,
+        }
+        .ToObjectArray();
+    }
+
+    private static object[] QuantityTypeCode_ToObjectArray(TypeCode typeCode)
+    {
+        return new QuantityTypeCode { TypeCode = typeCode, }.ToObjectArray();
+    }
+
     private static object[] ValueTypeQuantity_ToObjectArray(ValueType quantity)
     {
         return new ValueTypeQuantity { Quantity = quantity }.ToObjectArray();
     }
 
-    private struct ValueTypeQuantity
+    private static object[] EnumMeasureUnit_ToObjectArray(Enum measureUnit)
     {
-        internal ValueType Quantity { get; init; }
+        return new EnumMeasureUnit { MeasureUnit = measureUnit }.ToObjectArray();
+    }
+    #endregion
+    #endregion
 
-        internal object[] ToObjectArray()
+    #region Restore non-constant params
+    internal static void RemoveIfNonDefaultMeasureUnit(Enum measureUnit)
+    {
+        if (measureUnit.ShouldHaveAdHocExchangeRate())
         {
-            return new object[]
-            {
-                Quantity,
-            };
+            ExchangeMeasures.Rates.Remove(measureUnit);
         }
     }
+
+    internal static void RestoreDefaultMeasureUnits()
+    {
+        foreach (Enum measureUnit in ValidateMeasures.ValidMeasureUnits)
+        {
+            RemoveIfNonDefaultMeasureUnit(measureUnit);
+        }
+    }
+    #endregion
 
 }
 #nullable enable
