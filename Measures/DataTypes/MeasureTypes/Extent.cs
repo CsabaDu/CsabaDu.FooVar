@@ -6,23 +6,24 @@ namespace CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Extent : Measure, IExtent
 {
-    public Extent(ValueType quantity, ExtentUnit extentUnit) : base(new MeasureFactory(), quantity, extentUnit)
+    internal Extent(ValueType quantity, ExtentUnit extentUnit) : base(new MeasureFactory(), quantity, extentUnit)
     {
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Extent(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
+    internal Extent(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(ExtentUnit));
 
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Extent(IBaseMeasure other) : base(new MeasureFactory(), other)
+    internal Extent(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(ExtentUnit));
+        ValueType quantity = other.GetQuantity();
 
-        Quantity = other.GetQuantity().ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(other), quantity, null);
     }
 
     public IExtent GetExtent(double quantity, ExtentUnit extentUnit)
