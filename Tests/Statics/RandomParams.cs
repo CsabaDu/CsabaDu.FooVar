@@ -20,14 +20,14 @@ internal static class RandomParams
 
     private static readonly Random R = Random.Shared;
 
-    private static uint UlongQuantitiesCount;
-    private static uint ValueTypeQuantitiesCount;
-    private static uint PositiveDecimalQuantitiesCount;
-    private static int LimitTypesCount;
+    //private static uint UlongQuantitiesCount;
+    //private static uint ValueTypeQuantitiesCount;
+    //private static uint PositiveDecimalQuantitiesCount;
+    //private static int LimitTypesCount;
 
     //private static decimal[] RandomPositiveDecimalQuantities => GetRandomDenominatorQuantities();
     //private static ValueType[] RandomValueTypeQuantities => GetRandomValueTypeQuantities();
-    private static ulong[] RandomUlongQuantities => GetRandomLimitQuantities();
+    //private static ulong[] RandomUlongQuantities => GetRandomLimitQuantities();
     //private static LimitType[] RandomLimitTypes => CreateRandomLimitTypes();
 
     internal static LimitType GetRandomLimitType()
@@ -197,18 +197,25 @@ internal static class RandomParams
 
         TypeCode typeCode = GetRandomQuantityTypeCode();
 
-        return quantity.ToQuantity(typeCode)!;
+        return quantity.ToQuantity(typeCode) ?? 0;
     }
 
-    internal static ulong GetRandomUlongQuantity()
+    private static ulong GetRandomUlongQuantity()
     {
-        if (UlongQuantitiesCount == default)
-        {
-            UlongQuantitiesCount = MaxCountOfRandom;
-        }
+        long quantity = R.NextInt64(0, long.MaxValue);
 
-        return RandomUlongQuantities[--UlongQuantitiesCount];
+        return (ulong)quantity - 1 + (ulong)quantity;
     }
+
+    //internal static ulong GetRandomUlongQuantity()
+    //{
+    //    if (UlongQuantitiesCount == default)
+    //    {
+    //        UlongQuantitiesCount = MaxCountOfRandom;
+    //    }
+
+    //    return RandomUlongQuantities[--UlongQuantitiesCount];
+    //}
 
     //internal static LimitType GetRandomLimitType()
     //{
@@ -244,17 +251,17 @@ internal static class RandomParams
     //    return randomDenominatorQuantities;
     //}
 
-    private static ulong[] GetRandomLimitQuantities()
-    {
-        ulong[] randomLimitQuantities = new ulong[MaxCountOfRandom];
+    //private static ulong[] GetRandomLimitQuantities()
+    //{
+    //    ulong[] randomLimitQuantities = new ulong[MaxCountOfRandom];
 
-        for (int i = 0; i < MaxCountOfRandom; i++)
-        {
-            randomLimitQuantities[i] = CreateRandomLimitQuantity();
-        }
+    //    for (int i = 0; i < MaxCountOfRandom; i++)
+    //    {
+    //        randomLimitQuantities[i] = CreateRandomLimitQuantity();
+    //    }
 
-        return randomLimitQuantities;
-    }
+    //    return randomLimitQuantities;
+    //}
 
     internal static ValueType GetRandomValueTypeQuantity(TypeCode? typeCode = null)
     {
