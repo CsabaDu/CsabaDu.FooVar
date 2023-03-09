@@ -241,7 +241,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     private ValueType GetQuantity(ValueType quantity)
     {
-        return GetQuantity(quantity, QuantityTypeCode);
+        return GetQuantity(QuantityTypeCode, quantity);
     }
 
     private static ValueType GetQuantity(ValueType quantity, TypeCode typeCode)
