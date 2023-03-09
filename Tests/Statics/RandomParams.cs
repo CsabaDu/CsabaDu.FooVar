@@ -1,4 +1,6 @@
-﻿namespace CsabaDu.FooVar.Tests.Statics;
+﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
+
+namespace CsabaDu.FooVar.Tests.Statics;
 
 internal static class RandomParams
 {
@@ -141,11 +143,18 @@ internal static class RandomParams
     internal static ValueType GetRandomNotNegativeValueTypeQuantity()
     {
         TypeCode typeCode = GetRandomQuantityTypeCode();
-        decimal quantity = CreateRandomDecimalQuantityWithinTypeLimits(typeCode);
+
+       return GetRandomNotNegativeValueTypeQuantity(typeCode)!;
+    }
+
+    internal static ValueType GetRandomNotNegativeValueTypeQuantity(TypeCode typeCode)
+    {
+        decimal quantity = CreateRandomDecimalQuantity(typeCode);
         quantity = quantity < 0 ? 0 : quantity;
 
-       return quantity.ToQuantity(typeCode)!;
+        return quantity.ToQuantity(typeCode)!;
     }
+
 
     //private static ValueType CreateRandomPositiveValueTypeQuantity()
     //{
@@ -170,6 +179,15 @@ internal static class RandomParams
         return quantity.ToQuantity(typeCode)!;
     }
 
+    internal static ValueType GetRandomNegativeValueTypeQuantity()
+    {
+        long quantity = R.NextInt64(long.MinValue, 0);
+
+        TypeCode typeCode = GetRandomQuantityTypeCode();
+
+        return quantity.ToQuantity(typeCode) ?? -1;
+    }
+
     internal static decimal GetRandomExchangeRate()
     {
         return GetRandomPositiveDecimal();
@@ -177,10 +195,11 @@ internal static class RandomParams
 
     private static decimal GetRandomPositiveDecimal()
     {
-        decimal quantity = CreateRandomDecimalQuantityWithinTypeLimits(TypeCode.Decimal);
+        decimal quantity = CreateRandomDecimalQuantity(TypeCode.Decimal);
 
         return quantity > 0 ? quantity : 1;
     }
+
     //private static decimal GetRandomPositiveDecimal()
     //{
     //    if (PositiveDecimalQuantitiesCount == default)
@@ -284,10 +303,10 @@ internal static class RandomParams
     //    return (decimal)quantity.ToQuantity(TypeCode.Decimal)!;
     //}
 
-    private static ulong CreateRandomLimitQuantity()
-    {
-        return (ulong)CreateRandomDoubleQuantityWithinTypeLimits(TypeCode.UInt64);
-    }
+    //private static ulong CreateRandomLimitQuantity()
+    //{
+    //    return (ulong)CreateRandomDoubleQuantityWithinTypeLimits(TypeCode.UInt64);
+    //}
 
     internal static Type GetRandomQuantityType()
     {
@@ -320,47 +339,74 @@ internal static class RandomParams
     //    }
     //}
 
+    private static decimal CreateRandomDecimalQuantity(TypeCode typeCode)
+    {
+        return typeCode switch
+        {
+            TypeCode.Int32 => R.Next(int.MinValue, int.MaxValue),
+            TypeCode.Int64 => R.NextInt64(long.MinValue, long.MaxValue),
+            TypeCode.UInt32 or
+            TypeCode.UInt64 or
+            TypeCode.Double or
+            TypeCode.Decimal => CreateRandomDecimalQuantityWithinTypeLimits(typeCode),
+
+            _ => throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null),
+        };
+    }
+
+    private static decimal CreateRandomDecimalQuantity()
+    {
+        double quantity = default;
+
+        for (int i = 0; i < 4; i++)
+        {
+            long random = R.NextInt64(long.MinValue, long.MaxValue);
+            random *= R.Next(int.MinValue, int.MaxValue);
+
+            quantity += random;
+        }
+
+        switch (R.Next(2))
+        {
+            case 0: quantity -= R.NextDouble();
+                break;
+            default: quantity += R.NextDouble();
+                break;
+        }
+
+        return (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? decimal.Zero;
+    }
+
     private static decimal CreateRandomDecimalQuantityWithinTypeLimits(TypeCode typeCode)
     {
-        switch (typeCode)
-        {
-            case TypeCode.Int32:
-                return R.Next();
-            case TypeCode.Int64:
-                return R.NextInt64();
-            case TypeCode.UInt32:
-            case TypeCode.UInt64:
-            case TypeCode.Double:
-            case TypeCode.Decimal:
-                double quantity = CreateRandomDoubleQuantityWithinTypeLimits(typeCode);
-                return (decimal)quantity.ToQuantity(TypeCode.Decimal)!;
+        var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
 
-            default:
-                throw new InvalidOperationException(nameof(typeCode));
-        }
+        decimal quantity = CreateRandomDecimalQuantity();
+
+        return quantity>= minValue && quantity<=maxValue ? quantity : decimal.Zero;
     }
 
     private static ValueType CreateRandomValueTypeQuantity(TypeCode typeCode)
     {
-        decimal quantity = CreateRandomDecimalQuantityWithinTypeLimits(typeCode);
+        decimal quantity = CreateRandomDecimalQuantity(typeCode);
 
-        return quantity.ToQuantity(typeCode)!;
+        return quantity.ToQuantity(typeCode) ?? 0.ToQuantity(typeCode)!;
     }
 
-    private static double CreateRandomDoubleQuantityWithinTypeLimits(TypeCode typeCode)
-    {
-        TypeCode randomLimitsTypeCode = TypeCode.Int64;
-        var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(randomLimitsTypeCode);
+    //private static ValueType CreateRandomDoubleQuantityWithinTypeLimits(TypeCode typeCode)
+    //{
+    //    TypeCode randomLimitsTypeCode = TypeCode.Int64;
+    //    var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(randomLimitsTypeCode);
 
-        long minRandom = (long)minValue.ToQuantity(randomLimitsTypeCode)!;
-        long maxRandom = (long)maxValue.ToQuantity(randomLimitsTypeCode)!;
+    //    long minRandom = (long)minValue.ToQuantity(randomLimitsTypeCode)!;
+    //    long maxRandom = (long)maxValue.ToQuantity(randomLimitsTypeCode)!;
 
-        decimal quantity = R.NextInt64(minRandom, maxRandom) + (decimal)R.NextDouble().ToQuantity(TypeCode.Decimal)!;
-        (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
-        quantity = (quantity >= minValue && quantity <= maxValue) ? quantity : 0;
+    //    decimal quantity = R.NextInt64(minRandom, maxRandom) + (decimal)R.NextDouble().ToQuantity(TypeCode.Decimal)!;
+    //    (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
+    //    quantity = (quantity >= minValue && quantity <= maxValue) ? quantity : 0;
 
-        return (double)quantity.ToQuantity(TypeCode.Double)!;
-    }
+    //    return quantity.ToQuantity(typeCode)!;
+    //}
 
     internal static Enum GetRandomNotDefinedMeasureUnit()
     {
@@ -388,15 +434,6 @@ internal static class RandomParams
                 count = Enum.GetNames(typeof(WeightUnit)).Length;
                 return (WeightUnit)count;
         }
-    }
-
-    internal static ValueType GetRandomNegativeQuantity()
-    {
-        long quantity = R.NextInt64(long.MinValue, 0);
-
-        TypeCode typeCode = GetRandomQuantityTypeCode();
-
-        return quantity.ToQuantity(typeCode) ?? -1;
     }
 
     internal static (ValueType quantity, ValueType exchangedQuantity) GetRandomExchangedQuantityPair(Enum measureUnit, decimal targetExchangeRate)

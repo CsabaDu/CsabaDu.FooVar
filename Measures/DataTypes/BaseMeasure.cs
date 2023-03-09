@@ -1,17 +1,21 @@
 ﻿using CsabaDu.FooVar.Measures.Factories;
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
+using System;
+using static CsabaDu.FooVar.Measures.Statics.ConvertMeasures;
 
 namespace CsabaDu.FooVar.Measures.DataTypes;
 
 internal abstract class BaseMeasure : Measurable, IBaseMeasure
 {
     #region Fields
-    protected readonly decimal DecimalQuantity;
+    protected decimal DecimalQuantity;
     #endregion
 
     #region Properties
     public object Quantity { get; init; }
     public IMeasurement Measurement { get; init; }
+    public TypeCode QuantityTypeCode { get; init; }
     #endregion
 
     #region Constructors
@@ -19,24 +23,27 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
         Measurement = MeasurementFactory.GetMeasurement(measureUnit, exchangeRate);
+        QuantityTypeCode = Type.GetTypeCode(Quantity.GetType());
 
-        DecimalQuantity = GetDecimalQuantity(quantity);
+        DecimalQuantity = GetDecimalQuantity(GetQuantity());
     }
 
     private protected BaseMeasure(ValueType quantity, IMeasurement measurement) : base(measurement)
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
         Measurement = MeasurementFactory.GetMeasurement(measurement);
+        QuantityTypeCode = Type.GetTypeCode(Quantity.GetType());
 
-        DecimalQuantity = GetDecimalQuantity(quantity);
+        DecimalQuantity = GetDecimalQuantity(GetQuantity());
     }
 
     private protected BaseMeasure(IBaseMeasure other) : base(other?.Measurement ?? throw new ArgumentNullException(nameof(other)))
     {
         Quantity = other.Quantity;
         Measurement = MeasurementFactory.GetMeasurement(other.Measurement);
+        QuantityTypeCode = Type.GetTypeCode(Quantity.GetType());
 
-        DecimalQuantity = GetDecimalQuantity(other.GetQuantity());
+        DecimalQuantity = GetDecimalQuantity(GetQuantity());
     }
     #endregion
 
@@ -110,7 +117,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
             return null;
         }
 
-        return ConvertDecimalToQuantityType(quantity);
+        return GetQuantity(quantity);
     }
 
     public bool IsExchangeableTo(Enum measureUnit)
@@ -141,14 +148,14 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public ValueType GetQuantity(RoundingMode roundingMode)
     {
-        decimal roundedQuantity = RoundedDecimalQuantity(roundingMode);
+        decimal quantity = RoundedDecimalQuantity(roundingMode);
 
-        return ConvertDecimalToQuantityType(roundedQuantity)!;
+        return GetQuantity(quantity);
     }
 
     public ValueType GetQuantity(TypeCode typeCode)
     {
-        return ConvertDecimalToTypeCode(DecimalQuantity, typeCode) ?? throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null);
+        return GetQuantity(GetQuantity(), typeCode);
     }
 
     public decimal ProportionalTo(IBaseMeasure other)
@@ -168,11 +175,11 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
 
     public IBaseMeasure Round(RoundingMode roundingMode = default)
     {
-        decimal roundedDecimalQuantity = RoundedDecimalQuantity(roundingMode);
+        decimal decimalQuantity = RoundedDecimalQuantity(roundingMode);
 
-        ValueType roundedQuantity = ConvertDecimalToQuantityType(roundedDecimalQuantity)!;
+        ValueType quantity = GetQuantity(decimalQuantity);
 
-        return GetBaseMeasure(roundedQuantity);
+        return GetBaseMeasure(quantity);
     }
 
     public bool TryExchangeTo(Enum measureUnit, [NotNullWhen(true)] out IBaseMeasure? exchanged)
@@ -199,37 +206,52 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     #endregion
 
     #region Private methods
-    private ValueType? ConvertDecimalToQuantityType(decimal quantity)
-    {
-        TypeCode conversionTypeCode = Type.GetTypeCode(Quantity.GetType());
+    //private ValueType? ConvertDecimalToQuantityType(decimal quantity)
+    //{
+    //    TypeCode conversionTypeCode = Type.GetTypeCode(Quantity.GetType());
 
-        return ConvertDecimalToTypeCode(quantity, conversionTypeCode);
-    }
+    //    return ConvertDecimalToTypeCode(quantity, conversionTypeCode);
+    //}
 
-    private static ValueType? ConvertDecimalToTypeCode(decimal quantity, TypeCode conversionTypeCode)
-    {
-        var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(conversionTypeCode);
+    //private static ValueType? ConvertDecimalToTypeCode(decimal quantity, TypeCode conversionTypeCode)
+    //{
+    //    var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(conversionTypeCode);
 
-        if (quantity < minValue || quantity > maxValue) return null;
+    //    if (quantity < minValue || quantity > maxValue) return null;
 
-        switch (conversionTypeCode)
-        {
-            case TypeCode.UInt32:
-            case TypeCode.UInt64:
-                if (quantity < 0) return null;
-                break;
-            case TypeCode.Double:
-            case TypeCode.Decimal:
-                quantity = decimal.Round(quantity, 8);
-                break;
-        }
+    //    switch (conversionTypeCode)
+    //    {
+    //        case TypeCode.UInt32:
+    //        case TypeCode.UInt64:
+    //            if (quantity < 0) return null;
+    //            break;
+    //        case TypeCode.Double:
+    //        case TypeCode.Decimal:
+    //            quantity = decimal.Round(quantity, 8);
+    //            break;
+    //    }
 
-        return quantity.ToQuantity(conversionTypeCode);
-    }
+    //    return quantity.ToQuantity(conversionTypeCode);
+    //}
 
     private static decimal GetDecimalQuantity(ValueType quantity)
     {
-        return (decimal?)quantity.ToQuantity(TypeCode.Decimal) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
+        return (decimal)GetQuantity(TypeCode.Decimal, quantity);
+    }
+
+    private ValueType GetQuantity(ValueType quantity)
+    {
+        return GetQuantity(quantity, QuantityTypeCode);
+    }
+
+    private static ValueType GetQuantity(ValueType quantity, TypeCode typeCode)
+    {
+        return quantity.ToQuantity(typeCode) ?? throw new ArgumentOutOfRangeException(nameof(typeCode), typeCode, null);
+    }
+
+    private static ValueType GetQuantity(TypeCode typeCode, ValueType quantity)
+    {
+        return quantity.ToQuantity(typeCode) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
     private decimal HalfDecimalQuantity()

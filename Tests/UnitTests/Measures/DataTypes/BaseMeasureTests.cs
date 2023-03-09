@@ -936,7 +936,7 @@ public class BaseMeasureTests
     //    // Act
     //    // Assert
     //    var ex = Assert.ThrowsException<ArgumentNullException>(() => _baseMeasure.GetQuantity(TypeCode.Empty));
-    //    Assert.AreEqual(ParamNames.typeCode, ex.ParamName);
+    //    Assert.AreEqual(ParamNames.targetTypeCode, ex.ParamName);
     //}
 
     [TestMethod, TestCategory("UnitTest")]
@@ -957,7 +957,7 @@ public class BaseMeasureTests
     {
         // Arrange
         Enum measureUnit = GetRandomDefaultMeasureUnit();
-        ValueType quantity = GetRandomNegativeQuantity();
+        ValueType quantity = GetRandomNegativeValueTypeQuantity();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
 
         // Act
@@ -978,15 +978,19 @@ public class BaseMeasureTests
     public void GetQuantity_ValidTypeArg_ReturnsExpected()
     {
         // Arrange
-        ValueType quantity =  GetRandomNotNegativeValueTypeQuantity();
+        TypeCode targetTypeCode =  GetRandomQuantityTypeCode();
+        ValueType quantity =  GetRandomValueTypeQuantity(targetTypeCode);
+
+        TypeCode quantityTypeCode = GetRandomQuantityTypeCode();
+        quantity = quantity.ToQuantity(quantityTypeCode) ?? 0.ToQuantity(quantityTypeCode);
+
         Enum measureUnit =  GetRandomDefaultMeasureUnit();
         IBaseMeasure baseMeasure = new BaseMeasureChild(quantity, measureUnit, null);
 
-        TypeCode typeCode =  GetRandomQuantityTypeCode();
-        var expected = quantity.ToQuantity(typeCode);
+        var expected = quantity.ToQuantity(targetTypeCode);
 
         // Act
-        var actual = baseMeasure.GetQuantity(typeCode);
+        var actual = baseMeasure.GetQuantity(targetTypeCode);
 
         // Assert
         Assert.AreEqual(expected, actual);
