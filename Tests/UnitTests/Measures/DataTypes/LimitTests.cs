@@ -8,6 +8,12 @@ namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
 [TestClass]
 public class LimitTests
 {
+    static LimitTests()
+    {
+        RestoreDefaultMeasureUnits();
+    }
+
+
     #region Private fields
     private ILimit _limit;
     #endregion
@@ -15,7 +21,7 @@ public class LimitTests
     [TestInitialize]
     public void InitializeLimitTests()
     {
-        TestSupport.RestoreDefaultMeasureUnits();
+        //RestoreDefaultMeasureUnits();
 
         _limit = new Limit(SampleParams.MediumValueSampleMeasureUnit);
     }

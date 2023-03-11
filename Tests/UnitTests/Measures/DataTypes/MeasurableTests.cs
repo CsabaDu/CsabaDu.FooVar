@@ -9,6 +9,11 @@ namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
 [TestClass]
 public class MeasurableTests
 {
+    static MeasurableTests()
+    {
+        RestoreDefaultMeasureUnits();
+    }
+
     #region Private fields
     private IMeasurable _measurableChild;
     private IMeasurementFactory _factory;
@@ -18,7 +23,7 @@ public class MeasurableTests
     [TestInitialize]
     public void IntitializeMeasurableTests()
     {
-        TestSupport.RestoreDefaultMeasureUnits();
+        //RestoreDefaultMeasureUnits();
 
         Enum measureUnit = RandomParams.GetRandomDefaultMeasureUnit();
 

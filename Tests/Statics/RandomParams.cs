@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
-
-namespace CsabaDu.FooVar.Tests.Statics;
+﻿namespace CsabaDu.FooVar.Tests.Statics;
 
 internal static class RandomParams
 {
@@ -22,58 +20,14 @@ internal static class RandomParams
 
     private static readonly Random R = Random.Shared;
 
-    //private static int UlongQuantitiesCount;
-    //private static ulong[] RandomUlongQuantities => GetRandomLimitQuantities();
     private static int RandomValueTypeQuantitiesCount;
     private static int RandomPositiveDecimalQuantitiesCount;
     private static int RandomLimitTypesCount;
     private static int RandomDefaultMeasureUnitsCount;
-    private static IEnumerable<decimal> RandomPositiveDecimalQuantities
-    {
-        get
-        {
-            for (int i = 0; i < MaxCountOfRandom; i++)
-            {
-                yield return CreateRandomPositiveDecimalQuantity();
-            };
-        }
-    }
-    private static IEnumerable<LimitType> RandomLimitTypes
-    {
-        get
-        {
-            for (int i = 0; i < MaxCountOfRandom; i++)
-            {
-                yield return CreateRandomLimitType();
-            };
-        }
-    }
-
-    private static ValueType[] RandomValueTypeQuantities
-    {
-        get
-        {
-            ValueType[] randomValueTypeQuantities = new ValueType[MaxCountOfRandom];
-
-            for (int i = 0; i < MaxCountOfRandom; i++)
-            {
-                randomValueTypeQuantities[i] = CreateRandomValueTypeQuantity();
-            };
-
-            return randomValueTypeQuantities;
-        }
-    }
-
-    private static IEnumerable<Enum> RandomDefaultMeasureUnits
-    {
-        get
-        {
-            for (int i = 0; i < MaxCountOfRandom; i++)
-            {
-                yield return CreateRandomDefaultMeasureUnit();
-            };
-        }
-    }
+    private static decimal[] RandomPositiveDecimalQuantities => GetRandomPositiveDecimalQuantities();
+    private static LimitType[] RandomLimitTypes => GetRandomLimitTypes();
+    private static ValueType[] RandomValueTypeQuantities => GetRandomValueTypeQuantities();
+    private static Enum[] RandomDefaultMeasureUnits => GetRandomDefaultMeasureUnits();
 
     internal static Enum GetRandomDefaultMeasureUnit()
     {
@@ -82,7 +36,7 @@ internal static class RandomParams
             RandomDefaultMeasureUnitsCount = MaxCountOfRandom;
         }
 
-        return RandomDefaultMeasureUnits.ElementAt(--RandomDefaultMeasureUnitsCount);
+        return RandomDefaultMeasureUnits[--RandomDefaultMeasureUnitsCount];
     }
 
     internal static ValueType GetRandomValueTypeQuantity()
@@ -93,6 +47,87 @@ internal static class RandomParams
         }
 
         return RandomValueTypeQuantities[--RandomValueTypeQuantitiesCount];
+    }
+
+    private static decimal[] GetRandomPositiveDecimalQuantities()
+    {
+        decimal[] randomPositiveDecimalQuantities = new decimal[MaxCountOfRandom];
+
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            randomPositiveDecimalQuantities[i] = CreateRandomPositiveDecimalQuantity();
+        };
+
+        return randomPositiveDecimalQuantities;
+    }
+
+    private static LimitType[] GetRandomLimitTypes()
+    {
+        LimitType[] limitTypes = new LimitType[MaxCountOfRandom];
+
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            limitTypes[i] = CreateRandomLimitType();
+        }
+
+        return limitTypes;
+    }
+
+    private static Enum[] GetRandomDefaultMeasureUnits()
+    {
+        Enum[] measureUnits = new Enum[MaxCountOfRandom];
+
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            measureUnits[i] = CreateRandomDefaultMeasureUnit();
+        };
+
+
+        return measureUnits;
+    }
+
+    private static ValueType[] GetRandomValueTypeQuantities()
+    {
+        ValueType[] quantities = new ValueType[MaxCountOfRandom];
+
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            quantities[i] = CreateRandomValueTypeQuantity();
+        }
+
+        return quantities;
+    }
+
+    private static IEnumerable<decimal> GetRandomPositiveDecimalQuantityList()
+    {
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            yield return GetRandomPositiveDecimalQuantity();
+        }
+    }
+
+    private static IEnumerable<LimitType> GetRandomLimitTypeList()
+    {
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            yield return CreateRandomLimitType();
+        };
+    }
+
+    private static IEnumerable<Enum> GetRandomDefaultMeasureUnitList()
+    {
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            yield return CreateRandomDefaultMeasureUnit();
+        };
+    }
+
+    private static IEnumerable<ValueType> GetRandomValueTypeQuantityList()
+    {
+        for (int i = 0; i < MaxCountOfRandom; i++)
+        {
+            yield return CreateRandomValueTypeQuantity();
+        };
     }
 
     internal static (ValueType quantity, TypeCode targetTypeCode) GetRandomValueTypeQuantityTargetTypeCodePair(Enum measureUnit)
@@ -137,14 +172,7 @@ internal static class RandomParams
             RandomLimitTypesCount = MaxCountOfRandom;
         }
 
-        return RandomLimitTypes.ElementAt(--RandomLimitTypesCount);
-    }
-
-    private static LimitType CreateRandomLimitType()
-    {
-        int randomIndex = R.Next(LimitTypeNamesCount);
-
-        return (LimitType)randomIndex;
+        return RandomLimitTypes[--RandomLimitTypesCount];
     }
 
     internal static Type GetRandomConstantMeasureUnitType()
@@ -157,25 +185,19 @@ internal static class RandomParams
         return constantMeasureUnitTypes.ElementAt(randomIndex);
     }
 
-    //private static LimitType[] CreateRandomLimitTypes()
-    //{
-    //    LimitType[] limitTypes = new LimitType[MaxCountOfRandom];
-
-    //    for (int i = 0; i < MaxCountOfRandom; i++)
-    //    {
-    //        int randomIndex = R.Next(LimitTypeNamesCount);
-    //        limitTypes[i] = (LimitType)randomIndex;
-    //    }
-
-    //    return limitTypes;
-    //}
-
     internal static (ValueType quantity, Enum measureUnit) GetRandomBaseMeasureArgs()
     {
         Enum measureUnit = GetRandomDefaultMeasureUnit();
         ValueType quantity = GetRandomValueTypeQuantity(measureUnit);
 
         return (quantity, measureUnit);
+    }
+
+    private static LimitType CreateRandomLimitType()
+    {
+        int randomIndex = R.Next(LimitTypeNamesCount);
+
+        return (LimitType)randomIndex;
     }
 
     private static Enum CreateRandomDefaultMeasureUnit()
@@ -238,16 +260,6 @@ internal static class RandomParams
         return (measureUnit, sameTypeMeasureUnit);
     }
 
-    //internal static ValueType GetRandomValueTypeQuantity()
-    //{
-    //    if (ValueTypeQuantitiesCount == default)
-    //    {
-    //        ValueTypeQuantitiesCount = MaxCountOfRandom;
-    //    }
-
-    //    return RandomValueTypeQuantities[--ValueTypeQuantitiesCount];
-    //}
-
     internal static ValueType GetRandomNotNegativeValueTypeQuantity()
     {
         TypeCode typeCode = GetRandomQuantityTypeCode();
@@ -262,21 +274,6 @@ internal static class RandomParams
 
         return quantity.ToQuantity(typeCode) ?? 1.ToQuantity(typeCode)!;
     }
-
-
-    //private static ValueType CreateRandomPositiveValueTypeQuantity()
-    //{
-    //    TypeCode typeCode = GetRandomQuantityTypeCode();
-    //    double quantity;
-
-    //    do
-    //    {
-    //        quantity = CreateRandomDoubleQuantityWithinTypeLimits(typeCode);
-    //    }
-    //    while (quantity <= 0);
-
-    //    return quantity.ToQuantity(typeCode)!;
-    //}
 
     internal static ValueType GetRandomPositiveValueTypeQuantity()
     {
@@ -376,52 +373,6 @@ internal static class RandomParams
         };
     }
 
-    //private static decimal CreateRandomDecimalQuantity()
-    //{
-    //    return CreateRandomDecimalQuantity(TypeCode.Decimal);
-    //}
-
-    //private static double CreateRandomDoubleQuantity()
-    //{
-    //    double quantity = default;
-
-    //    for (int i = 0; i < 4; i++)
-    //    {
-    //        long random = R.NextInt64(long.MinValue, long.MaxValue);
-    //        random *= R.Next(int.MinValue, int.MaxValue);
-
-    //        quantity += random;
-    //    }
-
-    //    switch (R.Next(2))
-    //    {
-    //        case 0:
-    //            quantity -= R.NextDouble();
-    //            break;
-    //        default:
-    //            quantity += R.NextDouble();
-    //            break;
-    //    }
-
-    //    return quantity;
-    //}
-
-    //private static decimal CreateRandomDecimalQuantityWithinTypeLimits(TypeCode typeCode)
-    //{
-    //    var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
-    //    decimal quantity;
-    //    bool fitsIn;
-
-    //    do
-    //    {
-    //        quantity = (decimal?)CreateRandomDoubleQuantity().ToQuantity(TypeCode.Decimal) ?? decimal.One;
-    //        fitsIn = quantity >= minValue && quantity <= maxValue;
-    //    }
-    //    while (!fitsIn);
-
-    //    return quantity;
-    //}
-
     internal static Enum GetRandomNotDefinedMeasureUnit()
     {
         ICollection<Type> measureUnitTypes = ExchangeMeasures.ConstantMeasureUnitTypes;
@@ -473,20 +424,6 @@ internal static class RandomParams
         return (quantity, exchanged);
     }
 
-    private static decimal GetExchangedDecimalQuantity(Enum measureUnit, ValueType quantity, decimal targetExchangeRate)
-    {
-        decimal decimalQuantity;
-        bool canExchangeDecimal;
-
-        do
-        {
-            canExchangeDecimal = TryExchange(measureUnit, quantity, targetExchangeRate, out decimalQuantity);
-        }
-        while (!canExchangeDecimal);
-
-        return decimalQuantity;
-    }
-
     private static bool TryExchange(Enum measureUnit, ValueType quantity, decimal targetExchangeRate, out decimal decimalQuantity)
     {
         decimalQuantity = (decimal)quantity.ToQuantity(TypeCode.Decimal)!;
@@ -516,4 +453,103 @@ internal static class RandomParams
             return false;
         }
     }
+
+    //private static int UlongQuantitiesCount;
+    //private static ulong[] RandomUlongQuantities => GetRandomLimitQuantities();
+
+    //private static LimitType[] CreateRandomLimitTypes()
+    //{
+    //    LimitType[] limitTypes = new LimitType[MaxCountOfRandom];
+
+    //    for (int i = 0; i < MaxCountOfRandom; i++)
+    //    {
+    //        int randomIndex = R.Next(LimitTypeNamesCount);
+    //        limitTypes[i] = (LimitType)randomIndex;
+    //    }
+
+    //    return limitTypes;
+    //}
+
+    //internal static ValueType GetRandomValueTypeQuantity()
+    //{
+    //    if (ValueTypeQuantitiesCount == default)
+    //    {
+    //        ValueTypeQuantitiesCount = MaxCountOfRandom;
+    //    }
+
+    //    return RandomValueTypeQuantities[--ValueTypeQuantitiesCount];
+    //}
+
+    //private static ValueType CreateRandomPositiveValueTypeQuantity()
+    //{
+    //    TypeCode typeCode = GetRandomQuantityTypeCode();
+    //    double quantity;
+
+    //    do
+    //    {
+    //        quantity = CreateRandomDoubleQuantityWithinTypeLimits(typeCode);
+    //    }
+    //    while (quantity <= 0);
+
+    //    return quantity.ToQuantity(typeCode)!;
+    //}
+    //private static decimal CreateRandomDecimalQuantity()
+    //{
+    //    return CreateRandomDecimalQuantity(TypeCode.Decimal);
+    //}
+
+    //private static double CreateRandomDoubleQuantity()
+    //{
+    //    double quantity = default;
+
+    //    for (int i = 0; i < 4; i++)
+    //    {
+    //        long random = R.NextInt64(long.MinValue, long.MaxValue);
+    //        random *= R.Next(int.MinValue, int.MaxValue);
+
+    //        quantity += random;
+    //    }
+
+    //    switch (R.Next(2))
+    //    {
+    //        case 0:
+    //            quantity -= R.NextDouble();
+    //            break;
+    //        default:
+    //            quantity += R.NextDouble();
+    //            break;
+    //    }
+
+    //    return quantity;
+    //}
+
+    //private static decimal CreateRandomDecimalQuantityWithinTypeLimits(TypeCode typeCode)
+    //{
+    //    var (minValue, maxValue) = ValidateMeasures.GetQuantityValueLimits(typeCode);
+    //    decimal quantity;
+    //    bool fitsIn;
+
+    //    do
+    //    {
+    //        quantity = (decimal?)CreateRandomDoubleQuantity().ToQuantity(TypeCode.Decimal) ?? decimal.One;
+    //        fitsIn = quantity >= minValue && quantity <= maxValue;
+    //    }
+    //    while (!fitsIn);
+
+    //    return quantity;
+    //}
+
+    //private static decimal GetExchangedDecimalQuantity(Enum measureUnit, ValueType quantity, decimal targetExchangeRate)
+    //{
+    //    decimal decimalQuantity;
+    //    bool canExchangeDecimal;
+
+    //    do
+    //    {
+    //        canExchangeDecimal = TryExchange(measureUnit, quantity, targetExchangeRate, out decimalQuantity);
+    //    }
+    //    while (!canExchangeDecimal);
+
+    //    return decimalQuantity;
+    //}
 }

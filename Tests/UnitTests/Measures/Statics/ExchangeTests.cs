@@ -4,11 +4,16 @@
 [TestClass]
 public class ExchangeTests
 {
+    static ExchangeTests()
+    {
+        RestoreDefaultMeasureUnits();
+    }
+
     #region TestInitialize
     [TestInitialize]
     public void InitializeExchangeTests()
     {
-        TestSupport.RestoreDefaultMeasureUnits();
+        //RestoreDefaultMeasureUnits();
     }
     #endregion
 

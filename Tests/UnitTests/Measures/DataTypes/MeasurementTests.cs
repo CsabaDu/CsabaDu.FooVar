@@ -8,6 +8,11 @@ namespace CsabaDu.FooVar.Tests.UnitTests.Measures.DataTypes;
 [TestClass]
 public class MeasurementTests
 {
+    static MeasurementTests()
+    {
+        RestoreDefaultMeasureUnits();
+    }
+
     #region Private fields
     private IMeasurementFactory _factory;
     private IMeasurement _measurement;
@@ -17,7 +22,7 @@ public class MeasurementTests
     [TestInitialize]
     public void InitializeMeasurementTests()
     {
-        TestSupport.RestoreDefaultMeasureUnits();
+        //RestoreDefaultMeasureUnits();
 
         _factory = new MeasurementFactory();
 
