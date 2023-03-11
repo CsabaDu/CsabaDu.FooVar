@@ -17,7 +17,7 @@ internal sealed class Measurement : Measurable, IMeasurement
     {
         measureUnit.ValidateExchangeRate(exchangeRate, false);
 
-        if (!measureUnit.IsValidMeasureUnit()) throw new ArgumentOutOfRangeException(nameof(measureUnit));
+        if (!measureUnit.IsValidMeasureUnit()) throw new ArgumentOutOfRangeException(nameof(measureUnit), "");
 
         ExchangeRate = measureUnit.GetExchangeRate();
         MeasureUnitType = GetMeasureUnitType();

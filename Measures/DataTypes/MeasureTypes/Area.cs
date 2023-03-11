@@ -6,23 +6,24 @@ namespace CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Area : Measure, IArea
 {
-    public Area(ValueType quantity, AreaUnit areaUnit) : base(new MeasureFactory(), quantity, areaUnit)
+    internal Area(ValueType quantity, AreaUnit areaUnit) : base(new MeasureFactory(), quantity, areaUnit)
     {
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Area(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
+    internal Area(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(AreaUnit));
 
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Area(IBaseMeasure other) : base(new MeasureFactory(), other)
+    internal Area(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(AreaUnit));
+        ValueType quantity = other.GetQuantity();
 
-        Quantity = other.GetQuantity().ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(other), quantity, null);
     }
 
     public IArea GetArea(double quantity, AreaUnit areaUnit)

@@ -6,23 +6,24 @@ namespace CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Time : Measure, ITime
 {
-    public Time(ValueType quantity, TimeUnit timeUnit) : base(new MeasureFactory(), quantity, timeUnit)
+    internal Time(ValueType quantity, TimeUnit timeUnit) : base(new MeasureFactory(), quantity, timeUnit)
     {
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Time(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
+    internal Time(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(TimeUnit));
 
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Time(IBaseMeasure other) : base(new MeasureFactory(), other)
+    internal Time(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(TimeUnit));
+        ValueType quantity = other.GetQuantity();
 
-        Quantity = other.GetQuantity().ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(other), quantity, null);
     }
 
     public ITime GetTime(double quantity, TimeUnit timeUnit)

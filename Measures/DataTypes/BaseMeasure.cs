@@ -1,6 +1,7 @@
 ﻿using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
+using CsabaDu.FooVar.Measures.Statics;
 using System;
 using static CsabaDu.FooVar.Measures.Statics.ConvertMeasures;
 
@@ -23,7 +24,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
         Measurement = MeasurementFactory.GetMeasurement(measureUnit, exchangeRate);
-        QuantityTypeCode = Type.GetTypeCode(Quantity.GetType());
+        QuantityTypeCode = ConvertMeasures.GetQuantityTypeCode(measureUnit);
 
         DecimalQuantity = GetDecimalQuantity(GetQuantity());
     }
@@ -32,7 +33,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         Quantity = ValidateMeasures.GetValidQuantity(quantity);
         Measurement = MeasurementFactory.GetMeasurement(measurement);
-        QuantityTypeCode = Type.GetTypeCode(Quantity.GetType());
+        QuantityTypeCode = ConvertMeasures.GetQuantityTypeCode(measurement.GetMeasureUnit());
 
         DecimalQuantity = GetDecimalQuantity(GetQuantity());
     }
@@ -41,7 +42,7 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
     {
         Quantity = other.Quantity;
         Measurement = MeasurementFactory.GetMeasurement(other.Measurement);
-        QuantityTypeCode = Type.GetTypeCode(Quantity.GetType());
+        QuantityTypeCode = other.QuantityTypeCode;
 
         DecimalQuantity = GetDecimalQuantity(GetQuantity());
     }
@@ -144,7 +145,10 @@ internal abstract class BaseMeasure : Measurable, IBaseMeasure
         return GetBaseMeasure(quantity, measureUnit);
     }
 
-    public ValueType GetQuantity() => (ValueType)Quantity;
+    public ValueType GetQuantity()
+    {
+        return (Quantity as ValueType)!.ToQuantity(QuantityTypeCode)!;
+    }
 
     public ValueType GetQuantity(RoundingMode roundingMode)
     {

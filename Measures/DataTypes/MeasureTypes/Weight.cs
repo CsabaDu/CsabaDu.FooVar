@@ -6,23 +6,24 @@ namespace CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Weight : Measure, IWeight
 {
-    public Weight(ValueType quantity, WeightUnit weightUnit) : base(new MeasureFactory(), quantity, weightUnit)
+    internal Weight(ValueType quantity, WeightUnit weightUnit) : base(new MeasureFactory(), quantity, weightUnit)
     {
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Weight(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
+    internal Weight(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(WeightUnit));
 
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Weight(IBaseMeasure other) : base(new MeasureFactory(), other)
+    internal Weight(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(WeightUnit));
+        ValueType quantity = other.GetQuantity();
 
-        Quantity = other.GetQuantity().ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(other), quantity, null);
     }
 
     public IWeight GetWeight(double quantity, WeightUnit weightUnit)

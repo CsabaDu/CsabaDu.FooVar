@@ -6,23 +6,24 @@ namespace CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
 
 internal sealed class PieceCount : Measure, IPieceCount
 {
-    public PieceCount(ValueType quantity, Pieces pieces, decimal? exchangeRate = null) : base(new MeasureFactory(), quantity, pieces, exchangeRate)
+    internal PieceCount(ValueType quantity, Pieces pieces, decimal? exchangeRate = null) : base(new MeasureFactory(), quantity, pieces, exchangeRate)
     {
-        Quantity = quantity.ToQuantity(typeof(int))!;
+        Quantity = quantity.ToQuantity(TypeCode.Int64) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public PieceCount(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
+    internal PieceCount(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(Pieces));
 
-        Quantity = quantity.ToQuantity(typeof(int))!;
+        Quantity = quantity.ToQuantity(TypeCode.Int64) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public PieceCount(IBaseMeasure other) : base(new MeasureFactory(), other)
+    internal PieceCount(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(Pieces));
+        ValueType quantity = other.GetQuantity();
 
-        Quantity = other.GetQuantity().ToQuantity(typeof(int))!;
+        Quantity = quantity.ToQuantity(TypeCode.Int64) ?? throw new ArgumentOutOfRangeException(nameof(other), quantity, null);
     }
 
     public IPieceCount GetCount(int quantity, Pieces pieces)

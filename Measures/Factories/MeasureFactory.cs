@@ -1,4 +1,5 @@
 ﻿using CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
+using CsabaDu.FooVar.Measures.Interfaces.Behaviors;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
 

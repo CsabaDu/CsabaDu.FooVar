@@ -18,7 +18,7 @@ internal abstract class Measurable : IMeasurable
 
         _ = measureUnit ?? throw new ArgumentNullException(nameof(measureUnit));
 
-        if (!measureUnit.IsDefinedMeasureUnit()) throw new ArgumentOutOfRangeException(nameof(measureUnit));
+        if (!measureUnit.IsDefinedMeasureUnit()) throw new ArgumentOutOfRangeException(nameof(measureUnit), "");
 
         MeasureUnit = measureUnit;
     }

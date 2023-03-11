@@ -66,17 +66,6 @@ internal abstract class Measure : BaseMeasure, IMeasure
         if (limitType != LimitType.BeEqual) return comparison.FitsIn(limitType);
 
         return comparison == 0 && ceilingBaseMeasure.Equals(other);
-
-        //return limitType switch
-        //{
-        //    LimitType.BeNotLess => ceilingBaseMeasure.CompareTo(other) >= 0,
-        //    LimitType.BeNotGreater => floorBaseMeasure.CompareTo(other) <= 0,
-        //    LimitType.BeGreater => ceilingBaseMeasure.CompareTo(other) > 0,
-        //    LimitType.BeLess => floorBaseMeasure.CompareTo(other) < 0,
-        //    LimitType.BeEqual => floorBaseMeasure.Equals(other) && ceilingBaseMeasure.Equals(other),
-
-        //    _ => null,
-        //};
     }
 
     public IMeasure SumWith(IMeasure? other, SummingMode summingMode = SummingMode.Add)

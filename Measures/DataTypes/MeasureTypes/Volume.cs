@@ -6,23 +6,24 @@ namespace CsabaDu.FooVar.Measures.DataTypes.MeasureTypes;
 
 internal sealed class Volume : Measure, IVolume
 {
-    public Volume(ValueType quantity, VolumeUnit volumeUnit) : base(new MeasureFactory(), quantity, volumeUnit)
+    internal Volume(ValueType quantity, VolumeUnit volumeUnit) : base(new MeasureFactory(), quantity, volumeUnit)
     {
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Volume(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
+    internal Volume(ValueType quantity, IMeasurement measurement) : base(new MeasureFactory(), quantity, measurement)
     {
         measurement.ValidateMeasureUnitType(typeof(VolumeUnit));
 
-        Quantity = quantity.ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
-    public Volume(IBaseMeasure other) : base(new MeasureFactory(), other)
+    internal Volume(IBaseMeasure other) : base(new MeasureFactory(), other)
     {
         other.ValidateMeasureUnitType(typeof(VolumeUnit));
+        ValueType quantity = other.GetQuantity();
 
-        Quantity = other.GetQuantity().ToQuantity(typeof(double))!;
+        Quantity = quantity.ToQuantity(TypeCode.Double) ?? throw new ArgumentOutOfRangeException(nameof(other), quantity, null);
     }
 
     public IVolume GetVolume(double quantity, VolumeUnit volumeUnit)

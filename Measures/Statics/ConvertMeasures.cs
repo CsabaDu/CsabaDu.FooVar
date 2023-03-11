@@ -3,6 +3,7 @@ using CsabaDu.FooVar.Measures.Factories;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes;
 using CsabaDu.FooVar.Measures.Interfaces.DataTypes.MeasureTypes;
 using CsabaDu.FooVar.Measures.Interfaces.Factories;
+using System.Runtime.CompilerServices;
 
 namespace CsabaDu.FooVar.Measures.Statics;
 
@@ -11,6 +12,23 @@ public static class ConvertMeasures
     private static IRateFactory RateFactory => new RateFactory(new MeasureFactory());
 
     private const decimal DistancePerExtent = 1000m;
+
+    public static TypeCode GetQuantityTypeCode(this Enum measureUnit)
+    {
+        return measureUnit switch
+        {
+            Currency => TypeCode.Decimal,
+            Pieces => TypeCode.Int64,
+            AreaUnit or
+            DistanceUnit or
+            ExtentUnit or
+            TimeUnit or
+            VolumeUnit or
+            WeightUnit => TypeCode.Double,
+
+            _ => throw new ArgumentOutOfRangeException(nameof(measureUnit), measureUnit.GetType(), null),
+        };
+    }
 
     public static ValueType? ToQuantity(this ValueType quantity, TypeCode conversionTypeCode)
     {
@@ -48,6 +66,13 @@ public static class ConvertMeasures
         TypeCode conversionTypeCode = Type.GetTypeCode(conversionType);
 
         return quantity.ToQuantity(conversionTypeCode);
+    }
+
+    internal static ValueType GetValidQuantity(this TypeCode typeCode, ValueType quantity)
+    {
+        _ = quantity ?? throw new ArgumentNullException(nameof(quantity));
+
+        return quantity.ToQuantity(typeCode) ?? throw new ArgumentOutOfRangeException(nameof(quantity), quantity, null);
     }
 
     private static ValueType GetRoundedQuantity(this ValueType quantity)

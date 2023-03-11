@@ -25,6 +25,8 @@ public static class ExchangeMeasures
 
     internal static ICollection<Type> ConstantMeasureUnitTypes => ConstantMeasureUnits.Select(x => x.GetType()).ToHashSet();
 
+    internal static ICollection<Type> DefaultMeasureUnitTypes => DefaultMeasureUnits.Select(x => x.GetType()).ToHashSet();
+
     internal static IDictionary<Enum, decimal> ConstantRates => new Dictionary<Enum, decimal>()
     {
         // AreaMeasures
